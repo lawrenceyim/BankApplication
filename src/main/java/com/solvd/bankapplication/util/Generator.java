@@ -15,7 +15,7 @@ public class Generator {
         final ArrayList<String> queries = Parser.parseSqlFromFile(file);
         final QueryExecutor queryExecutor = new QueryExecutor();
         queries.stream().forEach(query -> {
-            queryExecutor.executeQuery(query);
+            queryExecutor.executeUpdate(query);
         });
     }
 
@@ -24,7 +24,7 @@ public class Generator {
         final ArrayList<String> queries = Parser.parseSqlFromFile(file);
         final QueryExecutor queryExecutor = new QueryExecutor();
         queries.stream().forEach(query -> {
-            queryExecutor.executeQuery(query);
+            queryExecutor.executeUpdate(query);
         });
     }
 }

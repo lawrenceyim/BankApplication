@@ -22,10 +22,29 @@ public class QueryExecutor implements IMapper {
                 connection = ConnectionPool.getInstance().getConnection();
             }
             Statement statement = connection.createStatement();
+            statement.executeUpdate("USE BankDB;");
             statement.executeQuery(query);
             resultSet = statement.getResultSet();
         } catch (SQLException e) {
-            logger.error("Invalid SQL query.");
+            logger.error(e.toString());
+            System.exit(1);
+        } finally {
+            if (connection != null) {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
+        }
+    }
+
+    @Override
+    public void executeUpdate(String query) {
+        try {
+            while (connection == null) {
+                connection = ConnectionPool.getInstance().getConnection();
+            }
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            logger.error(e.toString());
             System.exit(1);
         } finally {
             if (connection != null) {

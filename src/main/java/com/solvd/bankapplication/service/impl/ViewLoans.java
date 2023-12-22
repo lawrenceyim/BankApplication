@@ -37,7 +37,7 @@ public class ViewLoans implements IService {
                         ", Date: " + date);
             }
         } catch (SQLException e) {
-            logger.error("Invalid SQL query during database initialization");
+            logger.error(e.toString());
         }
     }
 }
