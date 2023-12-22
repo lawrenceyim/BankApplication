@@ -6,9 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class QueryExecutor implements IMapper {
     private final Logger logger = (Logger) LogManager.getLogger("Output");
@@ -21,10 +21,12 @@ public class QueryExecutor implements IMapper {
             while (connection == null) {
                 connection = ConnectionPool.getInstance().getConnection();
             }
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
+            Statement statement = connection.createStatement();
+            statement.executeQuery(query);
+            resultSet = statement.getResultSet();
         } catch (SQLException e) {
             logger.error("Invalid SQL query.");
+            System.exit(1);
         } finally {
             if (connection != null) {
                 ConnectionPool.getInstance().releaseConnection(connection);

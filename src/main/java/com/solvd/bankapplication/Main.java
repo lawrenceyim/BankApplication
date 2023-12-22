@@ -6,8 +6,6 @@ import com.solvd.bankapplication.util.Generator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
-import java.sql.SQLException;
-
 public class Main {
     private final Logger logger = (Logger) LogManager.getLogger("Output");
 
@@ -16,7 +14,7 @@ public class Main {
         Generator.fillDataBase();
     }
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         IService service = new ViewLoans();
         service.performService();
     }

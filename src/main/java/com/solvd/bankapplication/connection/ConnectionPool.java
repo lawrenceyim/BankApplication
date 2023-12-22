@@ -1,5 +1,8 @@
 package com.solvd.bankapplication.connection;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -8,6 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.IntStream;
 
 public class ConnectionPool {
+    private final Logger logger = (Logger) LogManager.getLogger("Output");
     private final String url = "jdbc:mysql://localhost/BankDB";
     private final String user = "root";
     private final String password = "password";
@@ -22,7 +26,8 @@ public class ConnectionPool {
             try {
                 connection = DriverManager.getConnection(url, user, password);
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                logger.error(e.getMessage());
+                System.exit(1);
             }
             freeConnections.add(connection);
         });

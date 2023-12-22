@@ -2,15 +2,15 @@ package com.solvd.bankapplication.service.impl;
 
 import com.solvd.bankapplication.dao.impl.QueryExecutor;
 import com.solvd.bankapplication.service.IService;
-import org.apache.commons.io.FileUtils;
+import com.solvd.bankapplication.util.Parser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class ViewLoans implements IService {
     private final Logger logger = (Logger) LogManager.getLogger("Output");
@@ -19,9 +19,11 @@ public class ViewLoans implements IService {
     public void performService() {
         final File file = new File("src/main/resources/ViewLoansQuery.txt");
         try {
-            final String query = FileUtils.readFileToString(file, "UTF-8").trim();
-            QueryExecutor queryExecutor = new QueryExecutor();
-            queryExecutor.executeQuery(query);
+            final ArrayList<String> queries = Parser.parseSqlFromFile(file);
+            final QueryExecutor queryExecutor = new QueryExecutor();
+            queries.stream().forEach(query -> {
+                queryExecutor.executeQuery(query);
+            });
             final ResultSet resultSet = queryExecutor.retrieveResult();
             while (resultSet.next()) {
                 final int loanId = resultSet.getInt("loan_id");
@@ -34,10 +36,8 @@ public class ViewLoans implements IService {
                         ", Loan Amount: " + loanAmount +
                         ", Date: " + date);
             }
-        } catch (IOException e) {
-            logger.error("Invalid file.");
         } catch (SQLException e) {
-            logger.error("Invalid SQL query.");
+            logger.error("Invalid SQL query during database initialization");
         }
     }
 }
