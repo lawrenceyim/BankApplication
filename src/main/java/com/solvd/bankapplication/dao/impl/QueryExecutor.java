@@ -1,5 +1,6 @@
 package com.solvd.bankapplication.dao.impl;
 
+import com.solvd.bankapplication.connection.ConnectionPool;
 import com.solvd.bankapplication.dao.IMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
@@ -14,17 +15,20 @@ public class QueryExecutor implements IMapper {
     private Connection connection;
     private ResultSet resultSet;
 
-    public QueryExecutor(Connection connection) {
-        this.connection = connection;
-    }
-
     @Override
     public void executeQuery(String query) {
         try {
+            while (connection == null) {
+                connection = ConnectionPool.getInstance().getConnection();
+            }
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
         } catch (SQLException e) {
             logger.error("Invalid SQL query.");
+        } finally {
+            if (connection != null) {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
     }
 

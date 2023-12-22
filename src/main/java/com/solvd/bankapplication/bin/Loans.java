@@ -1,6 +1,5 @@
 package com.solvd.bankapplication.bin;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 
 public class Loans {

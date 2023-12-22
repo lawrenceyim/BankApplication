@@ -8,6 +8,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.IntStream;
 
 public class ConnectionPool {
+    private final String url = "jdbc:mysql://localhost/BankDB";
+    private final String user = "root";
+    private final String password = "password";
     private final int MAX_CONNECTIONS = 5;
     private static ConnectionPool instance = null;
     private volatile CopyOnWriteArrayList<Connection> occupiedConnections = new CopyOnWriteArrayList<>();
@@ -17,7 +20,7 @@ public class ConnectionPool {
         IntStream.rangeClosed(1, MAX_CONNECTIONS).forEach(i -> {
             Connection connection = null;
             try {
-                connection = DriverManager.getConnection("", "", "");
+                connection = DriverManager.getConnection(url, user, password);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

@@ -1,7 +1,6 @@
 package com.solvd.bankapplication.bin;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class Transfers {
     private int transferID;
