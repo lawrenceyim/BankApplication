@@ -1,13 +1,16 @@
 USE BankDB;
 
+INSERT INTO Banks VALUES
+    (1, "Bank of America");
+
 INSERT INTO Customers VALUES
-	(1, 'customer1@email.com', '123456789', 'Street Address 1', 'City A', 'Country A'),
-	(2, 'customer2@email.com', '123456790', 'Street Address 2', 'City A', 'Country A'),
-	(3, 'customer3@email.com', '123456791', 'Street Address 3', 'City B', 'Country A'),
-	(4, 'customer4@email.com', '123456792', 'Street Address 4', 'City C', 'Country B'),
-	(5, 'customer5@email.com', '123456793', 'Street Address 5', 'City D', 'Country B'),
-	(6, 'customer6@email.com', '123456794', 'Street Address 6', 'City E', 'Country B'),
-	(7, 'customer7@email.com', '123456795', 'Street Address 7', 'City F', 'Country C');
+	(1, 1, 'customer1@email.com', '123456789', 'Street Address 1', 'City A', 'Country A'),
+	(2, 1, 'customer2@email.com', '123456790', 'Street Address 2', 'City A', 'Country A'),
+	(3, 1, 'customer3@email.com', '123456791', 'Street Address 3', 'City B', 'Country A'),
+	(4, 1, 'customer4@email.com', '123456792', 'Street Address 4', 'City C', 'Country B'),
+	(5, 1, 'customer5@email.com', '123456793', 'Street Address 5', 'City D', 'Country B'),
+	(6, 1, 'customer6@email.com', '123456794', 'Street Address 6', 'City E', 'Country B'),
+	(7, 1, 'customer7@email.com', '123456795', 'Street Address 7', 'City F', 'Country C');
 
 INSERT INTO Individuals (customer_id, first_name, last_name) VALUES (2, 'First Name 2', 'Last Name 2');
 INSERT INTO Individuals VALUES
@@ -88,8 +91,8 @@ INSERT INTO Branches VALUES
     (2, 3);
 
 INSERT INTO Employees VALUES
-	(1, 'Carl', 'Bill', 'Kevin', 1, 1, 'employee1@email.com'),
-    (2, 'Ryan', 'Chloe', 'Kath', 2, 1, 'employee2@gmail.com');
+	(1, 1, 'Carl', 'Bill', 'Kevin', 1, 1, 'employee1@email.com'),
+    (2, 1, 'Ryan', 'Chloe', 'Kath', 2, 1, 'employee2@gmail.com');
 
 INSERT INTO Loans VALUES
 	(1, 1, 5000.00, '2023-12-18 08:00:00'),

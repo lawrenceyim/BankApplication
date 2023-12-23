@@ -2,6 +2,12 @@ DROP DATABASE IF EXISTS BankDB;
 CREATE DATABASE IF NOT EXISTS BankDB;
 USE BankDB;
 
+CREATE TABLE Banks (
+    bank_id INT NOT NULL UNIQUE,
+    bank_name VARCHAR(45) NOT NULL,
+    PRIMARY KEY (bank_id)
+);
+
 CREATE TABLE Positions (
 	position_id INT NOT NULL UNIQUE,
     title VARCHAR(45) NOT NULL UNIQUE,
@@ -10,6 +16,7 @@ CREATE TABLE Positions (
 
 CREATE TABLE Employees (
 	employee_id INT NOT NULL UNIQUE,
+	bank_id INT NOT NULL,
     first_name VARCHAR(45) NOT NULL,
     middle_name VARCHAR(45),
     last_name VARCHAR(45) NOT NULL,
@@ -17,7 +24,8 @@ CREATE TABLE Employees (
     branch_id INT NOT NULL,
     email VARCHAR(45) NOT NULL UNIQUE,
     PRIMARY KEY (employee_id),
-    FOREIGN KEY (position) REFERENCES Positions(position_id)
+    FOREIGN KEY (position) REFERENCES Positions(position_id),
+    FOREIGN KEY (bank_id) REFERENCES Banks(bank_id)
 );
 
 CREATE TABLE EmployeeLoginDetails (
@@ -51,13 +59,15 @@ CREATE TABLE ATMs (
 );
 
 CREATE TABLE Customers (
-	  customer_id INT NOT NULL UNIQUE,
+	customer_id INT NOT NULL UNIQUE,
+	bank_id INT NOT NULL,
     email VARCHAR(45) NOT NULL UNIQUE,
     phone_number VARCHAR(45) NOT NULL UNIQUE,
     street_address VARCHAR(45) NOT NULL,
     city VARCHAR(45) NOT NULL,
     country VARCHAR(45) NOT NULL,
-    PRIMARY KEY (customer_id)
+    PRIMARY KEY (customer_id),
+    FOREIGN KEY (bank_id) REFERENCES Banks(bank_id)
 );
 
 CREATE TABLE CustomerLoginDetails (
