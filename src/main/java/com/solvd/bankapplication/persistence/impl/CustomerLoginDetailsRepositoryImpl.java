@@ -1,4 +1,4 @@
 package com.solvd.bankapplication.persistence.impl;
 
-public class BankRepositoryImpl {
+public class CustomerLoginDetailsRepositoryImpl {
 }
