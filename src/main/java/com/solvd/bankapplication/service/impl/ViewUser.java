@@ -1,6 +1,6 @@
 package com.solvd.bankapplication.service.impl;
 
-import com.solvd.bankapplication.dao.impl.QueryExecutor;
+import com.solvd.bankapplication.persistence.impl.QueryExecutor;
 import com.solvd.bankapplication.service.IService;
 import com.solvd.bankapplication.util.Parser;
 import org.apache.logging.log4j.LogManager;

@@ -2,6 +2,7 @@ package com.solvd.bankapplication.bin;
 
 public class Customers {
     private int customerID;
+    private int bankID;
     private String email;
     private String phoneNumber;
     private String streetAddress;
@@ -14,6 +15,14 @@ public class Customers {
 
     public void setCustomerID(int customerID) {
         this.customerID = customerID;
+    }
+
+    public int getBankID() {
+        return bankID;
+    }
+
+    public void setBankID(int bankID) {
+        this.bankID = bankID;
     }
 
     public String getEmail() {

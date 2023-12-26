@@ -1,7 +1,7 @@
-package com.solvd.bankapplication.dao.impl;
+package com.solvd.bankapplication.persistence.impl;
 
 import com.solvd.bankapplication.connection.ConnectionPool;
-import com.solvd.bankapplication.dao.IMapper;
+import com.solvd.bankapplication.persistence.IMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
@@ -18,6 +18,7 @@ public class QueryExecutor implements IMapper {
             while (connection == null) {
                 connection = ConnectionPool.getInstance().getConnection();
             }
+            connection.setAutoCommit(false);
             PreparedStatement statement = connection.prepareStatement("USE BankDB");
             statement.executeQuery(query);
             resultSet = statement.getResultSet();
@@ -26,6 +27,7 @@ public class QueryExecutor implements IMapper {
             System.exit(1);
         } finally {
             if (connection != null) {
+//                connection.setAutoCommit(true);
                 ConnectionPool.getInstance().releaseConnection(connection);
             }
         }

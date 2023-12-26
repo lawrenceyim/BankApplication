@@ -1,4 +1,4 @@
-package com.solvd.bankapplication.dao;
+package com.solvd.bankapplication.persistence;
 
 import java.sql.ResultSet;
 
