@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 
 public class ConnectionPool {
     private final Logger logger = (Logger) LogManager.getLogger("Output");
-    private final String url = "jdbc:mysql://localhost:3306";
+    private final String url = "jdbc:mysql://localhost:3306/BankDB";
     private final String user = "root";
     private final String password = "password";
     private final int MAX_CONNECTIONS = 5;

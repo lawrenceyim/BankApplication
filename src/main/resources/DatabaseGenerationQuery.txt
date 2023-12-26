@@ -54,6 +54,7 @@ CREATE TABLE Branches (
 CREATE TABLE ATMs (
 	atm_id INT NOT NULL UNIQUE,
     location_id INT NOT NULL,
+    cash_amount DECIMAL NOT NULL,
     PRIMARY KEY (atm_id),
     FOREIGN KEY (location_id) REFERENCES Locations(location_id)
 );

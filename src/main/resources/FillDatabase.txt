@@ -81,10 +81,10 @@ INSERT INTO Locations VALUES
     (3, 'Address 3', 'City C', 'Country B');
 
 INSERT INTO ATMs VALUES
-	(1, 1),
-    (2, 1),
-    (3, 2),
-    (4,3 );
+	(1, 1, 1299.23),
+    (2, 1, 49000),
+    (3, 2, 2500.01),
+    (4, 3, 10000);
 
 INSERT INTO Branches VALUES
 	(1, 1),

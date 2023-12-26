@@ -5,10 +5,7 @@ import com.solvd.bankapplication.dao.IMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class QueryExecutor implements IMapper {
     private final Logger logger = (Logger) LogManager.getLogger("Output");
@@ -21,8 +18,7 @@ public class QueryExecutor implements IMapper {
             while (connection == null) {
                 connection = ConnectionPool.getInstance().getConnection();
             }
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("USE BankDB;");
+            PreparedStatement statement = connection.prepareStatement("USE BankDB");
             statement.executeQuery(query);
             resultSet = statement.getResultSet();
         } catch (SQLException e) {
@@ -41,7 +37,7 @@ public class QueryExecutor implements IMapper {
             while (connection == null) {
                 connection = ConnectionPool.getInstance().getConnection();
             }
-            Statement statement = connection.createStatement();
+            PreparedStatement statement = connection.prepareStatement("USE BankDB");
             statement.executeUpdate(query);
         } catch (SQLException e) {
             logger.error(e.toString());
