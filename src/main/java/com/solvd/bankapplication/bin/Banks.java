@@ -1,14 +1,14 @@
 package com.solvd.bankapplication.bin;
 
 public class Banks {
-    private int bankID;
+    private long bankID;
     private String bankName;
 
-    public int getBankID() {
+    public long getBankID() {
         return bankID;
     }
 
-    public void setBankID(int bankID) {
+    public void setBankID(long bankID) {
         this.bankID = bankID;
     }
 
