@@ -1,4 +1,4 @@
-package com.solvd.bankapplication.bin;
+package com.solvd.bankapplication.domain;
 
 import java.math.BigDecimal;
 

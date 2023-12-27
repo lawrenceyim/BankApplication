@@ -1,4 +1,4 @@
-package com.solvd.bankapplication.connection;
+package com.solvd.bankapplication.persistence;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;

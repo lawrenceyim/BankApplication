@@ -1,8 +1,7 @@
 package com.solvd.bankapplication.persistence.impl;
 
-import com.solvd.bankapplication.bin.Business;
-import com.solvd.bankapplication.bin.CustomerLoginDetail;
-import com.solvd.bankapplication.connection.ConnectionPool;
+import com.solvd.bankapplication.domain.Business;
+import com.solvd.bankapplication.persistence.ConnectionPool;
 import com.solvd.bankapplication.persistence.BusinessRepository;
 
 import java.sql.Connection;

@@ -1,6 +1,6 @@
 package com.solvd.bankapplication.persistence.impl;
 
-import com.solvd.bankapplication.connection.ConnectionPool;
+import com.solvd.bankapplication.persistence.ConnectionPool;
 import com.solvd.bankapplication.persistence.IMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;

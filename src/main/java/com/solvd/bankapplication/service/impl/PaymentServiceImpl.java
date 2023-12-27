@@ -1,6 +1,6 @@
 package com.solvd.bankapplication.service.impl;
 
-import com.solvd.bankapplication.bin.Payment;
+import com.solvd.bankapplication.domain.Payment;
 import com.solvd.bankapplication.service.PaymentService;
 
 import java.util.List;

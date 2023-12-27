@@ -1,6 +1,6 @@
 package com.solvd.bankapplication.persistence;
 
-import com.solvd.bankapplication.bin.Account;
+import com.solvd.bankapplication.domain.Account;
 
 import java.util.List;
 import java.util.Optional;

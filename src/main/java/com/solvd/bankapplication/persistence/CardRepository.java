@@ -1,6 +1,6 @@
 package com.solvd.bankapplication.persistence;
 
-import com.solvd.bankapplication.bin.Card;
+import com.solvd.bankapplication.domain.Card;
 
 import java.util.List;
 import java.util.Optional;

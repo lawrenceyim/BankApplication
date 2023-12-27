@@ -1,6 +1,6 @@
 package com.solvd.bankapplication.persistence;
 
-import com.solvd.bankapplication.bin.Transfer;
+import com.solvd.bankapplication.domain.Transfer;
 
 import java.util.List;
 import java.util.Optional;

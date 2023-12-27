@@ -1,4 +1,4 @@
-package com.solvd.bankapplication.bin;
+package com.solvd.bankapplication.domain;
 
 public class CustomerLoginDetail {
     private long customerID;
