@@ -11,6 +11,7 @@ import java.util.Optional;
 
 public class PaymentRepositoryImpl implements PaymentRepository {
     private final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
+
     @Override
     public void create(Payment payment) {
         Connection connection = CONNECTION_POOL.getConnection();
@@ -26,7 +27,7 @@ public class PaymentRepositoryImpl implements PaymentRepository {
                 payment.setPaymentID(resultSet.getLong(1));
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Unable to create Payment.", e);
+            throw new RuntimeException("Unable to create payment.", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }

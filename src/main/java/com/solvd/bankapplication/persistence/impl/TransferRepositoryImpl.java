@@ -1,6 +1,5 @@
 package com.solvd.bankapplication.persistence.impl;
 
-import com.solvd.bankapplication.bin.Payment;
 import com.solvd.bankapplication.bin.Transfer;
 import com.solvd.bankapplication.connection.ConnectionPool;
 import com.solvd.bankapplication.persistence.TransferRepository;
@@ -12,6 +11,7 @@ import java.util.Optional;
 
 public class TransferRepositoryImpl implements TransferRepository {
     private final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
+
     @Override
     public void create(Transfer transfer) {
         Connection connection = CONNECTION_POOL.getConnection();

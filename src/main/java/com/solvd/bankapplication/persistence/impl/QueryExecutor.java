@@ -5,7 +5,10 @@ import com.solvd.bankapplication.persistence.IMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class QueryExecutor implements IMapper {
     private final Logger logger = (Logger) LogManager.getLogger("Output");
