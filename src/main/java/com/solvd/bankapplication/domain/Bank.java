@@ -1,6 +1,6 @@
 package com.solvd.bankapplication.domain;
 
-public class Banks {
+public class Bank {
     private long bankID;
     private String bankName;
 
