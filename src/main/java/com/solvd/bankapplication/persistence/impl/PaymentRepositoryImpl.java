@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class PaymentRepositoryImpl implements PaymentRepository {
-    private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
+    private final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
     @Override
     public void create(Payment payment) {
         Connection connection = CONNECTION_POOL.getConnection();
@@ -50,7 +50,7 @@ public class PaymentRepositoryImpl implements PaymentRepository {
     public Optional<Payment> findById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
         Payment payment = null;
-        final String query = "SELECT * FROM Payments WHERE payment_id = ?";
+        final String query = "SELECT payment_id, company, date, amount, card_id FROM Payments WHERE payment_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -92,8 +92,33 @@ public class PaymentRepositoryImpl implements PaymentRepository {
     public List<Payment> findAll() {
         Connection connection = CONNECTION_POOL.getConnection();
         List<Payment> payments = new ArrayList<>();
-        final String query = "SELECT * FROM Payments";
+        final String query = "SELECT payment_id, company, date, amount, card_id FROM Payments";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Payment payment = new Payment();
+                payment.setPaymentID(resultSet.getLong(1));
+                payment.setCompanyName(resultSet.getString(2));
+                payment.setDate(resultSet.getTimestamp(3));
+                payment.setAmount(resultSet.getBigDecimal(4));
+                payment.setCardID(resultSet.getLong(5));
+                payments.add(payment);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to find payment.", e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+        return payments;
+    }
+
+    @Override
+    public List<Payment> findAllByCard(long id) {
+        Connection connection = CONNECTION_POOL.getConnection();
+        List<Payment> payments = new ArrayList<>();
+        final String query = "SELECT payment_id, company, date, amount, card_id FROM Payments WHERE card_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Payment payment = new Payment();

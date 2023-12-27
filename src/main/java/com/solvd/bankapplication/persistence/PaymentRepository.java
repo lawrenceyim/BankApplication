@@ -13,4 +13,5 @@ public interface PaymentRepository {
     Optional<Payment> findById(long id);
     void update(Payment payment);
     List<Payment> findAll();
+    List<Payment> findAllByCard(long id);
 }
