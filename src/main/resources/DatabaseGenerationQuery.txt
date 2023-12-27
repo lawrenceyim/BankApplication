@@ -30,7 +30,7 @@ CREATE TABLE Employees (
 
 CREATE TABLE EmployeeLoginDetails (
 	employee_id INT NOT NULL UNIQUE,
-	  username VARCHAR(45) NOT NULL UNIQUE,
+	username VARCHAR(45) NOT NULL UNIQUE,
     password VARCHAR(45) NOT NULL,
     PRIMARY KEY (employee_id),
     FOREIGN KEY (employee_id) REFERENCES Employees(employee_id)

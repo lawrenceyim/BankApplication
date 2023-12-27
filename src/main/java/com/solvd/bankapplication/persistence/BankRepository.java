@@ -15,5 +15,4 @@ public interface BankRepository {
     void update(Bank bank);
 
     List<Bank> findAll();
-
 }
