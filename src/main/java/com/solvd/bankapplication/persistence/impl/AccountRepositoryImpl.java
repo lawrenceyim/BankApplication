@@ -1,4 +1,6 @@
 package com.solvd.bankapplication.persistence.impl;
 
-public class AccountRepositoryImpl {
+import com.solvd.bankapplication.persistence.AccountRepository;
+
+public class AccountRepositoryImpl implements AccountRepository {
 }

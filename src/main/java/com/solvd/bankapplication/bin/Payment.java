@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 
 public class Payment {
     private long paymentID;
-    private String company;
+    private String companyName;
     private Timestamp date;
     private BigDecimal amount;
     private long cardID;
@@ -18,12 +18,12 @@ public class Payment {
         this.paymentID = paymentID;
     }
 
-    public String getCompany() {
-        return company;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public Timestamp getDate() {

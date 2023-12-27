@@ -3,19 +3,19 @@ CREATE DATABASE IF NOT EXISTS BankDB;
 USE BankDB;
 
 CREATE TABLE Banks (
-    bank_id INT NOT NULL UNIQUE,
+    bank_id INT AUTO_INCREMENT NOT NULL UNIQUE,
     bank_name VARCHAR(45) NOT NULL,
     PRIMARY KEY (bank_id)
 );
 
 CREATE TABLE Positions (
-	position_id INT NOT NULL UNIQUE,
+	position_id INT AUTO_INCREMENT  NOT NULL UNIQUE,
     title VARCHAR(45) NOT NULL UNIQUE,
     PRIMARY KEY (position_id)
 );
 
 CREATE TABLE Employees (
-	employee_id INT NOT NULL UNIQUE,
+	employee_id INT AUTO_INCREMENT NOT NULL UNIQUE,
 	bank_id INT NOT NULL,
     first_name VARCHAR(45) NOT NULL,
     middle_name VARCHAR(45),
@@ -37,7 +37,7 @@ CREATE TABLE EmployeeLoginDetails (
 );
 
 CREATE TABLE Locations (
-	location_id INT NOT NULL UNIQUE,
+	location_id INT AUTO_INCREMENT NOT NULL UNIQUE,
     street_address VARCHAR(45) NOT NULL,
     city VARCHAR(45) NOT NULL,
     country VARCHAR(45) NOT NULL,
@@ -45,14 +45,14 @@ CREATE TABLE Locations (
 );
 
 CREATE TABLE Branches (
-	branch_id INT NOT NULL UNIQUE,
+	branch_id INT AUTO_INCREMENT NOT NULL UNIQUE,
     location_id INT NOT NULL,
     PRIMARY KEY (branch_id),
     FOREIGN KEY (location_id) REFERENCES Locations(location_id)
 );
 
 CREATE TABLE ATMs (
-	atm_id INT NOT NULL UNIQUE,
+	atm_id INT AUTO_INCREMENT NOT NULL UNIQUE,
     location_id INT NOT NULL,
     cash_amount DECIMAL NOT NULL,
     PRIMARY KEY (atm_id),
@@ -60,7 +60,7 @@ CREATE TABLE ATMs (
 );
 
 CREATE TABLE Customers (
-	customer_id INT NOT NULL UNIQUE,
+	customer_id INT AUTO_INCREMENT NOT NULL UNIQUE,
 	bank_id INT NOT NULL,
     email VARCHAR(45) NOT NULL UNIQUE,
     phone_number VARCHAR(45) NOT NULL UNIQUE,
@@ -95,7 +95,7 @@ CREATE TABLE Businesses (
 );
 
 CREATE TABLE Accounts (
-	account_id INT NOT NULL UNIQUE,
+	account_id INT AUTO_INCREMENT NOT NULL UNIQUE,
     customer_id INT NOT NULL,
     account_type VARCHAR(45) NOT NULL,
     balance DECIMAL NOT NULL,
@@ -104,7 +104,7 @@ CREATE TABLE Accounts (
 );
 
 CREATE TABLE Cards (
-	card_id INT NOT NULL UNIQUE,
+	card_id INT AUTO_INCREMENT NOT NULL UNIQUE,
     card_type VARCHAR(45) NOT NULL,
     account_id INT NOT NULL,
     PRIMARY KEY (card_id),
@@ -112,7 +112,7 @@ CREATE TABLE Cards (
 );
 
 CREATE TABLE Transfers (
-	transfer_id INT NOT NULL UNIQUE,
+	transfer_id INT AUTO_INCREMENT NOT NULL UNIQUE,
     date DATETIME NOT NULL,
     amount DECIMAL NOT NULL,
     from_account_id INT NOT NULL,
@@ -123,7 +123,7 @@ CREATE TABLE Transfers (
 );
 
 CREATE TABLE Payments (
-	payment_id INT NOT NULL UNIQUE,
+	payment_id INT AUTO_INCREMENT NOT NULL UNIQUE,
     company VARCHAR(45) NOT NULL,
     date DATETIME NOT NULL,
     amount DECIMAL NOT NULL,
@@ -133,7 +133,7 @@ CREATE TABLE Payments (
 );
 
 CREATE TABLE Loans (
-	loan_id INT NOT NULL UNIQUE,
+	loan_id INT AUTO_INCREMENT NOT NULL UNIQUE,
 	customer_id INT NOT NULL,
     loan_amount DECIMAL NOT NULL,
     date DATETIME NOT NULL,

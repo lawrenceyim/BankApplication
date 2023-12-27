@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PaymentRepository {
-    Payment create(String companyName, Timestamp date, BigDecimal amount, long cardID);
-    void updateById(long id);
+    void create(Payment payment);
     void deleteById(long id);
     Optional<Payment> findById(long id);
     void update(Payment payment);
