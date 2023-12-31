@@ -4,4 +4,45 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.solvd.bankapplication.persistence.IndividualRepository">
+    <insert id="create" keyColumn="customer_id" keyProperty="customerID" useGeneratedKeys="false">
+        INSERT INTO Individuals(customer_id, first_name, middle_name, last_name)
+        VALUES (${individual.customerID}, ${individual.firstName}, ${individual.middleName}, ${individual.lastName})
+    </insert>
+
+    <sql id="individualSelect">
+        SELECT
+            customer_id,
+            first_name,
+            middle_name,
+            last_name
+        FROM Individuals
+    </sql>
+
+    <select id="findById" resultMap="IndividualResultMap">
+        <include refid="individualSelect"/>
+        WHERE customer_id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="IndividualResultMap">
+        <include refid="individualSelect"/>
+    </select>
+
+    <update id="update">
+        UPDATE Individuals
+            first_name = #{individual.firstName},
+            middle_name = #{individual.middleName},
+            last_name = #{individual.lastName}
+        WHERE customer_id = #{individual.customerID}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM Individuals WHERE customer_id = #{id}
+    </delete>
+
+    <resultMap id="IndividualResultMap" type="com.solvd.bankapplication.domain.Individual" autoMapping="false">
+        <id column="customer_id" property="customerID"/>
+        <result column="first_name" property="firstname"/>
+        <result column="middle_name" property="middleName"/>
+        <result column="last_name" property="lastName"/>
+    </resultMap>
 </mapper>

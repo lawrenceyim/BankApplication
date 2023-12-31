@@ -4,4 +4,42 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.solvd.bankapplication.persistence.CustomerLoginDetailRepository">
+    <insert id="create" keyColumn="customer_id" keyProperty="customerID" useGeneratedKeys="false">
+        INSERT INTO CustomerLoginDetails(customer_id, username, password)
+        VALUES (#{customerLoginDetail.customerID}, #{customerLoginDetail.username}, #{customerLoginDetail.password})
+    </insert>
+
+    <sql id="customerLoginDetailSelect">
+        SELECT
+            customer_id,
+            username,
+            password
+        FROM CustomerLoginDetail
+    </sql>
+
+    <select id="findById" resultMap="CustomerLoginDetailResultMap">
+        <include refid="customerLoginDetailSelect"/>
+        WHERE customer_id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="CustomerLoginDetailResultMap">
+        <include refid="customerLoginDetailSelect"/>
+    </select>
+
+    <update id="update">
+        UPDATE CustomerLoginDetails
+            username = #{customerLoginDetail.username},
+            password= #{customerLoginDetail.password}
+        WHERE customer_id = #{customerLoginDetail.customerID}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM CustomerLoginDetails WHERE customer_id = #{id}
+    </delete>
+
+    <resultMap id="CustomerLoginDetailResultMap" type="com.solvd.bankapplication.domain.CustomerLoginDetail" autoMapping="false">
+        <id column="customer_id" property="customerID"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+    </resultMap>
 </mapper>

@@ -4,4 +4,58 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.solvd.bankapplication.persistence.EmployeeRepository">
+    <insert id="create" keyColumn="employee_id" keyProperty="employeeID" useGeneratedKeys="true">
+        INSERT INTO Employees(bank_id, first_name, middle_name, last_name, position, branch_id, email)
+        VALUES (${employee.bankID}, ${employee.firstName}, ${employee.middleName}, ${employee.lastName},
+            ${employee.positionID}, ${employee.branchID}, ${employee.lastName})
+    </insert>
+
+    <sql id="employeeSelect">
+        SELECT
+            employee_id,
+            bank_id,
+            first_name,
+            middle_name,
+            last_name,
+            position,
+            branch_id,
+            email
+        FROM Employees
+    </sql>
+
+    <select id="findById" resultMap="CustomerLoginDetailResultMap">
+        <include refid="employeeSelect"/>
+        WHERE employee_id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="EmployeeResultMap">
+        <include refid="employeeSelect"/>
+    </select>
+
+    <update id="update">
+        UPDATE Employees
+            bank_id = #{employee.bankID},
+            first_name = #{employee.firstName},
+            middle_name = #{employee.middleName},
+            last_name = #{employee.lastName},
+            position = #{employee.positionID},
+            branch_id = #{employee.branchID},
+            email = #{employee.email}
+        WHERE employee_id = #{employee.employeeID}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM Employees WHERE employee_id = #{id}
+    </delete>
+
+    <resultMap id="EmployeeResultMap" type="com.solvd.bankapplication.domain.Employee" autoMapping="false">
+        <id column="employee_id" property="employeeID"/>
+        <result column="bank_id" property="bankID"/>
+        <result column="first_name" property="firstname"/>
+        <result column="middle_name" property="middleName"/>
+        <result column="last_name" property="lastName"/>
+        <result column="position" property="positionID"/>
+        <result column="branch_id" property="branchID"/>
+        <result column="email" property="email"/>
+    </resultMap>
 </mapper>

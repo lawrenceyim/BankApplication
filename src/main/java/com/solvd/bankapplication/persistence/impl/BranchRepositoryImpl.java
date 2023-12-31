@@ -31,20 +31,6 @@ public class BranchRepositoryImpl implements BranchRepository {
     }
 
     @Override
-    public void deleteById(long id) {
-        Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "DELETE FROM Branches WHERE branch_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Unable to delete branch.", e);
-        } finally {
-            CONNECTION_POOL.releaseConnection(connection);
-        }
-    }
-
-    @Override
     public Optional<Branch> findById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
         Branch branch = null;
@@ -66,21 +52,6 @@ public class BranchRepositoryImpl implements BranchRepository {
     }
 
     @Override
-    public void update(Branch branch) {
-        Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "UPDATE Branches SET location_id = ? WHERE branch_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, branch.getLocationID());
-            preparedStatement.setLong(2, branch.getBranchID());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Unable to update branch.", e);
-        } finally {
-            CONNECTION_POOL.releaseConnection(connection);
-        }
-    }
-
-    @Override
     public List<Branch> findAll() {
         Connection connection = CONNECTION_POOL.getConnection();
         List<Branch> branches = new ArrayList<>();
@@ -99,5 +70,34 @@ public class BranchRepositoryImpl implements BranchRepository {
             CONNECTION_POOL.releaseConnection(connection);
         }
         return branches;
+    }
+
+    @Override
+    public void update(Branch branch) {
+        Connection connection = CONNECTION_POOL.getConnection();
+        final String query = "UPDATE Branches SET location_id = ? WHERE branch_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, branch.getLocationID());
+            preparedStatement.setLong(2, branch.getBranchID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to update branch.", e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+    }
+
+    @Override
+    public void deleteById(long id) {
+        Connection connection = CONNECTION_POOL.getConnection();
+        final String query = "DELETE FROM Branches WHERE branch_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to delete branch.", e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
     }
 }

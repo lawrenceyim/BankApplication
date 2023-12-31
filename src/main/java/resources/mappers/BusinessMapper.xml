@@ -4,4 +4,39 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.solvd.bankapplication.persistence.BusinessRepository">
+    <insert id="create" keyColumn="customer_id" keyProperty="customerID" useGeneratedKeys="false">
+        INSERT INTO Businesses(customer_id, business_name)
+        VALUES (#{business.customerID}, #{business.businessName})
+    </insert>
+
+    <sql id="businessSelect">
+        SELECT
+            customer_id,
+            business_name
+        FROM Businesses
+    </sql>
+
+    <select id="findById" resultMap="BusinessResultMap">
+        <include refid="businessSelect"/>
+        WHERE customer_id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="BusinessResultMap">
+        <include refid="businessSelect"/>
+    </select>
+
+    <update id="update">
+        UPDATE Businesses
+            business_name = #{business.businessName}
+        WHERE customer_id = #{business.customerID}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM Businesses WHERE customer_id = #{id}
+    </delete>
+
+    <resultMap id="BusinessResultMap" type="com.solvd.bankapplication.domain.Business" autoMapping="false">
+        <id column="customer_id" property="customerID"/>
+        <result column="business_name" property="businessName"/>
+    </resultMap>
 </mapper>

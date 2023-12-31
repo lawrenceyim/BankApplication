@@ -4,4 +4,55 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.solvd.bankapplication.persistence.CustomerRepository">
+    <insert id="create" keyColumn="customer_id" keyProperty="customerID" useGeneratedKeys="true">
+        INSERT INTO Customers(bank_id, email, phone_number, street_address, city, country)
+        VALUES (#{customer.bankID}, #{customer.email}, #{customer.phoneNumber}, #{customer.streetAddress},
+            #{customer.city}, #{customer.country});
+    </insert>
+
+    <sql id="customerSelect">
+        SELECT
+            customer_id,
+            bank_id,
+            email,
+            phone_number,
+            street_address,
+            city,
+            country
+        FROM Customers
+    </sql>
+
+    <select id="findById" resultMap="CustomerResultMap">
+        <include refid="customerSelect"/>
+        WHERE customer_id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="CustomerResultMap">
+        <include refid="customerSelect"/>
+    </select>
+
+    <update id="update">
+        UPDATE Customers
+            bank_id = #{customer.bankID},
+            email = #{customer.email},
+            phone_number = #{customer.phoneNumber},
+            street_address = #{customer.streetAddress},
+            city = #{customer.city},
+            country = #{customer.country}
+        WHERE customer_id = #{customer.customerID}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM Customers WHERE customer_id = #{id}
+    </delete>
+
+    <resultMap id="CustomerResultMap" type="com.solvd.bankapplication.domain.Customer" autoMapping="false">
+        <id column="customer_id" property="CustomerID"/>
+        <result column="bank_id" property="bankID"/>
+        <result column="email" property="email"/>
+        <result column="phone_number" property="phoneNumber"/>
+        <result column="street_address" property="streetAddress"/>
+        <result column="city" property="city"/>
+        <result column="country" property="country"/>
+    </resultMap>
 </mapper>

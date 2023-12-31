@@ -11,10 +11,10 @@
 
     <sql id="accountSelect">
         SELECT
-        account_id,
-        customer_id,
-        account_type,
-        balance
+            account_id,
+            customer_id,
+            account_type,
+            balance
         FROM Accounts
     </sql>
 
@@ -29,9 +29,9 @@
 
     <update id="update">
         UPDATE Accounts
-        customer_id = #{account.customerID},
-        account_type = #{account.accountType},
-        balance = #{account.balance}
+            customer_id = #{account.customerID},
+            account_type = #{account.accountType},
+            balance = #{account.balance}
         WHERE account_id = #{account.accountID}
     </update>
 
