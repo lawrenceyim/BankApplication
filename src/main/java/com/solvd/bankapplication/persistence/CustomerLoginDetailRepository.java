@@ -8,11 +8,11 @@ import java.util.Optional;
 public interface CustomerLoginDetailRepository {
     void create(CustomerLoginDetail customerLoginDetail);
 
-    void deleteById(long id);
-
     Optional<CustomerLoginDetail> findById(long id);
+
+    List<CustomerLoginDetail> findAll();
 
     void update(CustomerLoginDetail customerLoginDetail);
 
-    List<CustomerLoginDetail> findAll();
+    void deleteById(long id);
 }

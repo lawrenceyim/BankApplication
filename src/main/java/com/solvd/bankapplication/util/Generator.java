@@ -1,6 +1,5 @@
 package com.solvd.bankapplication.util;
 
-import com.solvd.bankapplication.persistence.impl.QueryExecutor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 

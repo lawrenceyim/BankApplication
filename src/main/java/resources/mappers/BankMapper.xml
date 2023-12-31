@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.bankapplication.persistence.BankRepository">
+    <insert id="create" keyColumn="bank_id" keyProperty="bankID" useGeneratedKeys="true">
+        INSERT INTO Banks(bank_name) VALUES (#{bank.bankName})
+    </insert>
+
+    <sql id="bankSelect">
+        SELECT
+        bank_id,
+        bank_name
+        FROM Banks
+    </sql>
+
+    <select id="findById" resultMap="BankResultMap">
+        <include refid="bankSelect"/>
+        WHERE bank_id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="BankResultMap">
+        <include refid="bankSelect"/>
+    </select>
+
+    <update id="update">
+        UPDATE Banks bank_name = #{bank.bankName} WHERE bank_id = #{bank.bankID}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM Banks WHERE bank_id = #{id}
+    </delete>
+
+    <resultMap id="BankResultMap" type="com.solvd.bankapplication.domain.Bank" autoMapping="false">
+        <id column="bank_id" property="bankID"/>
+        <result column="bank_name" property="bankName"/>
+    </resultMap>
+</mapper>

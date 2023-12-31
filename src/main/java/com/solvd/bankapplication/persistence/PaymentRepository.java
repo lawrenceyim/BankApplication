@@ -8,13 +8,13 @@ import java.util.Optional;
 public interface PaymentRepository {
     void create(Payment payment);
 
-    void deleteById(long id);
-
     Optional<Payment> findById(long id);
-
-    void update(Payment payment);
 
     List<Payment> findAll();
 
     List<Payment> findAllByCard(long id);
+
+    void update(Payment payment);
+
+    void deleteById(long id);
 }

@@ -8,11 +8,12 @@ import java.util.Optional;
 public interface AtmRepository {
     void create(Atm atm);
 
-    void deleteById(long id);
-
     Optional<Atm> findById(long id);
+
+    List<Atm> findAll();
 
     void update(Atm atm);
 
-    List<Atm> findAll();
+    void deleteById(long id);
+
 }

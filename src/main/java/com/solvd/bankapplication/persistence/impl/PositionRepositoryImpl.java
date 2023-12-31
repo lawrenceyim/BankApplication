@@ -3,7 +3,6 @@ package com.solvd.bankapplication.persistence.impl;
 import com.solvd.bankapplication.domain.Position;
 import com.solvd.bankapplication.persistence.ConnectionPool;
 import com.solvd.bankapplication.persistence.PositionRepository;
-import com.solvd.bankapplication.persistence.PositionRepository;
 
 import java.sql.*;
 import java.util.ArrayList;

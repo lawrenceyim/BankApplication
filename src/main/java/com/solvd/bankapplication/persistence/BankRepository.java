@@ -8,11 +8,11 @@ import java.util.Optional;
 public interface BankRepository {
     void create(Bank bank);
 
-    void deleteById(long id);
-
     Optional<Bank> findById(long id);
+
+    List<Bank> findAll();
 
     void update(Bank bank);
 
-    List<Bank> findAll();
+    void deleteById(long id);
 }

@@ -8,11 +8,11 @@ import java.util.Optional;
 public interface PositionRepository {
     void create(Position position);
 
-    void deleteById(long id);
-
     Optional<Position> findById(long id);
+
+    List<Position> findAll();
 
     void update(Position position);
 
-    List<Position> findAll();
+    void deleteById(long id);
 }

@@ -1,7 +1,6 @@
 package com.solvd.bankapplication.persistence.impl;
 
 import com.solvd.bankapplication.domain.Employee;
-import com.solvd.bankapplication.domain.Employee;
 import com.solvd.bankapplication.persistence.ConnectionPool;
 import com.solvd.bankapplication.persistence.EmployeeRepository;
 
@@ -84,7 +83,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     public void update(Employee employee) {
         Connection connection = CONNECTION_POOL.getConnection();
         final String query = "UPDATE Employees SET bank_id = ?, first_name = ?, middle_Name = ?, last_name = ?, "
-            +"position = ?, branch_id = ?, email = ? WHERE employee_id = ?";
+                + "position = ?, branch_id = ?, email = ? WHERE employee_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, employee.getBankID());
             preparedStatement.setString(2, employee.getFirstName());

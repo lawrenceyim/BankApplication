@@ -8,11 +8,11 @@ import java.util.Optional;
 public interface BusinessRepository {
     void create(Business business);
 
-    void deleteById(long id);
-
     Optional<Business> findById(long id);
+
+    List<Business> findAll();
 
     void update(Business business);
 
-    List<Business> findAll();
+    void deleteById(long id);
 }

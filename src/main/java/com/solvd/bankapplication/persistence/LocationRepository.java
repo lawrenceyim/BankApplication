@@ -8,11 +8,11 @@ import java.util.Optional;
 public interface LocationRepository {
     void create(Location location);
 
-    void deleteById(long id);
-
     Optional<Location> findById(long id);
+
+    List<Location> findAll();
 
     void update(Location location);
 
-    List<Location> findAll();
+    void deleteById(long id);
 }

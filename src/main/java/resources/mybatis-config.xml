@@ -18,6 +18,21 @@
     </environments>
 
     <mappers>
-        <mapper resource=""/>
+        <mapper resource="mappers/AccountMapper.xml"/>
+        <mapper resource="mappers/AtmMapper.xml"/>
+        <mapper resource="mappers/BankMapper.xml"/>
+        <mapper resource="mappers/BranchMapper.xml"/>
+        <mapper resource="mappers/BusinessMapper.xml"/>
+        <mapper resource="mappers/CardMapper.xml"/>
+        <mapper resource="mappers/CustomerLoginDetailMapper.xml"/>
+        <mapper resource="mappers/CustomerMapper.xml"/>
+        <mapper resource="mappers/EmployeeLoginDetailMapper.xml"/>
+        <mapper resource="mappers/EmployeeMapper.xml"/>
+        <mapper resource="mappers/IndividualMapper.xml"/>
+        <mapper resource="mappers/LoanMapper.xml"/>
+        <mapper resource="mappers/LocationMapper.xml"/>
+        <mapper resource="mappers/PaymentMapper.xml"/>
+        <mapper resource="mappers/PositionMapper.xml"/>
+        <mapper resource="mappers/TransferMapper.xml"/>
     </mappers>
 </configuration>

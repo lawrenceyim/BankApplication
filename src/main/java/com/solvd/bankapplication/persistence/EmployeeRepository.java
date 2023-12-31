@@ -8,11 +8,11 @@ import java.util.Optional;
 public interface EmployeeRepository {
     void create(Employee employee);
 
-    void deleteById(long id);
-
     Optional<Employee> findById(long id);
+
+    List<Employee> findAll();
 
     void update(Employee employee);
 
-    List<Employee> findAll();
+    void deleteById(long id);
 }

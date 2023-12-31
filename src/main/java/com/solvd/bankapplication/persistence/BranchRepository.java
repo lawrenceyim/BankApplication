@@ -8,11 +8,11 @@ import java.util.Optional;
 public interface BranchRepository {
     void create(Branch branch);
 
-    void deleteById(long id);
-
     Optional<Branch> findById(long id);
+
+    List<Branch> findAll();
 
     void update(Branch branch);
 
-    List<Branch> findAll();
+    void deleteById(long id);
 }
