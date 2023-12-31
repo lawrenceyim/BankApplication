@@ -6,8 +6,8 @@
 <mapper namespace="com.solvd.bankapplication.persistence.EmployeeRepository">
     <insert id="create" keyColumn="employee_id" keyProperty="employeeID" useGeneratedKeys="true">
         INSERT INTO Employees(bank_id, first_name, middle_name, last_name, position, branch_id, email)
-        VALUES (${employee.bankID}, ${employee.firstName}, ${employee.middleName}, ${employee.lastName},
-            ${employee.positionID}, ${employee.branchID}, ${employee.lastName})
+        VALUES (#{employee.bankID}, #{employee.firstName}, #{employee.middleName}, #{employee.lastName},
+            #{employee.positionID}, #{employee.branchID}, #{employee.lastName})
     </insert>
 
     <sql id="employeeSelect">
@@ -23,7 +23,7 @@
         FROM Employees
     </sql>
 
-    <select id="findById" resultMap="CustomerLoginDetailResultMap">
+    <select id="findById" resultMap="EmployeeResultMap">
         <include refid="employeeSelect"/>
         WHERE employee_id = #{id}
     </select>

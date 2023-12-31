@@ -6,7 +6,7 @@
 <mapper namespace="com.solvd.bankapplication.persistence.IndividualRepository">
     <insert id="create" keyColumn="customer_id" keyProperty="customerID" useGeneratedKeys="false">
         INSERT INTO Individuals(customer_id, first_name, middle_name, last_name)
-        VALUES (${individual.customerID}, ${individual.firstName}, ${individual.middleName}, ${individual.lastName})
+        VALUES (#{individual.customerID}, #{individual.firstName}, #{individual.middleName}, #{individual.lastName})
     </insert>
 
     <sql id="individualSelect">

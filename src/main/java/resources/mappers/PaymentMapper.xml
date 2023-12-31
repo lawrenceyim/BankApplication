@@ -4,4 +4,53 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.solvd.bankapplication.persistence.PaymentRepository">
+    <insert id="create" keyColumn="payment_id" keyProperty="paymentID" useGeneratedKeys="true">
+        INSERT INTO Payments(company_name, date, amount, card_id)
+        VALUES (#{payment.companyName}, #{payment.date}, #{payment.amount}, #{payment.cardID})
+    </insert>
+
+    <sql id="paymentSelect">
+        SELECT
+            payment_id,
+            company_name,
+            date,
+            amount,
+            card_id
+        FROM Payments
+    </sql>
+
+    <select id="findById" resultMap="PaymentResultMap">
+        <include refid="paymentSelect"/>
+        WHERE payment_id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="PaymentResultMap">
+        <include refid="paymentSelect"/>
+    </select>
+
+    <select id="findAllByCard" resultMap="PaymentResultMap">
+        <include refid="paymentSelect"/>
+        WHERE card_id = #{id}
+    </select>
+
+    <update id="update">
+        UPDATE Payments
+            company_name = #{payment.companyName},
+            date = #{payment.date},
+            amount = #{payment.amount},
+            card_id = #{payment.cardID}
+        WHERE payment_id = #{payment.paymentID}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM Payments WHERE payment_id = #{id}
+    </delete>
+
+    <resultMap id="PaymentResultMap" type="com.solvd.bankapplication.domain.Payment" autoMapping="false">
+        <id column="payment_id" property="paymentID"/>
+        <result column="company_name" property="companyName"/>
+        <result column="date" property="date"/>
+        <result column="amount" property="amount"/>
+        <result column="card_id" property="cardID"/>
+    </resultMap>
 </mapper>

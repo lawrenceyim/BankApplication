@@ -4,4 +4,45 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.solvd.bankapplication.persistence.LoanRepository">
+    <insert id="create" keyColumn="loan_id" keyProperty="loanID" useGeneratedKeys="true">
+        INSERT INTO Loans(customer_id, loan_amount, date)
+        VALUES (#{loan.customerID}, #{loan.loanAmount}, #{loan.date})
+    </insert>
+
+    <sql id="loanSelect">
+        SELECT
+            loan_id,
+            customer_id,
+            loan_amount,
+            date
+        FROM Loans
+    </sql>
+
+    <select id="findById" resultMap="LoanResultMap">
+        <include refid="loanSelect"/>
+        WHERE loan_id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="LoanResultMap">
+        <include refid="loanSelect"/>
+    </select>
+
+    <update id="update">
+        UPDATE Loans
+            customer_id = #{loan.customerID},
+            loan_amount = #{loan.loanAmount},
+            date = #{loan.date}
+        WHERE loan_id = #{loan.loanID}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM Loans WHERE loan_id = #{id}
+    </delete>
+
+    <resultMap id="LoanResultMap" type="com.solvd.bankapplication.domain.Loan" autoMapping="false">
+        <id column="loan_id" property="loanID"/>
+        <result column="customer_id" property="customerID"/>
+        <result column="loan_amount" property="loamAmount"/>
+        <result column="date" property="date"/>
+    </resultMap>
 </mapper>

@@ -4,4 +4,54 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.solvd.bankapplication.persistence.TransferRepository">
+    <insert id="create" keyColumn="transfer_id" keyProperty="transferID" useGeneratedKeys="true">
+        INSERT INTO Transfers(date, amount, from_account_id, to_account_id)
+        VALUES (#{transfer.date}, #{transfer.amount}, #{transfer.fromAccountID}, #{transfer.toAccountID})
+    </insert>
+
+    <sql id="transferSelect">
+        SELECT
+            transfer_id,
+            date,
+            amount,
+            from_account_id,
+            to_account_id
+        FROM Transfers
+    </sql>
+
+    <select id="findById" resultMap="TransferResultMap">
+        <include refid="transferSelect"/>
+        WHERE transfer_id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="TransferResultMap">
+        <include refid="transferSelect"/>
+    </select>
+
+    <select id="findAllByAccount" resultMap="TransferResultMap">
+        <include refid="transferSelect"/>
+        WHERE from_account_id = #{transfer.transfer_id}
+        OR to_account_id = #{transfer.transfer_id}
+    </select>
+
+    <update id="update">
+        UPDATE Transfers
+            date = #{transfer.date},
+            amount = #{transfer.amount},
+            from_account_id = #{transfer.fromAccountID},
+            to_account_id = #{transfer.toAccountID}
+        WHERE transfer_id = #{transfer.transferID}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM Transfers WHERE transfer_id = #{id}
+    </delete>
+
+    <resultMap id="TransferResultMap" type="com.solvd.bankapplication.domain.Transfer" autoMapping="false">
+        <id column="transfer_id" property="transferID"/>
+        <result column="date" property="date"/>
+        <result column="amount" property="amount"/>
+        <result column="from_account_id" property="fromAccountID"/>
+        <result column="to_account_id" property="toAccountID"/>
+    </resultMap>
 </mapper>
