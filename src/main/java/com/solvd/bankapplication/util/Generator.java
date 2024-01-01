@@ -12,18 +12,18 @@ public class Generator {
     public static void createDatabase() {
         final File file = new File("src/main/resources/DatabaseGenerationQuery.txt");
         final ArrayList<String> queries = Parser.parseSqlFromFile(file);
-        final QueryExecutor queryExecutor = new QueryExecutor();
-        queries.stream().forEach(query -> {
-            queryExecutor.executeUpdate(query);
-        });
+//        final QueryExecutor queryExecutor = new QueryExecutor();
+//        queries.stream().forEach(query -> {
+//            queryExecutor.executeUpdate(query);
+//        });
     }
 
     public static void fillDataBase() {
         final File file = new File("src/main/resources/FillDatabase.txt");
         final ArrayList<String> queries = Parser.parseSqlFromFile(file);
-        final QueryExecutor queryExecutor = new QueryExecutor();
-        queries.stream().forEach(query -> {
-            queryExecutor.executeUpdate(query);
-        });
+//        final QueryExecutor queryExecutor = new QueryExecutor();
+//        queries.stream().forEach(query -> {
+//            queryExecutor.executeUpdate(query);
+//        });
     }
 }
