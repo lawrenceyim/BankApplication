@@ -6,10 +6,8 @@ import com.solvd.bankapplication.service.AccountService;
 
 public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
-    private final AccountService accountService;
 
     public AccountServiceImpl() {
         this.accountRepository = new AccountRepositoryImpl();
-        this.accountService = new AccountServiceImpl();
     }
 }
