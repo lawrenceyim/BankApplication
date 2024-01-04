@@ -1,8 +1,6 @@
 package com.solvd.bankapplication.persistence.impl;
 
 import com.solvd.bankapplication.domain.Customer;
-import com.solvd.bankapplication.persistence.BankRepository;
-import com.solvd.bankapplication.persistence.CardRepository;
 import com.solvd.bankapplication.persistence.CustomerRepository;
 import com.solvd.bankapplication.persistence.PersistenceConfig;
 import org.apache.ibatis.session.SqlSession;

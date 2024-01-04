@@ -1,7 +1,6 @@
 package com.solvd.bankapplication.persistence.impl;
 
 import com.solvd.bankapplication.domain.Location;
-import com.solvd.bankapplication.persistence.BankRepository;
 import com.solvd.bankapplication.persistence.LocationRepository;
 import com.solvd.bankapplication.persistence.PersistenceConfig;
 import org.apache.ibatis.session.SqlSession;

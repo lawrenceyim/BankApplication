@@ -2,6 +2,7 @@ package com.solvd.bankapplication.service.impl;
 
 import com.solvd.bankapplication.domain.Bank;
 import com.solvd.bankapplication.persistence.BankRepository;
+import com.solvd.bankapplication.persistence.impl.BankRepositoryImpl;
 import com.solvd.bankapplication.service.BankService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
@@ -15,9 +16,10 @@ public class BankServiceImpl implements BankService {
 
     private BankRepository bankRepository;
 
-    public BankServiceImpl(BankRepository bankRepository) {
-        this.bankRepository = bankRepository;
+    public BankServiceImpl() {
+        bankRepository = new BankRepositoryImpl();
     }
+
     @Override
     public void createBank() {
         Bank bank = new Bank();

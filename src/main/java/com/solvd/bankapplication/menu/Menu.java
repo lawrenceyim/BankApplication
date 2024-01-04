@@ -1,5 +1,7 @@
 package com.solvd.bankapplication.menu;
 
+import com.solvd.bankapplication.service.*;
+import com.solvd.bankapplication.service.impl.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
@@ -7,18 +9,31 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu implements IMenu {
+    AccountService accountService;
+    CardService cardService;
+    CustomerService customerService;
+    PaymentService paymentService;
+    TransferService transferService;
     private final Logger logger = (Logger) LogManager.getLogger("Output");
     private final Scanner scanner = new Scanner(System.in);
+
+    public Menu() {
+        accountService = new AccountServiceImpl();
+        cardService = new CardServiceImpl();
+        customerService = new CustomerServiceImpl();
+        paymentService = new PaymentServiceImpl();
+        transferService = new TransferServiceImpl();
+    }
 
     @Override
     public void displayMenu() {
         logger.info("Bank Application");
-        logger.info("1. View Accounts");
-        logger.info("2. View Cards");
-        logger.info("3. View Payments");
-        logger.info("4. View Transfers");
-        logger.info("5. View Customers");
-        logger.info("6. Switch Customer");
+        logger.info("1. View Customers");
+        logger.info("2. View Accounts");
+        logger.info("3. View Cards");
+        logger.info("4. View Payments");
+        logger.info("5. View Transfers");
+        logger.info("6. Exit");
     }
 
     @Override
@@ -37,20 +52,23 @@ public class Menu implements IMenu {
     @Override
     public void performUserChoice(int choice) {
         switch (choice) {
-            case 0:
-                return;
             case 1:
+                customerService.findAll();
                 return;
             case 2:
+                accountService.findAll();
                 return;
             case 3:
+                cardService.findAll();
                 return;
             case 4:
+                paymentService.findAll();
                 return;
             case 5:
+                transferService.findAll();
                 return;
             case 6:
-                return;
+                System.exit(0);
         }
     }
 }
