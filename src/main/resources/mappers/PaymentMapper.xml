@@ -5,14 +5,14 @@
 
 <mapper namespace="com.solvd.bankapplication.persistence.PaymentRepository">
     <insert id="create" keyColumn="payment_id" keyProperty="paymentID" useGeneratedKeys="true">
-        INSERT INTO Payments(company_name, date, amount, card_id)
+        INSERT INTO Payments(company, date, amount, card_id)
         VALUES (#{payment.companyName}, #{payment.date}, #{payment.amount}, #{payment.cardID})
     </insert>
 
     <sql id="paymentSelect">
         SELECT
             payment_id,
-            company_name,
+            company,
             date,
             amount,
             card_id
@@ -35,7 +35,7 @@
 
     <update id="update">
         UPDATE Payments
-            company_name = #{payment.companyName},
+            company = #{payment.companyName},
             date = #{payment.date},
             amount = #{payment.amount},
             card_id = #{payment.cardID}
@@ -48,7 +48,7 @@
 
     <resultMap id="PaymentResultMap" type="com.solvd.bankapplication.domain.Payment" autoMapping="false">
         <id column="payment_id" property="paymentID"/>
-        <result column="company_name" property="companyName"/>
+        <result column="company" property="companyName"/>
         <result column="date" property="date"/>
         <result column="amount" property="amount"/>
         <result column="card_id" property="cardID"/>

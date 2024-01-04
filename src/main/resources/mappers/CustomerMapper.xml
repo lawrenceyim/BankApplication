@@ -47,7 +47,7 @@
     </delete>
 
     <resultMap id="CustomerResultMap" type="com.solvd.bankapplication.domain.Customer" autoMapping="false">
-        <id column="customer_id" property="CustomerID"/>
+        <id column="customer_id" property="customerID"/>
         <result column="bank_id" property="bankID"/>
         <result column="email" property="email"/>
         <result column="phone_number" property="phoneNumber"/>
