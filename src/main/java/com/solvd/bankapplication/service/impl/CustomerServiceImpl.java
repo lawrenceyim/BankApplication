@@ -3,6 +3,7 @@ package com.solvd.bankapplication.service.impl;
 import com.solvd.bankapplication.domain.Customer;
 import com.solvd.bankapplication.persistence.CustomerRepository;
 import com.solvd.bankapplication.persistence.impl.CustomerRepositoryImpl;
+import com.solvd.bankapplication.persistence.impl.CustomerRepositoryMybatisImpl;
 import com.solvd.bankapplication.service.CustomerService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
@@ -12,7 +13,15 @@ import java.util.List;
 public class CustomerServiceImpl implements CustomerService {
     private final Logger logger = (Logger) LogManager.getLogger("Output");
 
-    CustomerRepository customerRepository = new CustomerRepositoryImpl();
+    private CustomerRepository customerRepository;
+
+    public CustomerServiceImpl(String mode) {
+        if (mode.equals("mybatis")) {
+            customerRepository = new CustomerRepositoryMybatisImpl();
+        } else if (mode.equals("jdbc")) {
+            customerRepository = new CustomerRepositoryImpl();
+        }
+    }
 
     @Override
     public void findAll() {

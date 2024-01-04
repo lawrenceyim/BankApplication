@@ -3,6 +3,7 @@ package com.solvd.bankapplication.service.impl;
 import com.solvd.bankapplication.domain.Account;
 import com.solvd.bankapplication.persistence.AccountRepository;
 import com.solvd.bankapplication.persistence.impl.AccountRepositoryImpl;
+import com.solvd.bankapplication.persistence.impl.AccountRepositoryMybatisImpl;
 import com.solvd.bankapplication.service.AccountService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
@@ -13,8 +14,12 @@ public class AccountServiceImpl implements AccountService {
     private final Logger logger = (Logger) LogManager.getLogger("Output");
     private AccountRepository accountRepository;
 
-    public AccountServiceImpl() {
-        this.accountRepository = new AccountRepositoryImpl();
+    public AccountServiceImpl(String mode) {
+        if (mode.equals("mybatis")) {
+            this.accountRepository = new AccountRepositoryMybatisImpl();
+        } else if (mode.equals("jdbc")) {
+            this.accountRepository = new AccountRepositoryImpl();
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.solvd.bankapplication.domain.Payment;
 import com.solvd.bankapplication.persistence.CardRepository;
 import com.solvd.bankapplication.persistence.PaymentRepository;
 import com.solvd.bankapplication.persistence.impl.PaymentRepositoryImpl;
+import com.solvd.bankapplication.persistence.impl.PaymentRepositoryMybatisImpl;
 import com.solvd.bankapplication.service.PaymentService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
@@ -17,8 +18,12 @@ public class PaymentServiceImpl implements PaymentService {
     private final Logger logger = (Logger) LogManager.getLogger("Output");
     private PaymentRepository paymentRepository;
 
-    public PaymentServiceImpl() {
-         paymentRepository = new PaymentRepositoryImpl();
+    public PaymentServiceImpl(String mode) {
+        if (mode.equals("mybatis")) {
+            paymentRepository = new PaymentRepositoryMybatisImpl();
+        } else if (mode.equals("jdbc")) {
+            paymentRepository = new PaymentRepositoryImpl();
+        }
     }
     @Override
     public void findAll() {

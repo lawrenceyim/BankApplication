@@ -2,7 +2,10 @@ package com.solvd.bankapplication.service.impl;
 
 import com.solvd.bankapplication.domain.Card;
 import com.solvd.bankapplication.persistence.CardRepository;
+import com.solvd.bankapplication.persistence.impl.AccountRepositoryImpl;
+import com.solvd.bankapplication.persistence.impl.AccountRepositoryMybatisImpl;
 import com.solvd.bankapplication.persistence.impl.CardRepositoryImpl;
+import com.solvd.bankapplication.persistence.impl.CardRepositoryMybatisImpl;
 import com.solvd.bankapplication.service.CardService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
@@ -11,10 +14,14 @@ import java.util.List;
 
 public class CardServiceImpl implements CardService {
     private final Logger logger = (Logger) LogManager.getLogger("Output");
-    private final CardRepository cardRepository;
+    private CardRepository cardRepository;
 
-    public CardServiceImpl() {
-        cardRepository = new CardRepositoryImpl();
+    public CardServiceImpl(String mode) {
+        if (mode.equals("mybatis")) {
+            cardRepository = new CardRepositoryMybatisImpl();
+        } else if (mode.equals("jdbc")) {
+            cardRepository = new CardRepositoryImpl();
+        }
     }
 
     @Override

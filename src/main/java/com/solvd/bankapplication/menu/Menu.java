@@ -2,11 +2,16 @@ package com.solvd.bankapplication.menu;
 
 import com.solvd.bankapplication.service.*;
 import com.solvd.bankapplication.service.impl.*;
+import org.apache.ibatis.io.Resources;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
+import org.apache.logging.log4j.core.config.properties.PropertiesConfiguration;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.module.Configuration;
+import java.util.*;
 
 public class Menu implements IMenu {
     AccountService accountService;
@@ -16,13 +21,31 @@ public class Menu implements IMenu {
     TransferService transferService;
     private final Logger logger = (Logger) LogManager.getLogger("Output");
     private final Scanner scanner = new Scanner(System.in);
+    private final String configFile = "config.properties";
+    private final String implementationProperty = "use-implementation";
+    private final List<String> validImplementations = new ArrayList<>(Arrays.asList("mybatis", "jdbc"));
+    private final String implementationMode;
 
     public Menu() {
-        accountService = new AccountServiceImpl();
-        cardService = new CardServiceImpl();
-        customerService = new CustomerServiceImpl();
-        paymentService = new PaymentServiceImpl();
-        transferService = new TransferServiceImpl();
+        try (InputStream inputStream = Menu.class.getClassLoader().getResourceAsStream(configFile)){
+            Properties properties = new Properties();
+            properties.load(inputStream);
+            implementationMode = properties.getProperty(implementationProperty);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (implementationMode == null) {
+            throw new RuntimeException("No use-implementation property found");
+        } else if (!validImplementations.contains(implementationMode)) {
+            throw new RuntimeException("No valid implementation found");
+        }
+
+        accountService = new AccountServiceImpl(implementationMode);
+        cardService = new CardServiceImpl(implementationMode);
+        customerService = new CustomerServiceImpl(implementationMode);
+        paymentService = new PaymentServiceImpl(implementationMode);
+        transferService = new TransferServiceImpl(implementationMode);
     }
 
     @Override
