@@ -73,4 +73,18 @@ public class Employee {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Employee ID: ").append(employeeID).append(System.lineSeparator());
+        sb.append("Bank ID: ").append(bankID).append(System.lineSeparator());
+        sb.append("First Name: ").append(firstName).append(System.lineSeparator());
+        sb.append("Middle Name: ").append(middleName).append(System.lineSeparator());
+        sb.append("Last Name: ").append(lastName).append(System.lineSeparator());
+        sb.append("Position ID: ").append(position).append(System.lineSeparator());
+        sb.append("Branch ID: ").append(branchID).append(System.lineSeparator());
+        sb.append("Email: ").append(email).append(System.lineSeparator());
+        return sb.toString();
+    }
 }

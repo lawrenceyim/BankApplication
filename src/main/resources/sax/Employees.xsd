@@ -1,0 +1,22 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="employees">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="employee" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="employee_id" type="xs:long"/>
+                            <xs:element name="bank_id" type="xs:long"/>
+                            <xs:element name="first_name" type="xs:string"/>
+                            <xs:element name="middle_name" type="xs:string"/>
+                            <xs:element name="last_name" type="xs:string"/>
+                            <xs:element name="position" type="xs:long"/>
+                            <xs:element name="branch_id" type="xs:long"/>
+                            <xs:element name="email" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
