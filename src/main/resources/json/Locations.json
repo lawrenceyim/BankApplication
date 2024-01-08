@@ -1,0 +1,16 @@
+{
+  "locations": [
+    {
+      "location_id": 1,
+      "street_address":"Street Address 1",
+      "city": "City 1",
+      "country": "Country 1"
+    },
+    {
+      "location_id": 2,
+      "street_address":"Street Address 2",
+      "city": "City 1",
+      "country": "Country 1"
+    }
+  ]
+}

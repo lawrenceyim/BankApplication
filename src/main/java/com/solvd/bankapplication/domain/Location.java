@@ -1,7 +1,12 @@
 package com.solvd.bankapplication.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 public class Location {
+    @JsonProperty("location_id")
     private long locationID;
+    @JsonProperty("street_address")
     private String streetAddress;
     private String city;
     private String country;
@@ -36,5 +41,15 @@ public class Location {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Location ID: ").append(locationID).append(System.lineSeparator());
+        sb.append("Street address: ").append(streetAddress).append(System.lineSeparator());
+        sb.append("City: ").append(city).append(System.lineSeparator());
+        sb.append("Country: ").append(country).append(System.lineSeparator());
+        return sb.toString();
     }
 }

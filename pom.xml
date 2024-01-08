@@ -15,6 +15,8 @@
 
         <commons-lang3>3.13.0</commons-lang3>
         <commons-io>2.15.0</commons-io>
+        <jackson-core>2.16.1</jackson-core>
+        <jackson-databind>2.16.1</jackson-databind>
         <jaxb-core>4.0.4</jaxb-core>
         <jaxb-runtime>4.0.4</jaxb-runtime>
         <log4j-api>2.21.1</log4j-api>
@@ -48,6 +50,16 @@
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>${mysql-connector-j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson-core}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-databind}</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
