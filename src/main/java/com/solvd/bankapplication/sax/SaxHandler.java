@@ -1,4 +1,4 @@
-package com.solvd.bankapplication.xml;
+package com.solvd.bankapplication.sax;
 
 import com.solvd.bankapplication.domain.Employee;
 import org.xml.sax.Attributes;

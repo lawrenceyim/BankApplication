@@ -1,0 +1,13 @@
+<employee_login_details xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:noNamespaceSchemaLocation="EmployeeLoginDetails.xsd">
+    <employee_login_detail>
+        <employee_id>1</employee_id>
+        <username>username1</username>
+        <password>password1</password>
+    </employee_login_detail>
+    <employee_login_detail>
+        <employee_id>2</employee_id>
+        <username>username2</username>
+        <password>password2</password>
+    </employee_login_detail>
+</employee_login_details>

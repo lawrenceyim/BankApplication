@@ -1,4 +1,4 @@
-package com.solvd.bankapplication.xml;
+package com.solvd.bankapplication.sax;
 
 import com.solvd.bankapplication.domain.Employee;
 import org.apache.logging.log4j.LogManager;
@@ -17,8 +17,8 @@ public class SaxParser {
 
     public static void main(String[] args) {
         final String xmlFileName = "src/main/resources/sax/EmployeesExample.xml";
-        SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
-        SaxHandler saxHandler = new SaxHandler();
+        final SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+        final SaxHandler saxHandler = new SaxHandler();
         try {
             File file = new File(xmlFileName);
             SAXParser parser = saxParserFactory.newSAXParser();
