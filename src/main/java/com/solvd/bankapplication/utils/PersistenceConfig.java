@@ -1,4 +1,4 @@
-package com.solvd.bankapplication.persistence;
+package com.solvd.bankapplication.utils;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;

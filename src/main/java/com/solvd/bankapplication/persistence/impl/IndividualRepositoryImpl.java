@@ -1,7 +1,7 @@
 package com.solvd.bankapplication.persistence.impl;
 
 import com.solvd.bankapplication.domain.Individual;
-import com.solvd.bankapplication.persistence.ConnectionPool;
+import com.solvd.bankapplication.utils.ConnectionPool;
 import com.solvd.bankapplication.persistence.IndividualRepository;
 
 import java.sql.Connection;

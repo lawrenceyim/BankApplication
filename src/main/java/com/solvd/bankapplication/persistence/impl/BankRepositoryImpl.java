@@ -2,7 +2,7 @@ package com.solvd.bankapplication.persistence.impl;
 
 import com.solvd.bankapplication.domain.Bank;
 import com.solvd.bankapplication.persistence.BankRepository;
-import com.solvd.bankapplication.persistence.ConnectionPool;
+import com.solvd.bankapplication.utils.ConnectionPool;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package com.solvd.bankapplication.persistence.impl;
 
 import com.solvd.bankapplication.domain.Transfer;
-import com.solvd.bankapplication.persistence.PersistenceConfig;
+import com.solvd.bankapplication.utils.PersistenceConfig;
 import com.solvd.bankapplication.persistence.TransferRepository;
 import org.apache.ibatis.session.SqlSession;
 

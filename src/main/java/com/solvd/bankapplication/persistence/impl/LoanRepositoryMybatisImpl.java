@@ -2,7 +2,7 @@ package com.solvd.bankapplication.persistence.impl;
 
 import com.solvd.bankapplication.domain.Loan;
 import com.solvd.bankapplication.persistence.LoanRepository;
-import com.solvd.bankapplication.persistence.PersistenceConfig;
+import com.solvd.bankapplication.utils.PersistenceConfig;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;

@@ -2,7 +2,7 @@ package com.solvd.bankapplication.persistence.impl;
 
 import com.solvd.bankapplication.domain.CustomerLoginDetail;
 import com.solvd.bankapplication.persistence.CustomerLoginDetailRepository;
-import com.solvd.bankapplication.persistence.PersistenceConfig;
+import com.solvd.bankapplication.utils.PersistenceConfig;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
