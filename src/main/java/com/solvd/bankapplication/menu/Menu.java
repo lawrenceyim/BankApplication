@@ -27,7 +27,7 @@ public class Menu implements IMenu {
     private final String implementationMode;
 
     public Menu() {
-        try (InputStream inputStream = Menu.class.getClassLoader().getResourceAsStream(configFile)){
+        try (InputStream inputStream = Menu.class.getClassLoader().getResourceAsStream(configFile)) {
             Properties properties = new Properties();
             properties.load(inputStream);
             implementationMode = properties.getProperty(implementationProperty);

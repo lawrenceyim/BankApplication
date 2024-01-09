@@ -1,26 +1,40 @@
 package com.solvd.bankapplication.utils;
 
+import com.solvd.bankapplication.menu.Menu;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.IntStream;
 
 public class ConnectionPool {
+    private final String configFile = "config.properties";
     private final Logger logger = (Logger) LogManager.getLogger("Output");
-    private final String url = "jdbc:mysql://localhost:3306/BankDB";
-    private final String user = "root";
-    private final String password = "password";
     private final int MAX_CONNECTIONS = 5;
+    private String url;
+    private String user;
+    private String password;
     private static ConnectionPool instance = null;
     private volatile CopyOnWriteArrayList<Connection> occupiedConnections = new CopyOnWriteArrayList<>();
     private volatile ConcurrentLinkedQueue<Connection> freeConnections = new ConcurrentLinkedQueue<>();
 
     private ConnectionPool() {
+        try (InputStream inputStream = Menu.class.getClassLoader().getResourceAsStream(configFile)) {
+            Properties properties = new Properties();
+            properties.load(inputStream);
+            url = properties.getProperty("url");
+            user = properties.getProperty("username");
+            password = properties.getProperty("password");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         IntStream.rangeClosed(1, MAX_CONNECTIONS).forEach(i -> {
             Connection connection = null;
             try {
