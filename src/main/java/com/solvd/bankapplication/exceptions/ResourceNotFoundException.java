@@ -1,4 +1,4 @@
-package com.solvd.bankapplication.domain.exceptions;
+package com.solvd.bankapplication.exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message) {
