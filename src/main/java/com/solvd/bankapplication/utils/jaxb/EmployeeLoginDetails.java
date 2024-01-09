@@ -1,4 +1,4 @@
-package com.solvd.bankapplication.jaxb;
+package com.solvd.bankapplication.utils.jaxb;
 
 import com.solvd.bankapplication.domain.EmployeeLoginDetail;
 import jakarta.xml.bind.annotation.*;

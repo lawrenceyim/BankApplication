@@ -1,4 +1,4 @@
-package com.solvd.bankapplication.json;
+package com.solvd.bankapplication.utils.json;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.solvd.bankapplication.domain.Location;

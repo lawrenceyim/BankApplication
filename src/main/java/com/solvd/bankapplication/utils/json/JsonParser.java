@@ -1,4 +1,4 @@
-package com.solvd.bankapplication.json;
+package com.solvd.bankapplication.utils.json;
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
