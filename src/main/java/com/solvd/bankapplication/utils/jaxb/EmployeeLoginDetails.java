@@ -1,7 +1,10 @@
 package com.solvd.bankapplication.utils.jaxb;
 
 import com.solvd.bankapplication.domain.EmployeeLoginDetail;
-import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.util.List;
 

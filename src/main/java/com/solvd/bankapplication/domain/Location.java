@@ -1,7 +1,6 @@
 package com.solvd.bankapplication.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 public class Location {
     @JsonProperty("location_id")

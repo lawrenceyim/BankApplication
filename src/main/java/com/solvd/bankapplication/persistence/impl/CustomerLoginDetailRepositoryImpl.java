@@ -1,8 +1,8 @@
 package com.solvd.bankapplication.persistence.impl;
 
 import com.solvd.bankapplication.domain.CustomerLoginDetail;
-import com.solvd.bankapplication.utils.ConnectionPool;
 import com.solvd.bankapplication.persistence.CustomerLoginDetailRepository;
+import com.solvd.bankapplication.utils.ConnectionPool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

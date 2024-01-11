@@ -1,8 +1,6 @@
 package com.solvd.bankapplication.service.impl;
 
-import com.solvd.bankapplication.domain.Card;
 import com.solvd.bankapplication.domain.Payment;
-import com.solvd.bankapplication.persistence.CardRepository;
 import com.solvd.bankapplication.persistence.PaymentRepository;
 import com.solvd.bankapplication.persistence.impl.PaymentRepositoryImpl;
 import com.solvd.bankapplication.persistence.impl.PaymentRepositoryMybatisImpl;
@@ -10,8 +8,6 @@ import com.solvd.bankapplication.service.PaymentService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.List;
 
 public class PaymentServiceImpl implements PaymentService {
@@ -25,6 +21,7 @@ public class PaymentServiceImpl implements PaymentService {
             paymentRepository = new PaymentRepositoryImpl();
         }
     }
+
     @Override
     public void findAll() {
         List<Payment> payments = paymentRepository.findAll();

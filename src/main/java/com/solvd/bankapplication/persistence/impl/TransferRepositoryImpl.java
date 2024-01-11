@@ -1,8 +1,8 @@
 package com.solvd.bankapplication.persistence.impl;
 
 import com.solvd.bankapplication.domain.Transfer;
-import com.solvd.bankapplication.utils.ConnectionPool;
 import com.solvd.bankapplication.persistence.TransferRepository;
+import com.solvd.bankapplication.utils.ConnectionPool;
 
 import java.sql.*;
 import java.util.ArrayList;

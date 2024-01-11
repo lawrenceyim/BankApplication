@@ -33,20 +33,6 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     @Override
-    public void deleteById(long id) {
-        Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "DELETE FROM Accounts WHERE account_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Unable to delete account.", e);
-        } finally {
-            CONNECTION_POOL.releaseConnection(connection);
-        }
-    }
-
-    @Override
     public Optional<Account> findById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
         Account account = null;
@@ -67,23 +53,6 @@ public class AccountRepositoryImpl implements AccountRepository {
             CONNECTION_POOL.releaseConnection(connection);
         }
         return Optional.ofNullable(account);
-    }
-
-    @Override
-    public void update(Account account) {
-        Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "UPDATE Accounts SET customer_id = ?, account_type = ?, balance = ? WHERE account_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, account.getCustomerID());
-            preparedStatement.setString(2, account.getAccountType());
-            preparedStatement.setBigDecimal(3, account.getBalance());
-            preparedStatement.setLong(4, account.getAccountID());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Unable to update account.", e);
-        } finally {
-            CONNECTION_POOL.releaseConnection(connection);
-        }
     }
 
     @Override
@@ -131,5 +100,37 @@ public class AccountRepositoryImpl implements AccountRepository {
             CONNECTION_POOL.releaseConnection(connection);
         }
         return accounts;
+    }
+
+
+    @Override
+    public void update(Account account) {
+        Connection connection = CONNECTION_POOL.getConnection();
+        final String query = "UPDATE Accounts SET customer_id = ?, account_type = ?, balance = ? WHERE account_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, account.getCustomerID());
+            preparedStatement.setString(2, account.getAccountType());
+            preparedStatement.setBigDecimal(3, account.getBalance());
+            preparedStatement.setLong(4, account.getAccountID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to update account.", e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+    }
+
+    @Override
+    public void deleteById(long id) {
+        Connection connection = CONNECTION_POOL.getConnection();
+        final String query = "DELETE FROM Accounts WHERE account_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to delete account.", e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
     }
 }

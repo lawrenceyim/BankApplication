@@ -2,8 +2,6 @@ package com.solvd.bankapplication.service.impl;
 
 import com.solvd.bankapplication.domain.Card;
 import com.solvd.bankapplication.persistence.CardRepository;
-import com.solvd.bankapplication.persistence.impl.AccountRepositoryImpl;
-import com.solvd.bankapplication.persistence.impl.AccountRepositoryMybatisImpl;
 import com.solvd.bankapplication.persistence.impl.CardRepositoryImpl;
 import com.solvd.bankapplication.persistence.impl.CardRepositoryMybatisImpl;
 import com.solvd.bankapplication.service.CardService;

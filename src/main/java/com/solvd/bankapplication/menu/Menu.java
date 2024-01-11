@@ -2,15 +2,11 @@ package com.solvd.bankapplication.menu;
 
 import com.solvd.bankapplication.service.*;
 import com.solvd.bankapplication.service.impl.*;
-import org.apache.ibatis.io.Resources;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
-import org.apache.logging.log4j.core.config.properties.PropertiesConfiguration;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.module.Configuration;
 import java.util.*;
 
 public class Menu implements IMenu {
