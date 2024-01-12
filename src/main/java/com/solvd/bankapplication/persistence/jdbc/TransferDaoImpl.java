@@ -34,20 +34,6 @@ public class TransferDaoImpl implements TransferDao {
     }
 
     @Override
-    public void deleteById(long id) {
-        Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "DELETE FROM Transfers WHERE transfer_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Unable to delete transfer.", e);
-        } finally {
-            CONNECTION_POOL.releaseConnection(connection);
-        }
-    }
-
-    @Override
     public Optional<Transfer> findById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
         Transfer transfer = null;
@@ -63,30 +49,13 @@ public class TransferDaoImpl implements TransferDao {
                 transfer.setFromAccountID(resultSet.getLong(4));
                 transfer.setToAccountID(resultSet.getLong(5));
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find transfer.", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
         return Optional.ofNullable(transfer);
-    }
-
-    @Override
-    public void update(Transfer transfer) {
-        Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "UPDATE Transfers SET date = ?, amount = ?, from_account_id = ?, to_account_id = ? WHERE transfer_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setTimestamp(1, transfer.getDate());
-            preparedStatement.setBigDecimal(2, transfer.getAmount());
-            preparedStatement.setLong(3, transfer.getToAccountID());
-            preparedStatement.setLong(4, transfer.getFromAccountID());
-            preparedStatement.setLong(5, transfer.getTransferID());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Unable to update transfer.", e);
-        } finally {
-            CONNECTION_POOL.releaseConnection(connection);
-        }
     }
 
     @Override
@@ -105,6 +74,7 @@ public class TransferDaoImpl implements TransferDao {
                 transfer.setToAccountID(resultSet.getLong(5));
                 transfers.add(transfer);
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find transfer.", e);
         } finally {
@@ -138,4 +108,37 @@ public class TransferDaoImpl implements TransferDao {
         }
         return transfers;
     }
+
+    @Override
+    public void update(Transfer transfer) {
+        Connection connection = CONNECTION_POOL.getConnection();
+        final String query = "UPDATE Transfers SET date = ?, amount = ?, from_account_id = ?, to_account_id = ? WHERE transfer_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setTimestamp(1, transfer.getDate());
+            preparedStatement.setBigDecimal(2, transfer.getAmount());
+            preparedStatement.setLong(3, transfer.getToAccountID());
+            preparedStatement.setLong(4, transfer.getFromAccountID());
+            preparedStatement.setLong(5, transfer.getTransferID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to update transfer.", e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+    }
+
+    @Override
+    public void deleteById(long id) {
+        Connection connection = CONNECTION_POOL.getConnection();
+        final String query = "DELETE FROM Transfers WHERE transfer_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to delete transfer.", e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+    }
+
 }

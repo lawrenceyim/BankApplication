@@ -34,20 +34,6 @@ public class PaymentDaoImpl implements PaymentDao {
     }
 
     @Override
-    public void deleteById(long id) {
-        Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "DELETE FROM Payments WHERE payment_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Unable to delete payment.", e);
-        } finally {
-            CONNECTION_POOL.releaseConnection(connection);
-        }
-    }
-
-    @Override
     public Optional<Payment> findById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
         Payment payment = null;
@@ -72,24 +58,6 @@ public class PaymentDaoImpl implements PaymentDao {
     }
 
     @Override
-    public void update(Payment payment) {
-        Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "UPDATE Payments SET company = ?, date = ?, amount = ?, card_id = ? WHERE payment_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, payment.getCompanyName());
-            preparedStatement.setTimestamp(2, payment.getDate());
-            preparedStatement.setBigDecimal(3, payment.getAmount());
-            preparedStatement.setLong(4, payment.getCardID());
-            preparedStatement.setLong(5, payment.getPaymentID());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Unable to update payment.", e);
-        } finally {
-            CONNECTION_POOL.releaseConnection(connection);
-        }
-    }
-
-    @Override
     public List<Payment> findAll() {
         Connection connection = CONNECTION_POOL.getConnection();
         List<Payment> payments = new ArrayList<>();
@@ -105,6 +73,7 @@ public class PaymentDaoImpl implements PaymentDao {
                 payment.setCardID(resultSet.getLong(5));
                 payments.add(payment);
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find payment.", e);
         } finally {
@@ -130,6 +99,7 @@ public class PaymentDaoImpl implements PaymentDao {
                 payment.setCardID(resultSet.getLong(5));
                 payments.add(payment);
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find payment.", e);
         } finally {
@@ -137,4 +107,37 @@ public class PaymentDaoImpl implements PaymentDao {
         }
         return payments;
     }
+
+    @Override
+    public void update(Payment payment) {
+        Connection connection = CONNECTION_POOL.getConnection();
+        final String query = "UPDATE Payments SET company = ?, date = ?, amount = ?, card_id = ? WHERE payment_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, payment.getCompanyName());
+            preparedStatement.setTimestamp(2, payment.getDate());
+            preparedStatement.setBigDecimal(3, payment.getAmount());
+            preparedStatement.setLong(4, payment.getCardID());
+            preparedStatement.setLong(5, payment.getPaymentID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to update payment.", e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+    }
+
+    @Override
+    public void deleteById(long id) {
+        Connection connection = CONNECTION_POOL.getConnection();
+        final String query = "DELETE FROM Payments WHERE payment_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to delete payment.", e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+    }
+
 }

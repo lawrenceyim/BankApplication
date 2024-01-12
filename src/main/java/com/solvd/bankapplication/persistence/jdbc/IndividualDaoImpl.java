@@ -33,20 +33,6 @@ public class IndividualDaoImpl implements IndividualDao {
     }
 
     @Override
-    public void deleteById(long id) {
-        Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "DELETE FROM Individuals WHERE customer_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Unable to delete individual.", e);
-        } finally {
-            CONNECTION_POOL.releaseConnection(connection);
-        }
-    }
-
-    @Override
     public Optional<Individual> findById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
         Individual individual = null;
@@ -61,12 +47,37 @@ public class IndividualDaoImpl implements IndividualDao {
                 individual.setMiddleName(resultSet.getString(3));
                 individual.setLastName(resultSet.getString(4));
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find individual.", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
         return Optional.ofNullable(individual);
+    }
+
+    @Override
+    public List<Individual> findAll() {
+        Connection connection = CONNECTION_POOL.getConnection();
+        List<Individual> individuals = new ArrayList<>();
+        final String query = "SELECT customer_id, first_name, middle_name, last_name FROM Individuals";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Individual individual = new Individual();
+                individual.setCustomerID(resultSet.getLong(1));
+                individual.setFirstName(resultSet.getString(2));
+                individual.setMiddleName(resultSet.getString(3));
+                individual.setLastName(resultSet.getString(4));
+                individuals.add(individual);
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to find individual.", e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+        return individuals;
     }
 
     @Override
@@ -87,25 +98,17 @@ public class IndividualDaoImpl implements IndividualDao {
     }
 
     @Override
-    public List<Individual> findAll() {
+    public void deleteById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
-        List<Individual> individuals = new ArrayList<>();
-        final String query = "SELECT customer_id, first_name, middle_name, last_name FROM Individuals";
+        final String query = "DELETE FROM Individuals WHERE customer_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Individual individual = new Individual();
-                individual.setCustomerID(resultSet.getLong(1));
-                individual.setFirstName(resultSet.getString(2));
-                individual.setMiddleName(resultSet.getString(3));
-                individual.setLastName(resultSet.getString(4));
-                individuals.add(individual);
-            }
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Unable to find individual.", e);
+            throw new RuntimeException("Unable to delete individual.", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
-        return individuals;
     }
+
 }

@@ -31,20 +31,6 @@ public class BusinessDaoImpl implements BusinessDao {
     }
 
     @Override
-    public void deleteById(long id) {
-        Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "DELETE FROM Businesses WHERE customer_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Unable to delete business.", e);
-        } finally {
-            CONNECTION_POOL.releaseConnection(connection);
-        }
-    }
-
-    @Override
     public Optional<Business> findById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
         Business business = null;
@@ -57,12 +43,35 @@ public class BusinessDaoImpl implements BusinessDao {
                 business.setCustomerID(resultSet.getLong(1));
                 business.setBusinessName(resultSet.getString(2));
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find business.", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
         return Optional.ofNullable(business);
+    }
+
+    @Override
+    public List<Business> findAll() {
+        Connection connection = CONNECTION_POOL.getConnection();
+        List<Business> businesses = new ArrayList<>();
+        final String query = "SELECT customer_id, business_name FROM Businesses";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Business business = new Business();
+                business.setCustomerID(resultSet.getLong(1));
+                business.setBusinessName(resultSet.getString(2));
+                businesses.add(business);
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to find business.", e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+        return businesses;
     }
 
     @Override
@@ -81,23 +90,16 @@ public class BusinessDaoImpl implements BusinessDao {
     }
 
     @Override
-    public List<Business> findAll() {
+    public void deleteById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
-        List<Business> businesses = new ArrayList<>();
-        final String query = "SELECT customer_id, business_name FROM Businesses";
+        final String query = "DELETE FROM Businesses WHERE customer_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Business business = new Business();
-                business.setCustomerID(resultSet.getLong(1));
-                business.setBusinessName(resultSet.getString(2));
-                businesses.add(business);
-            }
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Unable to find business.", e);
+            throw new RuntimeException("Unable to delete business.", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
-        return businesses;
     }
 }

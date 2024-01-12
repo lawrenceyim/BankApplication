@@ -24,22 +24,9 @@ public class CardDaoImpl implements CardDao {
             if (resultSet.next()) {
                 card.setCardID(resultSet.getLong(1));
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to create card.", e);
-        } finally {
-            CONNECTION_POOL.releaseConnection(connection);
-        }
-    }
-
-    @Override
-    public void deleteById(long id) {
-        Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "DELETE FROM Cards WHERE card_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Unable to delete card.", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -59,28 +46,13 @@ public class CardDaoImpl implements CardDao {
                 card.setCardType(resultSet.getString(2));
                 card.setAccountID(resultSet.getLong(3));
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find card.", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
         return Optional.ofNullable(card);
-    }
-
-    @Override
-    public void update(Card card) {
-        Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "UPDATE Payments SET card_type = ?, account_id = ? WHERE card_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, card.getCardType());
-            preparedStatement.setLong(2, card.getAccountID());
-            preparedStatement.setLong(3, card.getCardID());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Unable to update card.", e);
-        } finally {
-            CONNECTION_POOL.releaseConnection(connection);
-        }
     }
 
     @Override
@@ -97,6 +69,7 @@ public class CardDaoImpl implements CardDao {
                 card.setAccountID(resultSet.getLong(3));
                 cards.add(card);
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find card.", e);
         } finally {
@@ -126,5 +99,35 @@ public class CardDaoImpl implements CardDao {
             CONNECTION_POOL.releaseConnection(connection);
         }
         return cards;
+    }
+
+    @Override
+    public void update(Card card) {
+        Connection connection = CONNECTION_POOL.getConnection();
+        final String query = "UPDATE Payments SET card_type = ?, account_id = ? WHERE card_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, card.getCardType());
+            preparedStatement.setLong(2, card.getAccountID());
+            preparedStatement.setLong(3, card.getCardID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to update card.", e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+    }
+
+    @Override
+    public void deleteById(long id) {
+        Connection connection = CONNECTION_POOL.getConnection();
+        final String query = "DELETE FROM Cards WHERE card_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to delete card.", e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
     }
 }

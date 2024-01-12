@@ -23,6 +23,7 @@ public class BankDaoImpl implements BankDao {
             if (resultSet.next()) {
                 bank.setBankID(resultSet.getLong(1));
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to create bank.", e);
         } finally {
@@ -43,6 +44,7 @@ public class BankDaoImpl implements BankDao {
                 bank.setBankID(resultSet.getLong(1));
                 bank.setBankName(resultSet.getString(2));
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find bank.", e);
         } finally {
@@ -64,6 +66,7 @@ public class BankDaoImpl implements BankDao {
                 bank.setBankName(resultSet.getString(2));
                 banks.add(bank);
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find bank.", e);
         } finally {

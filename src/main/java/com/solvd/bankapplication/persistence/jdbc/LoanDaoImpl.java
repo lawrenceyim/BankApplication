@@ -33,20 +33,6 @@ public class LoanDaoImpl implements LoanDao {
     }
 
     @Override
-    public void deleteById(long id) {
-        Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "DELETE FROM Loans WHERE loan_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Unable to delete loan.", e);
-        } finally {
-            CONNECTION_POOL.releaseConnection(connection);
-        }
-    }
-
-    @Override
     public Optional<Loan> findById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
         Loan loan = null;
@@ -61,12 +47,37 @@ public class LoanDaoImpl implements LoanDao {
                 loan.setLoanAmount(resultSet.getBigDecimal(3));
                 loan.setDate(resultSet.getTimestamp(4));
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find loan.", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
         return Optional.ofNullable(loan);
+    }
+
+    @Override
+    public List<Loan> findAll() {
+        Connection connection = CONNECTION_POOL.getConnection();
+        List<Loan> loans = new ArrayList<>();
+        final String query = "SELECT loan_id, customer_id, amount, card_id FROM Loans";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Loan loan = new Loan();
+                loan.setLoanID(resultSet.getLong(1));
+                loan.setCustomerID(resultSet.getLong(2));
+                loan.setLoanAmount(resultSet.getBigDecimal(3));
+                loan.setDate(resultSet.getTimestamp(4));
+                loans.add(loan);
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to find loan.", e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+        return loans;
     }
 
     @Override
@@ -87,25 +98,17 @@ public class LoanDaoImpl implements LoanDao {
     }
 
     @Override
-    public List<Loan> findAll() {
+    public void deleteById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
-        List<Loan> loans = new ArrayList<>();
-        final String query = "SELECT loan_id, customer_id, amount, card_id FROM Loans";
+        final String query = "DELETE FROM Loans WHERE loan_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Loan loan = new Loan();
-                loan.setLoanID(resultSet.getLong(1));
-                loan.setCustomerID(resultSet.getLong(2));
-                loan.setLoanAmount(resultSet.getBigDecimal(3));
-                loan.setDate(resultSet.getTimestamp(4));
-                loans.add(loan);
-            }
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Unable to find loan.", e);
+            throw new RuntimeException("Unable to delete loan.", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
-        return loans;
     }
+
 }

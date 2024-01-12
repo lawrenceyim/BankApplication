@@ -32,20 +32,6 @@ public class CustomerLoginDetailDaoImpl implements CustomerLoginDetailDao {
     }
 
     @Override
-    public void deleteById(long id) {
-        Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "DELETE FROM CustomerLoginDetails WHERE customer_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Unable to delete customer login detail.", e);
-        } finally {
-            CONNECTION_POOL.releaseConnection(connection);
-        }
-    }
-
-    @Override
     public Optional<CustomerLoginDetail> findById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
         CustomerLoginDetail customerLoginDetail = null;
@@ -59,12 +45,36 @@ public class CustomerLoginDetailDaoImpl implements CustomerLoginDetailDao {
                 customerLoginDetail.setUsername(resultSet.getString(2));
                 customerLoginDetail.setPassword(resultSet.getString(3));
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find customer login detail.", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
         return Optional.ofNullable(customerLoginDetail);
+    }
+
+    @Override
+    public List<CustomerLoginDetail> findAll() {
+        Connection connection = CONNECTION_POOL.getConnection();
+        List<CustomerLoginDetail> customerLoginDetails = new ArrayList<>();
+        final String query = "SELECT customer_id, username, password FROM Payments";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                CustomerLoginDetail customerLoginDetail = new CustomerLoginDetail();
+                customerLoginDetail.setCustomerID(resultSet.getLong(1));
+                customerLoginDetail.setUsername(resultSet.getString(2));
+                customerLoginDetail.setPassword(resultSet.getString(3));
+                customerLoginDetails.add(customerLoginDetail);
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to find customer login detail.", e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+        return customerLoginDetails;
     }
 
     @Override
@@ -84,24 +94,17 @@ public class CustomerLoginDetailDaoImpl implements CustomerLoginDetailDao {
     }
 
     @Override
-    public List<CustomerLoginDetail> findAll() {
+    public void deleteById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
-        List<CustomerLoginDetail> customerLoginDetails = new ArrayList<>();
-        final String query = "SELECT customer_id, username, password FROM Payments";
+        final String query = "DELETE FROM CustomerLoginDetails WHERE customer_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                CustomerLoginDetail customerLoginDetail = new CustomerLoginDetail();
-                customerLoginDetail.setCustomerID(resultSet.getLong(1));
-                customerLoginDetail.setUsername(resultSet.getString(2));
-                customerLoginDetail.setPassword(resultSet.getString(3));
-                customerLoginDetails.add(customerLoginDetail);
-            }
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Unable to find customer login detail.", e);
+            throw new RuntimeException("Unable to delete customer login detail.", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
-        return customerLoginDetails;
     }
+
 }

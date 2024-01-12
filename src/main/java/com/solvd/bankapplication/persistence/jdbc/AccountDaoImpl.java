@@ -25,6 +25,7 @@ public class AccountDaoImpl implements AccountDao {
             if (resultSet.next()) {
                 account.setAccountID(resultSet.getLong(1));
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to create account.", e);
         } finally {
@@ -47,6 +48,7 @@ public class AccountDaoImpl implements AccountDao {
                 account.setAccountType(resultSet.getString(3));
                 account.setBalance(resultSet.getBigDecimal(4));
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find account.", e);
         } finally {
@@ -70,6 +72,7 @@ public class AccountDaoImpl implements AccountDao {
                 account.setBalance(resultSet.getBigDecimal(4));
                 accounts.add(account);
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find account.", e);
         } finally {
@@ -94,6 +97,7 @@ public class AccountDaoImpl implements AccountDao {
                 account.setBalance(resultSet.getBigDecimal(4));
                 accounts.add(account);
             }
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find account.", e);
         } finally {
