@@ -11,11 +11,16 @@ import java.util.Optional;
 public class AccountDaoImpl implements AccountDao {
     @Override
     public void create(Account account) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             AccountDao accountDao = sqlSession.getMapper(AccountDao.class);
             accountDao.create(account);
+            sqlSession.commit();
         } catch (Exception e) {
+            sqlSession.rollback();
             throw new RuntimeException("Unable to create account.", e);
+        } finally {
+            sqlSession.close();
         }
     }
 

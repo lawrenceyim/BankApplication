@@ -4,19 +4,28 @@ import com.solvd.bankapplication.domain.Card;
 import com.solvd.bankapplication.persistence.CardDao;
 import com.solvd.bankapplication.utils.ConnectionPool;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class CardDaoImpl implements CardDao {
     private final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
+    private final String createQuery = "INSERT INTO Cards(card_type, account_id) VALUES (?, ?)";
+    private final String findByIdQuery = "SELECT card_id, card_type, account_id FROM FROM Cards WHERE card_id = ?";
+    private final String findAllQuery = "SELECT card_id, card_type, account_id FROM Cards";
+    private final String findAllByAccountQuery = "SELECT card_id, card_type, account_id FROM Cards WHERE card_id = ?";
+    private final String updateQuery = "UPDATE Payments SET card_type = ?, account_id = ? WHERE card_id = ?";
+    private final String deleteByIdQuery = "DELETE FROM Cards WHERE card_id = ?";
 
     @Override
     public void create(Card card) {
         Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "INSERT INTO Cards(card_type, account_id) VALUES (?, ?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(createQuery, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, card.getCardType());
             preparedStatement.setLong(2, card.getAccountID());
             preparedStatement.executeUpdate();
@@ -36,8 +45,7 @@ public class CardDaoImpl implements CardDao {
     public Optional<Card> findById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
         Card card = null;
-        final String query = "SELECT card_id, card_type, account_id FROM FROM Cards WHERE card_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(findByIdQuery)) {
             preparedStatement.setLong(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -59,8 +67,7 @@ public class CardDaoImpl implements CardDao {
     public List<Card> findAll() {
         Connection connection = CONNECTION_POOL.getConnection();
         List<Card> cards = new ArrayList<>();
-        final String query = "SELECT card_id, card_type, account_id FROM Cards";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(findAllQuery)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     Card card = new Card();
@@ -82,8 +89,7 @@ public class CardDaoImpl implements CardDao {
     public List<Card> findAllByAccount(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
         List<Card> cards = new ArrayList<>();
-        final String query = "SELECT card_id, card_type, account_id FROM Cards WHERE card_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(findAllByAccountQuery)) {
             preparedStatement.setLong(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
@@ -105,8 +111,7 @@ public class CardDaoImpl implements CardDao {
     @Override
     public void update(Card card) {
         Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "UPDATE Payments SET card_type = ?, account_id = ? WHERE card_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
             preparedStatement.setString(1, card.getCardType());
             preparedStatement.setLong(2, card.getAccountID());
             preparedStatement.setLong(3, card.getCardID());
@@ -121,8 +126,7 @@ public class CardDaoImpl implements CardDao {
     @Override
     public void deleteById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "DELETE FROM Cards WHERE card_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(deleteByIdQuery)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

@@ -4,19 +4,27 @@ import com.solvd.bankapplication.domain.Customer;
 import com.solvd.bankapplication.persistence.CustomerDao;
 import com.solvd.bankapplication.utils.ConnectionPool;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class CustomerDaoImpl implements CustomerDao {
     private final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
+    private final String createQuery = "INSERT INTO Customers(bank_id, email, phone_number, street_address, city, country) VALUES (?, ?, ?, ?, ?, ?)";
+    private final String findByIdQuery = "SELECT customer_id, bank_id, email, phone_number, street_address, city, country FROM Customers WHERE customer_id = ?";
+    private final String findAllQuery = "SELECT customer_id, bank_id, email, phone_number, street_address, city, country FROM Customers";
+    private final String updateQuery = "UPDATE Customers SET bank_id = ?, email = ?, phone_number = ?, street_address = ?, city = ?, country = ? WHERE customer_id = ?";
+    private final String deleteByIdQuery = "DELETE FROM Customers WHERE customer_id = ?";
 
     @Override
     public void create(Customer customer) {
         Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "INSERT INTO Customers(bank_id, email, phone_number, street_address, city, country) VALUES (?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(createQuery, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setLong(1, customer.getBankID());
             preparedStatement.setString(2, customer.getEmail());
             preparedStatement.setString(3, customer.getPhoneNumber());
@@ -40,8 +48,7 @@ public class CustomerDaoImpl implements CustomerDao {
     public Optional<Customer> findById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
         Customer customer = null;
-        final String query = "SELECT customer_id, bank_id, email, phone_number, street_address, city, country FROM Customers WHERE customer_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(findByIdQuery)) {
             preparedStatement.setLong(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -67,8 +74,7 @@ public class CustomerDaoImpl implements CustomerDao {
     public List<Customer> findAll() {
         Connection connection = CONNECTION_POOL.getConnection();
         List<Customer> customers = new ArrayList<>();
-        final String query = "SELECT customer_id, bank_id, email, phone_number, street_address, city, country FROM Customers";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(findAllQuery)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     Customer customer = new Customer();
@@ -93,8 +99,7 @@ public class CustomerDaoImpl implements CustomerDao {
     @Override
     public void update(Customer customer) {
         Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "UPDATE Customers SET bank_id = ?, email = ?, phone_number = ?, street_address = ?, city = ?, country = ? WHERE customer_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
             preparedStatement.setLong(1, customer.getBankID());
             preparedStatement.setString(2, customer.getEmail());
             preparedStatement.setString(3, customer.getPhoneNumber());
@@ -113,8 +118,7 @@ public class CustomerDaoImpl implements CustomerDao {
     @Override
     public void deleteById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "DELETE FROM Customers WHERE customer_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(deleteByIdQuery)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

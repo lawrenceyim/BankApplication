@@ -4,19 +4,27 @@ import com.solvd.bankapplication.domain.Loan;
 import com.solvd.bankapplication.persistence.LoanDao;
 import com.solvd.bankapplication.utils.ConnectionPool;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class LoanDaoImpl implements LoanDao {
     private final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
+    private final String createQuery = "INSERT INTO Loans(customer_id, loan_amount, date) VALUES (?, ?, ?)";
+    private final String findByIdQuery = "SELECT loan_id, customer_id, loan_amount, date FROM Loans WHERE loan_id = ?";
+    private final String findAllQuery = "SELECT loan_id, customer_id, amount, card_id FROM Loans";
+    private final String updateQuery = "UPDATE Loans SET customer_id = ?, loan_amount = ?, date = ? WHERE loan_id = ?";
+    private final String deleteByIdQuery = "DELETE FROM Loans WHERE loan_id = ?";
 
     @Override
     public void create(Loan loan) {
         Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "INSERT INTO Loans(customer_id, loan_amount, date) VALUES (?, ?, ?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(createQuery, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setLong(1, loan.getLoanID());
             preparedStatement.setBigDecimal(2, loan.getLoanAmount());
             preparedStatement.setTimestamp(3, loan.getDate());
@@ -37,8 +45,7 @@ public class LoanDaoImpl implements LoanDao {
     public Optional<Loan> findById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
         Loan loan = null;
-        final String query = "SELECT loan_id, customer_id, loan_amount, date FROM Loans WHERE loan_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(findByIdQuery)) {
             preparedStatement.setLong(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -61,8 +68,7 @@ public class LoanDaoImpl implements LoanDao {
     public List<Loan> findAll() {
         Connection connection = CONNECTION_POOL.getConnection();
         List<Loan> loans = new ArrayList<>();
-        final String query = "SELECT loan_id, customer_id, amount, card_id FROM Loans";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(findAllQuery)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     Loan loan = new Loan();
@@ -84,8 +90,7 @@ public class LoanDaoImpl implements LoanDao {
     @Override
     public void update(Loan loan) {
         Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "UPDATE Loans SET customer_id = ?, loan_amount = ?, date = ? WHERE loan_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
             preparedStatement.setLong(1, loan.getCustomerID());
             preparedStatement.setBigDecimal(2, loan.getLoanAmount());
             preparedStatement.setTimestamp(3, loan.getDate());
@@ -101,8 +106,7 @@ public class LoanDaoImpl implements LoanDao {
     @Override
     public void deleteById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "DELETE FROM Loans WHERE loan_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(deleteByIdQuery)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -111,5 +115,4 @@ public class LoanDaoImpl implements LoanDao {
             CONNECTION_POOL.releaseConnection(connection);
         }
     }
-
 }

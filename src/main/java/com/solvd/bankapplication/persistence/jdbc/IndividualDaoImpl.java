@@ -14,12 +14,16 @@ import java.util.Optional;
 
 public class IndividualDaoImpl implements IndividualDao {
     private final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
+    private final String createQuery = "INSERT INTO Individuals(customer_id, first_name, middle_name, last_name) VALUES (?, ?, ?, ?)";
+    private final String findByIqQuery = "SELECT customer_id, first_name, middle_name, last_name FROM Individuals WHERE customer_id = ?";
+    private final String findAllQuery = "SELECT customer_id, first_name, middle_name, last_name FROM Individuals";
+    private final String updateQuery = "UPDATE Individuals SET first_name = ?, middle_name = ?, last_name = ? WHERE customer_id = ?";
+    private final String deleteByIdQuery = "DELETE FROM Individuals WHERE customer_id = ?";
 
     @Override
     public void create(Individual individual) {
         Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "INSERT INTO Individuals(customer_id, first_name, middle_name, last_name) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(createQuery)) {
             preparedStatement.setLong(1, individual.getCustomerID());
             preparedStatement.setString(2, individual.getFirstName());
             preparedStatement.setString(3, individual.getMiddleName());
@@ -36,8 +40,7 @@ public class IndividualDaoImpl implements IndividualDao {
     public Optional<Individual> findById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
         Individual individual = null;
-        final String query = "SELECT customer_id, first_name, middle_name, last_name FROM Individuals WHERE customer_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(findByIqQuery)) {
             preparedStatement.setLong(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -60,8 +63,7 @@ public class IndividualDaoImpl implements IndividualDao {
     public List<Individual> findAll() {
         Connection connection = CONNECTION_POOL.getConnection();
         List<Individual> individuals = new ArrayList<>();
-        final String query = "SELECT customer_id, first_name, middle_name, last_name FROM Individuals";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(findAllQuery)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     Individual individual = new Individual();
@@ -83,8 +85,7 @@ public class IndividualDaoImpl implements IndividualDao {
     @Override
     public void update(Individual individual) {
         Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "UPDATE Individuals SET first_name = ?, middle_name = ?, last_name = ? WHERE customer_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
             preparedStatement.setString(1, individual.getFirstName());
             preparedStatement.setString(2, individual.getMiddleName());
             preparedStatement.setString(3, individual.getLastName());
@@ -100,8 +101,7 @@ public class IndividualDaoImpl implements IndividualDao {
     @Override
     public void deleteById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "DELETE FROM Individuals WHERE customer_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(deleteByIdQuery)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

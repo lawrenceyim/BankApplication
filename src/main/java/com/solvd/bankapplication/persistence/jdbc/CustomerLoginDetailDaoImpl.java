@@ -14,12 +14,16 @@ import java.util.Optional;
 
 public class CustomerLoginDetailDaoImpl implements CustomerLoginDetailDao {
     private final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
+    private final String createQuery = "INSERT INTO CustomerLoginDetails(customer_id, username, password) VALUES (?, ?, ?)";
+    private final String findByIdQuery = "SELECT customer_id, username, password FROM CustomerLoginDetails WHERE customer_id = ?";
+    private final String findAllQuery = "SELECT customer_id, username, password FROM Payments";
+    private final String updateQuery = "UPDATE Payments SET username = ?, password = ? WHERE customer_id = ?";
+    private final String deleteByIdQuery = "DELETE FROM CustomerLoginDetails WHERE customer_id = ?";
 
     @Override
     public void create(CustomerLoginDetail customerLoginDetail) {
         Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "INSERT INTO CustomerLoginDetails(customer_id, username, password) VALUES (?, ?, ?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(createQuery)) {
             preparedStatement.setLong(1, customerLoginDetail.getCustomerID());
             preparedStatement.setString(2, customerLoginDetail.getUsername());
             preparedStatement.setString(3, customerLoginDetail.getPassword());
@@ -35,8 +39,7 @@ public class CustomerLoginDetailDaoImpl implements CustomerLoginDetailDao {
     public Optional<CustomerLoginDetail> findById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
         CustomerLoginDetail customerLoginDetail = null;
-        final String query = "SELECT customer_id, username, password FROM CustomerLoginDetails WHERE customer_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(findByIdQuery)) {
             preparedStatement.setLong(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -58,8 +61,7 @@ public class CustomerLoginDetailDaoImpl implements CustomerLoginDetailDao {
     public List<CustomerLoginDetail> findAll() {
         Connection connection = CONNECTION_POOL.getConnection();
         List<CustomerLoginDetail> customerLoginDetails = new ArrayList<>();
-        final String query = "SELECT customer_id, username, password FROM Payments";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(findAllQuery)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     CustomerLoginDetail customerLoginDetail = new CustomerLoginDetail();
@@ -80,8 +82,7 @@ public class CustomerLoginDetailDaoImpl implements CustomerLoginDetailDao {
     @Override
     public void update(CustomerLoginDetail customerLoginDetail) {
         Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "UPDATE Payments SET username = ?, password = ? WHERE customer_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
             preparedStatement.setString(1, customerLoginDetail.getUsername());
             preparedStatement.setString(2, customerLoginDetail.getPassword());
             preparedStatement.setLong(3, customerLoginDetail.getCustomerID());
@@ -96,8 +97,7 @@ public class CustomerLoginDetailDaoImpl implements CustomerLoginDetailDao {
     @Override
     public void deleteById(long id) {
         Connection connection = CONNECTION_POOL.getConnection();
-        final String query = "DELETE FROM CustomerLoginDetails WHERE customer_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(deleteByIdQuery)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

@@ -1,7 +1,6 @@
 package com.solvd.bankapplication.utils;
 
 import com.solvd.bankapplication.menu.Menu;
-import com.solvd.bankapplication.persistence.BankDao;
 
 import java.io.IOException;
 import java.io.InputStream;
