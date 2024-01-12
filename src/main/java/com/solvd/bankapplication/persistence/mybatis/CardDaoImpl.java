@@ -3,13 +3,13 @@ package com.solvd.bankapplication.persistence.mybatis;
 import com.solvd.bankapplication.domain.Card;
 import com.solvd.bankapplication.persistence.CardDao;
 import com.solvd.bankapplication.utils.MyBatisSessionFactory;
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 import java.util.Optional;
 
 public class CardDaoImpl implements CardDao {
-
     @Override
     public void create(Card card) {
         SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
@@ -17,7 +17,7 @@ public class CardDaoImpl implements CardDao {
             CardDao cardDao = sqlSession.getMapper(CardDao.class);
             cardDao.create(card);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();
@@ -55,7 +55,7 @@ public class CardDaoImpl implements CardDao {
             CardDao cardDao = sqlSession.getMapper(CardDao.class);
             cardDao.update(card);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();
@@ -69,7 +69,7 @@ public class CardDaoImpl implements CardDao {
             CardDao cardDao = sqlSession.getMapper(CardDao.class);
             cardDao.deleteById(id);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();

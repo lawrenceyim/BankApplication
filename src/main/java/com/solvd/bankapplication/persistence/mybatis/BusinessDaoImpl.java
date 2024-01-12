@@ -3,6 +3,7 @@ package com.solvd.bankapplication.persistence.mybatis;
 import com.solvd.bankapplication.domain.Business;
 import com.solvd.bankapplication.persistence.BusinessDao;
 import com.solvd.bankapplication.utils.MyBatisSessionFactory;
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class BusinessDaoImpl implements BusinessDao {
             BusinessDao businessDao = sqlSession.getMapper(BusinessDao.class);
             businessDao.create(business);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();
@@ -46,7 +47,7 @@ public class BusinessDaoImpl implements BusinessDao {
             BusinessDao businessDao = sqlSession.getMapper(BusinessDao.class);
             businessDao.update(business);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();
@@ -60,7 +61,7 @@ public class BusinessDaoImpl implements BusinessDao {
             BusinessDao businessDao = sqlSession.getMapper(BusinessDao.class);
             businessDao.deleteById(id);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();

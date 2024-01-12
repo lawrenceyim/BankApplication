@@ -3,6 +3,7 @@ package com.solvd.bankapplication.persistence.mybatis;
 import com.solvd.bankapplication.domain.CustomerLoginDetail;
 import com.solvd.bankapplication.persistence.CustomerLoginDetailDao;
 import com.solvd.bankapplication.utils.MyBatisSessionFactory;
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class CustomerLoginDetailDaoImpl implements CustomerLoginDetailDao {
             CustomerLoginDetailDao customerLoginDetailDao = sqlSession.getMapper(CustomerLoginDetailDao.class);
             customerLoginDetailDao.create(customerLoginDetail);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();
@@ -46,7 +47,7 @@ public class CustomerLoginDetailDaoImpl implements CustomerLoginDetailDao {
             CustomerLoginDetailDao customerLoginDetailDao = sqlSession.getMapper(CustomerLoginDetailDao.class);
             customerLoginDetailDao.update(customerLoginDetail);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();
@@ -60,7 +61,7 @@ public class CustomerLoginDetailDaoImpl implements CustomerLoginDetailDao {
             CustomerLoginDetailDao customerLoginDetailDao = sqlSession.getMapper(CustomerLoginDetailDao.class);
             customerLoginDetailDao.deleteById(id);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();

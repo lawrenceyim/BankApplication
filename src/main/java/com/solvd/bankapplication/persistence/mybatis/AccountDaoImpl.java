@@ -3,8 +3,10 @@ package com.solvd.bankapplication.persistence.mybatis;
 import com.solvd.bankapplication.domain.Account;
 import com.solvd.bankapplication.persistence.AccountDao;
 import com.solvd.bankapplication.utils.MyBatisSessionFactory;
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +18,7 @@ public class AccountDaoImpl implements AccountDao {
             AccountDao accountDao = sqlSession.getMapper(AccountDao.class);
             accountDao.create(account);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();
@@ -54,7 +56,7 @@ public class AccountDaoImpl implements AccountDao {
             AccountDao accountDao = sqlSession.getMapper(AccountDao.class);
             accountDao.update(account);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();
@@ -68,7 +70,7 @@ public class AccountDaoImpl implements AccountDao {
             AccountDao accountDao = sqlSession.getMapper(AccountDao.class);
             accountDao.deleteById(id);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();

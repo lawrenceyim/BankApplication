@@ -3,6 +3,7 @@ package com.solvd.bankapplication.persistence.mybatis;
 import com.solvd.bankapplication.domain.Transfer;
 import com.solvd.bankapplication.persistence.TransferDao;
 import com.solvd.bankapplication.utils.MyBatisSessionFactory;
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class TransferDaoImpl implements TransferDao {
             TransferDao transferDao = sqlSession.getMapper(TransferDao.class);
             transferDao.create(transfer);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();
@@ -54,7 +55,7 @@ public class TransferDaoImpl implements TransferDao {
             TransferDao transferDao = sqlSession.getMapper(TransferDao.class);
             transferDao.update(transfer);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();
@@ -68,7 +69,7 @@ public class TransferDaoImpl implements TransferDao {
             TransferDao transferDao = sqlSession.getMapper(TransferDao.class);
             transferDao.deleteById(id);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();

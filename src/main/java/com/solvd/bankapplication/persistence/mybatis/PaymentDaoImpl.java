@@ -3,13 +3,13 @@ package com.solvd.bankapplication.persistence.mybatis;
 import com.solvd.bankapplication.domain.Payment;
 import com.solvd.bankapplication.persistence.PaymentDao;
 import com.solvd.bankapplication.utils.MyBatisSessionFactory;
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 import java.util.Optional;
 
 public class PaymentDaoImpl implements PaymentDao {
-
     @Override
     public void create(Payment payment) {
         SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
@@ -17,7 +17,7 @@ public class PaymentDaoImpl implements PaymentDao {
             PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
             paymentDao.create(payment);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();
@@ -45,8 +45,6 @@ public class PaymentDaoImpl implements PaymentDao {
         try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false)) {
             PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
             return paymentDao.findAllByCard(id);
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to find payment.", e);
         }
     }
 
@@ -57,7 +55,7 @@ public class PaymentDaoImpl implements PaymentDao {
             PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
             paymentDao.update(payment);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();
@@ -71,7 +69,7 @@ public class PaymentDaoImpl implements PaymentDao {
             PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
             paymentDao.deleteById(id);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();

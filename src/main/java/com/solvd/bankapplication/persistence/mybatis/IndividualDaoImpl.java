@@ -3,6 +3,7 @@ package com.solvd.bankapplication.persistence.mybatis;
 import com.solvd.bankapplication.domain.Individual;
 import com.solvd.bankapplication.persistence.IndividualDao;
 import com.solvd.bankapplication.utils.MyBatisSessionFactory;
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class IndividualDaoImpl implements IndividualDao {
             IndividualDao individualDao = sqlSession.getMapper(IndividualDao.class);
             individualDao.create(individual);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();
@@ -46,7 +47,7 @@ public class IndividualDaoImpl implements IndividualDao {
             IndividualDao individualDao = sqlSession.getMapper(IndividualDao.class);
             individualDao.update(individual);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();
@@ -60,7 +61,7 @@ public class IndividualDaoImpl implements IndividualDao {
             IndividualDao individualDao = sqlSession.getMapper(IndividualDao.class);
             individualDao.deleteById(id);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();

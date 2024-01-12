@@ -3,13 +3,13 @@ package com.solvd.bankapplication.persistence.mybatis;
 import com.solvd.bankapplication.domain.Loan;
 import com.solvd.bankapplication.persistence.LoanDao;
 import com.solvd.bankapplication.utils.MyBatisSessionFactory;
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 import java.util.Optional;
 
 public class LoanDaoImpl implements LoanDao {
-
     @Override
     public void create(Loan loan) {
         SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
@@ -17,7 +17,7 @@ public class LoanDaoImpl implements LoanDao {
             LoanDao loanDao = sqlSession.getMapper(LoanDao.class);
             loanDao.create(loan);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();
@@ -47,7 +47,7 @@ public class LoanDaoImpl implements LoanDao {
             LoanDao loanDao = sqlSession.getMapper(LoanDao.class);
             loanDao.update(loan);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();
@@ -61,7 +61,7 @@ public class LoanDaoImpl implements LoanDao {
             LoanDao loanDao = sqlSession.getMapper(LoanDao.class);
             loanDao.deleteById(id);
             sqlSession.commit();
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             sqlSession.rollback();
         } finally {
             sqlSession.close();
