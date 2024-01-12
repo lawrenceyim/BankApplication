@@ -48,9 +48,9 @@ public class CardServiceImpl implements CardService {
             return;
         }
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%-30s%-30s%-30s\n", "Card ID", "Card Type", "Account ID"));
+        sb.append(String.format("%-30s%-30s%-30s" + System.lineSeparator(), "Card ID", "Card Type", "Account ID"));
         cards.stream().forEach(card -> {
-            sb.append(String.format("%-30s%-30s%-30s\n", card.getCardID(), card.getCardType(), card.getAccountID()));
+            sb.append(String.format("%-30s%-30s%-30s" + System.lineSeparator(), card.getCardID(), card.getCardType(), card.getAccountID()));
         });
         logger.info(sb.toString());
     }

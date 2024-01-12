@@ -47,10 +47,11 @@ public class AccountServiceImpl implements AccountService {
             return;
         }
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%-30s%-30s%-30s%-30s\n", "Account ID", "Customer ID", "Account Type", "Balance"));
+        sb.append(String.format("%-30s%-30s%-30s%-30s" + System.lineSeparator(), "Account ID", "Customer ID",
+                "Account Type", "Balance"));
         accounts.stream().forEach(account -> {
-            sb.append(String.format("%-30s%-30s%-30s%-30s\n", account.getAccountID(), account.getCustomerID(),
-                    account.getAccountType(), account.getBalance()));
+            sb.append(String.format("%-30s%-30s%-30s%-30s" + System.lineSeparator(), account.getAccountID(),
+                    account.getCustomerID(), account.getAccountType(), account.getBalance()));
         });
         logger.info(sb.toString());
     }

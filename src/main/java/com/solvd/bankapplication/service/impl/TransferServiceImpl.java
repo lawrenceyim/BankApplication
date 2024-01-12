@@ -47,9 +47,9 @@ public class TransferServiceImpl implements TransferService {
             return;
         }
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%-30s%-30s%-30s%-30s%-30s\n", "Transfer ID", "Date", "amount", "To", "From"));
+        sb.append(String.format("%-30s%-30s%-30s%-30s%-30s" + System.lineSeparator(), "Transfer ID", "Date", "amount", "To", "From"));
         transfers.stream().forEach(transfer -> {
-            sb.append(String.format("%-30s%-30s%-30s%-30s%-30s\n", transfer.getTransferID(), transfer.getDate(),
+            sb.append(String.format("%-30s%-30s%-30s%-30s%-30s" + System.lineSeparator(), transfer.getTransferID(), transfer.getDate(),
                     transfer.getAmount(), transfer.getToAccountID(), transfer.getFromAccountID()));
         });
         logger.info(sb.toString());

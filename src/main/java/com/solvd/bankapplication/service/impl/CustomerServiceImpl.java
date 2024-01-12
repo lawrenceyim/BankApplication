@@ -48,9 +48,9 @@ public class CustomerServiceImpl implements CustomerService {
             return;
         }
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%-30s%-30s%-30s\n", "Customer ID", "Email", "Phone Number"));
+        sb.append(String.format("%-30s%-30s%-30s" + System.lineSeparator(), "Customer ID", "Email", "Phone Number"));
         customers.stream().forEach(customer -> {
-            sb.append(String.format("%-30s%-30s%-30s\n", customer.getCustomerID(), customer.getEmail(), customer.getPhoneNumber()));
+            sb.append(String.format("%-30s%-30s%-30s" + System.lineSeparator(), customer.getCustomerID(), customer.getEmail(), customer.getPhoneNumber()));
         });
         logger.info(sb.toString());
     }

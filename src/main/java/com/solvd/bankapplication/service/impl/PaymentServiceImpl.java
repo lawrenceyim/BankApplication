@@ -47,9 +47,9 @@ public class PaymentServiceImpl implements PaymentService {
             return;
         }
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%-30s%-30s%-30s%-30s%-30s\n", "Payment ID", "Company", "Date", "Amount", "Card ID"));
+        sb.append(String.format("%-30s%-30s%-30s%-30s%-30s" + System.lineSeparator(), "Payment ID", "Company", "Date", "Amount", "Card ID"));
         payments.stream().forEach(payment -> {
-            sb.append(String.format("%-30s%-30s%-30s%-30s%-30s\n", payment.getPaymentID(), payment.getCompanyName(),
+            sb.append(String.format("%-30s%-30s%-30s%-30s%-30s" + System.lineSeparator(), payment.getPaymentID(), payment.getCompanyName(),
                     payment.getDate(), payment.getAmount(), payment.getCardID()));
         });
         logger.info(sb.toString());
