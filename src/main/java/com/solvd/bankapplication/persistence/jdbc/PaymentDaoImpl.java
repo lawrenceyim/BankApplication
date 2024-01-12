@@ -1,4 +1,4 @@
-package com.solvd.bankapplication.persistence.impl;
+package com.solvd.bankapplication.persistence.jdbc;
 
 import com.solvd.bankapplication.domain.Payment;
 import com.solvd.bankapplication.persistence.PaymentDao;

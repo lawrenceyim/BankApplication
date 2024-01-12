@@ -1,4 +1,4 @@
-package com.solvd.bankapplication.persistence.impl;
+package com.solvd.bankapplication.persistence.mybatis;
 
 import com.solvd.bankapplication.domain.Loan;
 import com.solvd.bankapplication.persistence.LoanDao;
@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import java.util.List;
 import java.util.Optional;
 
-public class LoanDaoMybatisImpl implements LoanDao {
+public class LoanDaoImpl implements LoanDao {
 
     @Override
     public void create(Loan loan) {

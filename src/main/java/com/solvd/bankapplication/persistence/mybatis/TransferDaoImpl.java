@@ -1,4 +1,4 @@
-package com.solvd.bankapplication.persistence.impl;
+package com.solvd.bankapplication.persistence.mybatis;
 
 import com.solvd.bankapplication.domain.Transfer;
 import com.solvd.bankapplication.persistence.TransferDao;
@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import java.util.List;
 import java.util.Optional;
 
-public class TransferDaoMybatisImpl implements TransferDao {
+public class TransferDaoImpl implements TransferDao {
     @Override
     public void create(Transfer transfer) {
         try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {

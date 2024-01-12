@@ -1,4 +1,4 @@
-package com.solvd.bankapplication.persistence.impl;
+package com.solvd.bankapplication.persistence.mybatis;
 
 import com.solvd.bankapplication.domain.Card;
 import com.solvd.bankapplication.persistence.CardDao;
@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import java.util.List;
 import java.util.Optional;
 
-public class CardDaoMybatisImpl implements CardDao {
+public class CardDaoImpl implements CardDao {
 
     @Override
     public void create(Card card) {

@@ -1,4 +1,4 @@
-package com.solvd.bankapplication.persistence.impl;
+package com.solvd.bankapplication.persistence.mybatis;
 
 import com.solvd.bankapplication.domain.Individual;
 import com.solvd.bankapplication.persistence.IndividualDao;
@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import java.util.List;
 import java.util.Optional;
 
-public class IndividualDaoMybatisImpl implements IndividualDao {
+public class IndividualDaoImpl implements IndividualDao {
     @Override
     public void create(Individual individual) {
         try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {

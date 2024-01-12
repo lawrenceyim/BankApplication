@@ -1,4 +1,4 @@
-package com.solvd.bankapplication.persistence.impl;
+package com.solvd.bankapplication.persistence.mybatis;
 
 import com.solvd.bankapplication.domain.Payment;
 import com.solvd.bankapplication.persistence.PaymentDao;
@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import java.util.List;
 import java.util.Optional;
 
-public class PaymentDaoMybatisImpl implements PaymentDao {
+public class PaymentDaoImpl implements PaymentDao {
 
     @Override
     public void create(Payment payment) {

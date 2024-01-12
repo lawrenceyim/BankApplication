@@ -1,4 +1,4 @@
-package com.solvd.bankapplication.persistence.impl;
+package com.solvd.bankapplication.persistence.mybatis;
 
 import com.solvd.bankapplication.domain.Customer;
 import com.solvd.bankapplication.persistence.CustomerDao;
@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import java.util.List;
 import java.util.Optional;
 
-public class CustomerDaoMybatisImpl implements CustomerDao {
+public class CustomerDaoImpl implements CustomerDao {
 
     @Override
     public void create(Customer customer) {

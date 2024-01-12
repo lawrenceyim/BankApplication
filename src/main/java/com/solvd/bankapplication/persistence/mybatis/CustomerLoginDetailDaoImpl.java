@@ -1,4 +1,4 @@
-package com.solvd.bankapplication.persistence.impl;
+package com.solvd.bankapplication.persistence.mybatis;
 
 import com.solvd.bankapplication.domain.CustomerLoginDetail;
 import com.solvd.bankapplication.persistence.CustomerLoginDetailDao;
@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import java.util.List;
 import java.util.Optional;
 
-public class CustomerLoginDetailDaoMybatisImpl implements CustomerLoginDetailDao {
+public class CustomerLoginDetailDaoImpl implements CustomerLoginDetailDao {
     @Override
     public void create(CustomerLoginDetail customerLoginDetail) {
         try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {

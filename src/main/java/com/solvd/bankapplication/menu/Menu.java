@@ -17,31 +17,13 @@ public class Menu implements IMenu {
     TransferService transferService;
     private final Logger logger = (Logger) LogManager.getLogger("Output");
     private final Scanner scanner = new Scanner(System.in);
-    private final String configFile = "config.properties";
-    private final String implementationProperty = "use-implementation";
-    private final List<String> validImplementations = new ArrayList<>(Arrays.asList("mybatis", "jdbc"));
-    private final String implementationMode;
 
     public Menu() {
-        try (InputStream inputStream = Menu.class.getClassLoader().getResourceAsStream(configFile)) {
-            Properties properties = new Properties();
-            properties.load(inputStream);
-            implementationMode = properties.getProperty(implementationProperty);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        if (implementationMode == null) {
-            throw new RuntimeException("No use-implementation property found");
-        } else if (!validImplementations.contains(implementationMode)) {
-            throw new RuntimeException("No valid implementation found");
-        }
-
-        accountService = new AccountServiceImpl(implementationMode);
-        cardService = new CardServiceImpl(implementationMode);
-        customerService = new CustomerServiceImpl(implementationMode);
-        paymentService = new PaymentServiceImpl(implementationMode);
-        transferService = new TransferServiceImpl(implementationMode);
+        accountService = new AccountServiceImpl();
+        cardService = new CardServiceImpl();
+        customerService = new CustomerServiceImpl();
+        paymentService = new PaymentServiceImpl();
+        transferService = new TransferServiceImpl();
     }
 
     @Override
