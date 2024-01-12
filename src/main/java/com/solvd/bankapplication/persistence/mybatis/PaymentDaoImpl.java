@@ -12,37 +12,37 @@ public class PaymentDaoImpl implements PaymentDao {
 
     @Override
     public void create(Payment payment) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
             paymentDao.create(payment);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to create payment.", e);
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
     }
 
     @Override
     public Optional<Payment> findById(long id) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false)) {
             PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
             return paymentDao.findById(id);
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to find payment.", e);
         }
     }
 
     @Override
     public List<Payment> findAll() {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false)) {
             PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
             return paymentDao.findAll();
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to find payment.", e);
         }
     }
 
     @Override
     public List<Payment> findAllByCard(long id) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false)) {
             PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
             return paymentDao.findAllByCard(id);
         } catch (Exception e) {
@@ -52,21 +52,29 @@ public class PaymentDaoImpl implements PaymentDao {
 
     @Override
     public void update(Payment payment) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
             paymentDao.update(payment);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to payment payment.", e);
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
     }
 
     @Override
     public void deleteById(long id) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
             paymentDao.deleteById(id);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to delete payment.", e);
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
     }
 }

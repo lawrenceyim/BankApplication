@@ -11,51 +11,59 @@ import java.util.Optional;
 public class IndividualDaoImpl implements IndividualDao {
     @Override
     public void create(Individual individual) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             IndividualDao individualDao = sqlSession.getMapper(IndividualDao.class);
             individualDao.create(individual);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to create individual.", e);
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
     }
 
     @Override
     public Optional<Individual> findById(long id) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false)) {
             IndividualDao individualDao = sqlSession.getMapper(IndividualDao.class);
             return individualDao.findById(id);
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to find individual.", e);
         }
     }
 
     @Override
     public List<Individual> findAll() {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false)) {
             IndividualDao individualDao = sqlSession.getMapper(IndividualDao.class);
             return individualDao.findAll();
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to find individual.", e);
         }
     }
 
     @Override
     public void update(Individual individual) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             IndividualDao individualDao = sqlSession.getMapper(IndividualDao.class);
             individualDao.update(individual);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to update individual.", e);
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
     }
 
     @Override
     public void deleteById(long id) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             IndividualDao individualDao = sqlSession.getMapper(IndividualDao.class);
             individualDao.deleteById(id);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to delete individual.", e);
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
     }
 }

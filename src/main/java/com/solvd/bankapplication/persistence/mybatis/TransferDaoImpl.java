@@ -11,61 +11,67 @@ import java.util.Optional;
 public class TransferDaoImpl implements TransferDao {
     @Override
     public void create(Transfer transfer) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             TransferDao transferDao = sqlSession.getMapper(TransferDao.class);
             transferDao.create(transfer);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to create transfer.", e);
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
     }
 
     @Override
     public Optional<Transfer> findById(long id) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false)) {
             TransferDao transferDao = sqlSession.getMapper(TransferDao.class);
             return transferDao.findById(id);
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to find transfer.", e);
         }
     }
 
     @Override
     public List<Transfer> findAll() {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false)) {
             TransferDao transferDao = sqlSession.getMapper(TransferDao.class);
             return transferDao.findAll();
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to find transfer.", e);
         }
     }
 
     @Override
     public List<Transfer> findAllByAccount(long id) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false)) {
             TransferDao transferDao = sqlSession.getMapper(TransferDao.class);
             return transferDao.findAllByAccount(id);
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to find transfer.", e);
         }
     }
 
     @Override
     public void update(Transfer transfer) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             TransferDao transferDao = sqlSession.getMapper(TransferDao.class);
             transferDao.update(transfer);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to update transfer.", e);
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
     }
 
     @Override
     public void deleteById(long id) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             TransferDao transferDao = sqlSession.getMapper(TransferDao.class);
             transferDao.deleteById(id);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to delete transfer.", e);
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
     }
 }

@@ -18,7 +18,6 @@ public class AccountDaoImpl implements AccountDao {
             sqlSession.commit();
         } catch (Exception e) {
             sqlSession.rollback();
-            throw new RuntimeException("Unable to create account.", e);
         } finally {
             sqlSession.close();
         }
@@ -26,51 +25,53 @@ public class AccountDaoImpl implements AccountDao {
 
     @Override
     public Optional<Account> findById(long id) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false)) {
             AccountDao accountDao = sqlSession.getMapper(AccountDao.class);
             return accountDao.findById(id);
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to find account.", e);
         }
     }
 
     @Override
     public List<Account> findAll() {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false)) {
             AccountDao accountDao = sqlSession.getMapper(AccountDao.class);
             return accountDao.findAll();
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to find account.", e);
         }
     }
 
     @Override
     public List<Account> findByCustomer(long id) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false)) {
             AccountDao accountDao = sqlSession.getMapper(AccountDao.class);
             return accountDao.findByCustomer(id);
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to find account.", e);
         }
     }
 
     @Override
     public void update(Account account) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             AccountDao accountDao = sqlSession.getMapper(AccountDao.class);
             accountDao.update(account);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to update account.", e);
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
     }
 
     @Override
     public void deleteById(long id) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             AccountDao accountDao = sqlSession.getMapper(AccountDao.class);
             accountDao.deleteById(id);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to delete account.", e);
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
     }
 }

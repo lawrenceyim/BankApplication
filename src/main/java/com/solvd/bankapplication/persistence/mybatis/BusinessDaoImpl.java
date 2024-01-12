@@ -11,51 +11,59 @@ import java.util.Optional;
 public class BusinessDaoImpl implements BusinessDao {
     @Override
     public void create(Business business) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             BusinessDao businessDao = sqlSession.getMapper(BusinessDao.class);
             businessDao.create(business);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to create business.", e);
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
     }
 
     @Override
     public Optional<Business> findById(long id) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false)) {
             BusinessDao businessDao = sqlSession.getMapper(BusinessDao.class);
             return businessDao.findById(id);
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to find business.", e);
         }
     }
 
     @Override
     public List<Business> findAll() {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false)) {
             BusinessDao businessDao = sqlSession.getMapper(BusinessDao.class);
             return businessDao.findAll();
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to find business.", e);
         }
     }
 
     @Override
     public void update(Business business) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             BusinessDao businessDao = sqlSession.getMapper(BusinessDao.class);
             businessDao.update(business);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to update business.", e);
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
     }
 
     @Override
     public void deleteById(long id) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             BusinessDao businessDao = sqlSession.getMapper(BusinessDao.class);
             businessDao.deleteById(id);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to delete business.", e);
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
     }
 }

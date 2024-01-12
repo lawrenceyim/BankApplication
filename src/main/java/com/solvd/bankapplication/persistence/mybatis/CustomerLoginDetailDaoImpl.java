@@ -11,51 +11,59 @@ import java.util.Optional;
 public class CustomerLoginDetailDaoImpl implements CustomerLoginDetailDao {
     @Override
     public void create(CustomerLoginDetail customerLoginDetail) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             CustomerLoginDetailDao customerLoginDetailDao = sqlSession.getMapper(CustomerLoginDetailDao.class);
             customerLoginDetailDao.create(customerLoginDetail);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to create customer login detail.", e);
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
     }
 
     @Override
     public Optional<CustomerLoginDetail> findById(long id) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false)) {
             CustomerLoginDetailDao customerLoginDetailDao = sqlSession.getMapper(CustomerLoginDetailDao.class);
             return customerLoginDetailDao.findById(id);
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to find customer login detail.", e);
         }
     }
 
     @Override
     public List<CustomerLoginDetail> findAll() {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false)) {
             CustomerLoginDetailDao customerLoginDetailDao = sqlSession.getMapper(CustomerLoginDetailDao.class);
             return customerLoginDetailDao.findAll();
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to find customer login detail.", e);
         }
     }
 
     @Override
     public void update(CustomerLoginDetail customerLoginDetail) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             CustomerLoginDetailDao customerLoginDetailDao = sqlSession.getMapper(CustomerLoginDetailDao.class);
             customerLoginDetailDao.update(customerLoginDetail);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to update customer login detail.", e);
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
     }
 
     @Override
     public void deleteById(long id) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             CustomerLoginDetailDao customerLoginDetailDao = sqlSession.getMapper(CustomerLoginDetailDao.class);
             customerLoginDetailDao.deleteById(id);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to update customer login detail.", e);
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
     }
 }

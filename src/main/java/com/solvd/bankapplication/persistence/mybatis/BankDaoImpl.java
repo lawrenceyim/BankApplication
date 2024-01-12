@@ -11,51 +11,53 @@ import java.util.Optional;
 public class BankDaoImpl implements BankDao {
     @Override
     public void create(Bank bank) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             BankDao bankDao = sqlSession.getMapper(BankDao.class);
             bankDao.create(bank);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to create bank.", e);
+            sqlSession.rollback();
         }
     }
 
     @Override
     public Optional<Bank> findById(long id) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false)) {
             BankDao bankDao = sqlSession.getMapper(BankDao.class);
             return bankDao.findById(id);
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to find bank.", e);
         }
     }
 
     @Override
     public List<Bank> findAll() {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false)) {
             BankDao bankDao = sqlSession.getMapper(BankDao.class);
             return bankDao.findAll();
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to find bank.", e);
         }
     }
 
     @Override
     public void update(Bank bank) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             BankDao bankDao = sqlSession.getMapper(BankDao.class);
             bankDao.update(bank);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to update bank.", e);
+            sqlSession.rollback();
         }
     }
 
     @Override
     public void deleteById(long id) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             BankDao bankDao = sqlSession.getMapper(BankDao.class);
             bankDao.deleteById(id);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to delete bank.", e);
+            sqlSession.rollback();
         }
     }
 }

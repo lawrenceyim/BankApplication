@@ -12,51 +12,59 @@ public class LoanDaoImpl implements LoanDao {
 
     @Override
     public void create(Loan loan) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             LoanDao loanDao = sqlSession.getMapper(LoanDao.class);
             loanDao.create(loan);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to create loan.", e);
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
     }
 
     @Override
     public Optional<Loan> findById(long id) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false)) {
             LoanDao loanDao = sqlSession.getMapper(LoanDao.class);
             return loanDao.findById(id);
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to find loan.", e);
         }
     }
 
     @Override
     public List<Loan> findAll() {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false)) {
             LoanDao loanDao = sqlSession.getMapper(LoanDao.class);
             return loanDao.findAll();
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to find loan.", e);
         }
     }
 
     @Override
     public void update(Loan loan) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             LoanDao loanDao = sqlSession.getMapper(LoanDao.class);
             loanDao.update(loan);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to update loan.", e);
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
     }
 
     @Override
     public void deleteById(long id) {
-        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
+        SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(false);
+        try {
             LoanDao loanDao = sqlSession.getMapper(LoanDao.class);
             loanDao.deleteById(id);
+            sqlSession.commit();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to delete loan.", e);
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
     }
 }
