@@ -1,9 +1,9 @@
 package com.solvd.bankapplication.service.impl;
 
 import com.solvd.bankapplication.domain.Payment;
-import com.solvd.bankapplication.persistence.PaymentRepository;
-import com.solvd.bankapplication.persistence.impl.PaymentRepositoryImpl;
-import com.solvd.bankapplication.persistence.impl.PaymentRepositoryMybatisImpl;
+import com.solvd.bankapplication.persistence.PaymentDao;
+import com.solvd.bankapplication.persistence.impl.PaymentDaoImpl;
+import com.solvd.bankapplication.persistence.impl.PaymentDaoMybatisImpl;
 import com.solvd.bankapplication.service.PaymentService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
@@ -12,19 +12,19 @@ import java.util.List;
 
 public class PaymentServiceImpl implements PaymentService {
     private final Logger logger = (Logger) LogManager.getLogger("Output");
-    private PaymentRepository paymentRepository;
+    private PaymentDao paymentDao;
 
     public PaymentServiceImpl(String mode) {
         if (mode.equals("mybatis")) {
-            paymentRepository = new PaymentRepositoryMybatisImpl();
+            paymentDao = new PaymentDaoMybatisImpl();
         } else if (mode.equals("jdbc")) {
-            paymentRepository = new PaymentRepositoryImpl();
+            paymentDao = new PaymentDaoImpl();
         }
     }
 
     @Override
     public void findAll() {
-        List<Payment> payments = paymentRepository.findAll();
+        List<Payment> payments = paymentDao.findAll();
         if (payments.isEmpty()) {
             logger.info("No payments found");
             return;

@@ -1,19 +1,19 @@
 package com.solvd.bankapplication.persistence.impl;
 
 import com.solvd.bankapplication.domain.Individual;
-import com.solvd.bankapplication.persistence.IndividualRepository;
+import com.solvd.bankapplication.persistence.IndividualDao;
 import com.solvd.bankapplication.utils.PersistenceConfig;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 import java.util.Optional;
 
-public class IndividualRepositoryMybatisImpl implements IndividualRepository {
+public class IndividualDaoMybatisImpl implements IndividualDao {
     @Override
     public void create(Individual individual) {
         try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
-            IndividualRepository individualRepository = sqlSession.getMapper(IndividualRepository.class);
-            individualRepository.create(individual);
+            IndividualDao individualDao = sqlSession.getMapper(IndividualDao.class);
+            individualDao.create(individual);
         } catch (Exception e) {
             throw new RuntimeException("Unable to create individual.", e);
         }
@@ -22,8 +22,8 @@ public class IndividualRepositoryMybatisImpl implements IndividualRepository {
     @Override
     public Optional<Individual> findById(long id) {
         try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
-            IndividualRepository individualRepository = sqlSession.getMapper(IndividualRepository.class);
-            return individualRepository.findById(id);
+            IndividualDao individualDao = sqlSession.getMapper(IndividualDao.class);
+            return individualDao.findById(id);
         } catch (Exception e) {
             throw new RuntimeException("Unable to find individual.", e);
         }
@@ -32,8 +32,8 @@ public class IndividualRepositoryMybatisImpl implements IndividualRepository {
     @Override
     public List<Individual> findAll() {
         try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
-            IndividualRepository individualRepository = sqlSession.getMapper(IndividualRepository.class);
-            return individualRepository.findAll();
+            IndividualDao individualDao = sqlSession.getMapper(IndividualDao.class);
+            return individualDao.findAll();
         } catch (Exception e) {
             throw new RuntimeException("Unable to find individual.", e);
         }
@@ -42,8 +42,8 @@ public class IndividualRepositoryMybatisImpl implements IndividualRepository {
     @Override
     public void update(Individual individual) {
         try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
-            IndividualRepository individualRepository = sqlSession.getMapper(IndividualRepository.class);
-            individualRepository.update(individual);
+            IndividualDao individualDao = sqlSession.getMapper(IndividualDao.class);
+            individualDao.update(individual);
         } catch (Exception e) {
             throw new RuntimeException("Unable to update individual.", e);
         }
@@ -52,8 +52,8 @@ public class IndividualRepositoryMybatisImpl implements IndividualRepository {
     @Override
     public void deleteById(long id) {
         try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
-            IndividualRepository individualRepository = sqlSession.getMapper(IndividualRepository.class);
-            individualRepository.deleteById(id);
+            IndividualDao individualDao = sqlSession.getMapper(IndividualDao.class);
+            individualDao.deleteById(id);
         } catch (Exception e) {
             throw new RuntimeException("Unable to delete individual.", e);
         }

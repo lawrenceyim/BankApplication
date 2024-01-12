@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.solvd.bankapplication.persistence.CustomerRepository">
+<mapper namespace="com.solvd.bankapplication.persistence.CustomerDao">
     <insert id="create" keyColumn="customer_id" keyProperty="customerID" useGeneratedKeys="true">
         INSERT INTO Customers(bank_id, email, phone_number, street_address, city, country)
         VALUES (#{customer.bankID}, #{customer.email}, #{customer.phoneNumber}, #{customer.streetAddress},

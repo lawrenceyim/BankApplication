@@ -1,7 +1,7 @@
 package com.solvd.bankapplication.persistence.impl;
 
 import com.solvd.bankapplication.domain.Customer;
-import com.solvd.bankapplication.persistence.CustomerRepository;
+import com.solvd.bankapplication.persistence.CustomerDao;
 import com.solvd.bankapplication.utils.ConnectionPool;
 
 import java.sql.*;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class CustomerRepositoryImpl implements CustomerRepository {
+public class CustomerDaoImpl implements CustomerDao {
     private final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     @Override

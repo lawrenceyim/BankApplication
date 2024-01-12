@@ -1,19 +1,19 @@
 package com.solvd.bankapplication.persistence.impl;
 
 import com.solvd.bankapplication.domain.Business;
-import com.solvd.bankapplication.persistence.BusinessRepository;
+import com.solvd.bankapplication.persistence.BusinessDao;
 import com.solvd.bankapplication.utils.PersistenceConfig;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 import java.util.Optional;
 
-public class BusinessRepositoryMybatisImpl implements BusinessRepository {
+public class BusinessDaoMybatisImpl implements BusinessDao {
     @Override
     public void create(Business business) {
         try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
-            BusinessRepository businessRepository = sqlSession.getMapper(BusinessRepository.class);
-            businessRepository.create(business);
+            BusinessDao businessDao = sqlSession.getMapper(BusinessDao.class);
+            businessDao.create(business);
         } catch (Exception e) {
             throw new RuntimeException("Unable to create business.", e);
         }
@@ -22,8 +22,8 @@ public class BusinessRepositoryMybatisImpl implements BusinessRepository {
     @Override
     public Optional<Business> findById(long id) {
         try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
-            BusinessRepository businessRepository = sqlSession.getMapper(BusinessRepository.class);
-            return businessRepository.findById(id);
+            BusinessDao businessDao = sqlSession.getMapper(BusinessDao.class);
+            return businessDao.findById(id);
         } catch (Exception e) {
             throw new RuntimeException("Unable to find business.", e);
         }
@@ -32,8 +32,8 @@ public class BusinessRepositoryMybatisImpl implements BusinessRepository {
     @Override
     public List<Business> findAll() {
         try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
-            BusinessRepository businessRepository = sqlSession.getMapper(BusinessRepository.class);
-            return businessRepository.findAll();
+            BusinessDao businessDao = sqlSession.getMapper(BusinessDao.class);
+            return businessDao.findAll();
         } catch (Exception e) {
             throw new RuntimeException("Unable to find business.", e);
         }
@@ -42,8 +42,8 @@ public class BusinessRepositoryMybatisImpl implements BusinessRepository {
     @Override
     public void update(Business business) {
         try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
-            BusinessRepository businessRepository = sqlSession.getMapper(BusinessRepository.class);
-            businessRepository.update(business);
+            BusinessDao businessDao = sqlSession.getMapper(BusinessDao.class);
+            businessDao.update(business);
         } catch (Exception e) {
             throw new RuntimeException("Unable to update business.", e);
         }
@@ -52,8 +52,8 @@ public class BusinessRepositoryMybatisImpl implements BusinessRepository {
     @Override
     public void deleteById(long id) {
         try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
-            BusinessRepository businessRepository = sqlSession.getMapper(BusinessRepository.class);
-            businessRepository.deleteById(id);
+            BusinessDao businessDao = sqlSession.getMapper(BusinessDao.class);
+            businessDao.deleteById(id);
         } catch (Exception e) {
             throw new RuntimeException("Unable to delete business.", e);
         }

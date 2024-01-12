@@ -1,7 +1,7 @@
 package com.solvd.bankapplication.persistence.impl;
 
 import com.solvd.bankapplication.domain.Payment;
-import com.solvd.bankapplication.persistence.PaymentRepository;
+import com.solvd.bankapplication.persistence.PaymentDao;
 import com.solvd.bankapplication.utils.ConnectionPool;
 
 import java.sql.*;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PaymentRepositoryImpl implements PaymentRepository {
+public class PaymentDaoImpl implements PaymentDao {
     private final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     @Override

@@ -1,20 +1,20 @@
 package com.solvd.bankapplication.persistence.impl;
 
 import com.solvd.bankapplication.domain.Loan;
-import com.solvd.bankapplication.persistence.LoanRepository;
+import com.solvd.bankapplication.persistence.LoanDao;
 import com.solvd.bankapplication.utils.PersistenceConfig;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 import java.util.Optional;
 
-public class LoanRepositoryMybatisImpl implements LoanRepository {
+public class LoanDaoMybatisImpl implements LoanDao {
 
     @Override
     public void create(Loan loan) {
         try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
-            LoanRepository loanRepository = sqlSession.getMapper(LoanRepository.class);
-            loanRepository.create(loan);
+            LoanDao loanDao = sqlSession.getMapper(LoanDao.class);
+            loanDao.create(loan);
         } catch (Exception e) {
             throw new RuntimeException("Unable to create loan.", e);
         }
@@ -23,8 +23,8 @@ public class LoanRepositoryMybatisImpl implements LoanRepository {
     @Override
     public Optional<Loan> findById(long id) {
         try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
-            LoanRepository loanRepository = sqlSession.getMapper(LoanRepository.class);
-            return loanRepository.findById(id);
+            LoanDao loanDao = sqlSession.getMapper(LoanDao.class);
+            return loanDao.findById(id);
         } catch (Exception e) {
             throw new RuntimeException("Unable to find loan.", e);
         }
@@ -33,8 +33,8 @@ public class LoanRepositoryMybatisImpl implements LoanRepository {
     @Override
     public List<Loan> findAll() {
         try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
-            LoanRepository loanRepository = sqlSession.getMapper(LoanRepository.class);
-            return loanRepository.findAll();
+            LoanDao loanDao = sqlSession.getMapper(LoanDao.class);
+            return loanDao.findAll();
         } catch (Exception e) {
             throw new RuntimeException("Unable to find loan.", e);
         }
@@ -43,8 +43,8 @@ public class LoanRepositoryMybatisImpl implements LoanRepository {
     @Override
     public void update(Loan loan) {
         try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
-            LoanRepository loanRepository = sqlSession.getMapper(LoanRepository.class);
-            loanRepository.update(loan);
+            LoanDao loanDao = sqlSession.getMapper(LoanDao.class);
+            loanDao.update(loan);
         } catch (Exception e) {
             throw new RuntimeException("Unable to update loan.", e);
         }
@@ -53,8 +53,8 @@ public class LoanRepositoryMybatisImpl implements LoanRepository {
     @Override
     public void deleteById(long id) {
         try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
-            LoanRepository loanRepository = sqlSession.getMapper(LoanRepository.class);
-            loanRepository.deleteById(id);
+            LoanDao loanDao = sqlSession.getMapper(LoanDao.class);
+            loanDao.deleteById(id);
         } catch (Exception e) {
             throw new RuntimeException("Unable to delete loan.", e);
         }

@@ -1,8 +1,8 @@
 package com.solvd.bankapplication.service.impl;
 
 import com.solvd.bankapplication.domain.Bank;
-import com.solvd.bankapplication.persistence.BankRepository;
-import com.solvd.bankapplication.persistence.impl.BankRepositoryImpl;
+import com.solvd.bankapplication.persistence.BankDao;
+import com.solvd.bankapplication.persistence.impl.BankDaoImpl;
 import com.solvd.bankapplication.service.BankService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
@@ -14,10 +14,10 @@ public class BankServiceImpl implements BankService {
     private final Logger logger = (Logger) LogManager.getLogger("Output");
     private final Scanner scanner = new Scanner(System.in);
 
-    private BankRepository bankRepository;
+    private BankDao bankDao;
 
     public BankServiceImpl() {
-        bankRepository = new BankRepositoryImpl();
+        bankDao = new BankDaoImpl();
     }
 
     @Override
@@ -31,7 +31,7 @@ public class BankServiceImpl implements BankService {
             return;
         }
         bank.setBankName(bankName);
-        bankRepository.create(bank);
+        bankDao.create(bank);
         logger.info("Created bank with the name: " + bankName);
     }
 }

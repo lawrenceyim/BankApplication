@@ -1,9 +1,9 @@
 package com.solvd.bankapplication.service.impl;
 
 import com.solvd.bankapplication.domain.Card;
-import com.solvd.bankapplication.persistence.CardRepository;
-import com.solvd.bankapplication.persistence.impl.CardRepositoryImpl;
-import com.solvd.bankapplication.persistence.impl.CardRepositoryMybatisImpl;
+import com.solvd.bankapplication.persistence.CardDao;
+import com.solvd.bankapplication.persistence.impl.CardDaoImpl;
+import com.solvd.bankapplication.persistence.impl.CardDaoMybatisImpl;
 import com.solvd.bankapplication.service.CardService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
@@ -12,19 +12,19 @@ import java.util.List;
 
 public class CardServiceImpl implements CardService {
     private final Logger logger = (Logger) LogManager.getLogger("Output");
-    private CardRepository cardRepository;
+    private CardDao cardDao;
 
     public CardServiceImpl(String mode) {
         if (mode.equals("mybatis")) {
-            cardRepository = new CardRepositoryMybatisImpl();
+            cardDao = new CardDaoMybatisImpl();
         } else if (mode.equals("jdbc")) {
-            cardRepository = new CardRepositoryImpl();
+            cardDao = new CardDaoImpl();
         }
     }
 
     @Override
     public void findAll() {
-        List<Card> cards = cardRepository.findAll();
+        List<Card> cards = cardDao.findAll();
         if (cards.isEmpty()) {
             logger.info("No cards found");
             return;

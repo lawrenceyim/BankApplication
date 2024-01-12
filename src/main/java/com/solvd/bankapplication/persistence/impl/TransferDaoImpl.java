@@ -1,7 +1,7 @@
 package com.solvd.bankapplication.persistence.impl;
 
 import com.solvd.bankapplication.domain.Transfer;
-import com.solvd.bankapplication.persistence.TransferRepository;
+import com.solvd.bankapplication.persistence.TransferDao;
 import com.solvd.bankapplication.utils.ConnectionPool;
 
 import java.sql.*;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class TransferRepositoryImpl implements TransferRepository {
+public class TransferDaoImpl implements TransferDao {
     private final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     @Override

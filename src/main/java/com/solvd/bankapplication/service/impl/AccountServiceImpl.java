@@ -1,9 +1,9 @@
 package com.solvd.bankapplication.service.impl;
 
 import com.solvd.bankapplication.domain.Account;
-import com.solvd.bankapplication.persistence.AccountRepository;
-import com.solvd.bankapplication.persistence.impl.AccountRepositoryImpl;
-import com.solvd.bankapplication.persistence.impl.AccountRepositoryMybatisImpl;
+import com.solvd.bankapplication.persistence.AccountDao;
+import com.solvd.bankapplication.persistence.impl.AccountDaoImpl;
+import com.solvd.bankapplication.persistence.impl.AccountDaoMybatisImpl;
 import com.solvd.bankapplication.service.AccountService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
@@ -12,19 +12,19 @@ import java.util.List;
 
 public class AccountServiceImpl implements AccountService {
     private final Logger logger = (Logger) LogManager.getLogger("Output");
-    private AccountRepository accountRepository;
+    private AccountDao accountDao;
 
     public AccountServiceImpl(String mode) {
         if (mode.equals("mybatis")) {
-            this.accountRepository = new AccountRepositoryMybatisImpl();
+            this.accountDao = new AccountDaoMybatisImpl();
         } else if (mode.equals("jdbc")) {
-            this.accountRepository = new AccountRepositoryImpl();
+            this.accountDao = new AccountDaoImpl();
         }
     }
 
     @Override
     public void findAll() {
-        List<Account> accounts = accountRepository.findAll();
+        List<Account> accounts = accountDao.findAll();
         if (accounts.isEmpty()) {
             logger.info("No accounts found");
             return;

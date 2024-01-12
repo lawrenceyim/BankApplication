@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.solvd.bankapplication.persistence.CustomerLoginDetailRepository">
+<mapper namespace="com.solvd.bankapplication.persistence.CustomerLoginDetailDao">
     <insert id="create" keyColumn="customer_id" keyProperty="customerID" useGeneratedKeys="false">
         INSERT INTO CustomerLoginDetails(customer_id, username, password)
         VALUES (#{customerLoginDetail.customerID}, #{customerLoginDetail.username}, #{customerLoginDetail.password})

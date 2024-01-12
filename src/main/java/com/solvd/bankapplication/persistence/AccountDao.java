@@ -4,6 +4,6 @@ import com.solvd.bankapplication.domain.Account;
 
 import java.util.List;
 
-public interface AccountRepository extends BasePersistence<Account> {
+public interface AccountDao extends BaseDao<Account> {
     List<Account> findByCustomer(long id);
 }

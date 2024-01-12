@@ -4,6 +4,6 @@ import com.solvd.bankapplication.domain.Card;
 
 import java.util.List;
 
-public interface CardRepository extends BasePersistence<Card> {
+public interface CardDao extends BaseDao<Card> {
     List<Card> findAllByAccount(long id);
 }

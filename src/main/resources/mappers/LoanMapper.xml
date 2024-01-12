@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.solvd.bankapplication.persistence.LoanRepository">
+<mapper namespace="com.solvd.bankapplication.persistence.LoanDao">
     <insert id="create" keyColumn="loan_id" keyProperty="loanID" useGeneratedKeys="true">
         INSERT INTO Loans(customer_id, loan_amount, date)
         VALUES (#{loan.customerID}, #{loan.loanAmount}, #{loan.date})

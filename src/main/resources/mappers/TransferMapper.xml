@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.solvd.bankapplication.persistence.TransferRepository">
+<mapper namespace="com.solvd.bankapplication.persistence.TransferDao">
     <insert id="create" keyColumn="transfer_id" keyProperty="transferID" useGeneratedKeys="true">
         INSERT INTO Transfers(date, amount, from_account_id, to_account_id)
         VALUES (#{transfer.date}, #{transfer.amount}, #{transfer.fromAccountID}, #{transfer.toAccountID})

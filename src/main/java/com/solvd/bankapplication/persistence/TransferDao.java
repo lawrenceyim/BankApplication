@@ -4,6 +4,6 @@ import com.solvd.bankapplication.domain.Transfer;
 
 import java.util.List;
 
-public interface TransferRepository extends BasePersistence<Transfer> {
+public interface TransferDao extends BaseDao<Transfer> {
     List<Transfer> findAllByAccount(long id);
 }
