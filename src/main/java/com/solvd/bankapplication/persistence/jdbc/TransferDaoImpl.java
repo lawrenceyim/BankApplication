@@ -22,9 +22,10 @@ public class TransferDaoImpl implements TransferDao {
             preparedStatement.setLong(3, transfer.getFromAccountID());
             preparedStatement.setLong(4, transfer.getToAccountID());
             preparedStatement.executeUpdate();
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) {
-                transfer.setTransferID(resultSet.getLong(1));
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    transfer.setTransferID(resultSet.getLong(1));
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException("Unable to create transfer.", e);
@@ -40,16 +41,16 @@ public class TransferDaoImpl implements TransferDao {
         final String query = "SELECT transfer_id, date, amount, from_account_id, to_account_id FROM Transfers WHERE transfer_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                transfer = new Transfer();
-                transfer.setTransferID(resultSet.getLong(1));
-                transfer.setDate(resultSet.getTimestamp(2));
-                transfer.setAmount(resultSet.getBigDecimal(3));
-                transfer.setFromAccountID(resultSet.getLong(4));
-                transfer.setToAccountID(resultSet.getLong(5));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    transfer = new Transfer();
+                    transfer.setTransferID(resultSet.getLong(1));
+                    transfer.setDate(resultSet.getTimestamp(2));
+                    transfer.setAmount(resultSet.getBigDecimal(3));
+                    transfer.setFromAccountID(resultSet.getLong(4));
+                    transfer.setToAccountID(resultSet.getLong(5));
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find transfer.", e);
         } finally {
@@ -64,17 +65,17 @@ public class TransferDaoImpl implements TransferDao {
         List<Transfer> transfers = new ArrayList<>();
         final String query = "SELECT transfer_id, date, amount, from_account_id, to_account_id FROM Transfers";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Transfer transfer = new Transfer();
-                transfer.setTransferID(resultSet.getLong(1));
-                transfer.setDate(resultSet.getTimestamp(2));
-                transfer.setAmount(resultSet.getBigDecimal(3));
-                transfer.setFromAccountID(resultSet.getLong(4));
-                transfer.setToAccountID(resultSet.getLong(5));
-                transfers.add(transfer);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Transfer transfer = new Transfer();
+                    transfer.setTransferID(resultSet.getLong(1));
+                    transfer.setDate(resultSet.getTimestamp(2));
+                    transfer.setAmount(resultSet.getBigDecimal(3));
+                    transfer.setFromAccountID(resultSet.getLong(4));
+                    transfer.setToAccountID(resultSet.getLong(5));
+                    transfers.add(transfer);
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find transfer.", e);
         } finally {
@@ -91,15 +92,16 @@ public class TransferDaoImpl implements TransferDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
             preparedStatement.setLong(2, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Transfer transfer = new Transfer();
-                transfer.setTransferID(resultSet.getLong(1));
-                transfer.setDate(resultSet.getTimestamp(2));
-                transfer.setAmount(resultSet.getBigDecimal(3));
-                transfer.setFromAccountID(resultSet.getLong(4));
-                transfer.setToAccountID(resultSet.getLong(5));
-                transfers.add(transfer);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Transfer transfer = new Transfer();
+                    transfer.setTransferID(resultSet.getLong(1));
+                    transfer.setDate(resultSet.getTimestamp(2));
+                    transfer.setAmount(resultSet.getBigDecimal(3));
+                    transfer.setFromAccountID(resultSet.getLong(4));
+                    transfer.setToAccountID(resultSet.getLong(5));
+                    transfers.add(transfer);
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find transfer.", e);

@@ -2,7 +2,7 @@ package com.solvd.bankapplication.persistence.mybatis;
 
 import com.solvd.bankapplication.domain.Business;
 import com.solvd.bankapplication.persistence.BusinessDao;
-import com.solvd.bankapplication.utils.PersistenceConfig;
+import com.solvd.bankapplication.utils.MyBatisSessionFactory;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.Optional;
 public class BusinessDaoImpl implements BusinessDao {
     @Override
     public void create(Business business) {
-        try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
             BusinessDao businessDao = sqlSession.getMapper(BusinessDao.class);
             businessDao.create(business);
         } catch (Exception e) {
@@ -21,7 +21,7 @@ public class BusinessDaoImpl implements BusinessDao {
 
     @Override
     public Optional<Business> findById(long id) {
-        try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
             BusinessDao businessDao = sqlSession.getMapper(BusinessDao.class);
             return businessDao.findById(id);
         } catch (Exception e) {
@@ -31,7 +31,7 @@ public class BusinessDaoImpl implements BusinessDao {
 
     @Override
     public List<Business> findAll() {
-        try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
             BusinessDao businessDao = sqlSession.getMapper(BusinessDao.class);
             return businessDao.findAll();
         } catch (Exception e) {
@@ -41,7 +41,7 @@ public class BusinessDaoImpl implements BusinessDao {
 
     @Override
     public void update(Business business) {
-        try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
             BusinessDao businessDao = sqlSession.getMapper(BusinessDao.class);
             businessDao.update(business);
         } catch (Exception e) {
@@ -51,7 +51,7 @@ public class BusinessDaoImpl implements BusinessDao {
 
     @Override
     public void deleteById(long id) {
-        try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
             BusinessDao businessDao = sqlSession.getMapper(BusinessDao.class);
             businessDao.deleteById(id);
         } catch (Exception e) {

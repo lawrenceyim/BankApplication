@@ -19,11 +19,11 @@ public class BankDaoImpl implements BankDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, bank.getBankName());
             preparedStatement.executeUpdate();
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) {
-                bank.setBankID(resultSet.getLong(1));
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    bank.setBankID(resultSet.getLong(1));
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to create bank.", e);
         } finally {
@@ -38,13 +38,13 @@ public class BankDaoImpl implements BankDao {
         final String query = "SELECT bank_id, bank_name FROM Banks WHERE bank_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                bank = new Bank();
-                bank.setBankID(resultSet.getLong(1));
-                bank.setBankName(resultSet.getString(2));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    bank = new Bank();
+                    bank.setBankID(resultSet.getLong(1));
+                    bank.setBankName(resultSet.getString(2));
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find bank.", e);
         } finally {
@@ -59,14 +59,14 @@ public class BankDaoImpl implements BankDao {
         List<Bank> banks = new ArrayList<>();
         final String query = "SELECT bank_id, bank_name FROM Banks";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Bank bank = new Bank();
-                bank.setBankID(resultSet.getLong(1));
-                bank.setBankName(resultSet.getString(2));
-                banks.add(bank);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Bank bank = new Bank();
+                    bank.setBankID(resultSet.getLong(1));
+                    bank.setBankName(resultSet.getString(2));
+                    banks.add(bank);
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find bank.", e);
         } finally {

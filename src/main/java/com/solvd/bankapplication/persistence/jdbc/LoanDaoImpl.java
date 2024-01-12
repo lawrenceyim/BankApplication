@@ -21,9 +21,10 @@ public class LoanDaoImpl implements LoanDao {
             preparedStatement.setBigDecimal(2, loan.getLoanAmount());
             preparedStatement.setTimestamp(3, loan.getDate());
             preparedStatement.executeUpdate();
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) {
-                loan.setLoanID(resultSet.getLong(1));
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    loan.setLoanID(resultSet.getLong(1));
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException("Unable to create loan.", e);
@@ -39,15 +40,15 @@ public class LoanDaoImpl implements LoanDao {
         final String query = "SELECT loan_id, customer_id, loan_amount, date FROM Loans WHERE loan_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                loan = new Loan();
-                loan.setLoanID(resultSet.getLong(1));
-                loan.setCustomerID(resultSet.getLong(2));
-                loan.setLoanAmount(resultSet.getBigDecimal(3));
-                loan.setDate(resultSet.getTimestamp(4));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    loan = new Loan();
+                    loan.setLoanID(resultSet.getLong(1));
+                    loan.setCustomerID(resultSet.getLong(2));
+                    loan.setLoanAmount(resultSet.getBigDecimal(3));
+                    loan.setDate(resultSet.getTimestamp(4));
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find loan.", e);
         } finally {
@@ -62,16 +63,16 @@ public class LoanDaoImpl implements LoanDao {
         List<Loan> loans = new ArrayList<>();
         final String query = "SELECT loan_id, customer_id, amount, card_id FROM Loans";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Loan loan = new Loan();
-                loan.setLoanID(resultSet.getLong(1));
-                loan.setCustomerID(resultSet.getLong(2));
-                loan.setLoanAmount(resultSet.getBigDecimal(3));
-                loan.setDate(resultSet.getTimestamp(4));
-                loans.add(loan);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Loan loan = new Loan();
+                    loan.setLoanID(resultSet.getLong(1));
+                    loan.setCustomerID(resultSet.getLong(2));
+                    loan.setLoanAmount(resultSet.getBigDecimal(3));
+                    loan.setDate(resultSet.getTimestamp(4));
+                    loans.add(loan);
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find loan.", e);
         } finally {

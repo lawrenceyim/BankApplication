@@ -21,11 +21,11 @@ public class AccountDaoImpl implements AccountDao {
             preparedStatement.setString(2, account.getAccountType());
             preparedStatement.setBigDecimal(3, account.getBalance());
             preparedStatement.executeUpdate();
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) {
-                account.setAccountID(resultSet.getLong(1));
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    account.setAccountID(resultSet.getLong(1));
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to create account.", e);
         } finally {
@@ -40,15 +40,15 @@ public class AccountDaoImpl implements AccountDao {
         final String query = "SELECT account_id, customer_id, account_type, balance FROM Accounts WHERE account_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                account = new Account();
-                account.setAccountID(resultSet.getLong(1));
-                account.setCustomerID(resultSet.getLong(2));
-                account.setAccountType(resultSet.getString(3));
-                account.setBalance(resultSet.getBigDecimal(4));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    account = new Account();
+                    account.setAccountID(resultSet.getLong(1));
+                    account.setCustomerID(resultSet.getLong(2));
+                    account.setAccountType(resultSet.getString(3));
+                    account.setBalance(resultSet.getBigDecimal(4));
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find account.", e);
         } finally {
@@ -63,16 +63,16 @@ public class AccountDaoImpl implements AccountDao {
         List<Account> accounts = new ArrayList<>();
         final String query = "SELECT account_id, customer_id, account_type, balance FROM Accounts";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Account account = new Account();
-                account.setAccountID(resultSet.getLong(1));
-                account.setCustomerID(resultSet.getLong(2));
-                account.setAccountType(resultSet.getString(3));
-                account.setBalance(resultSet.getBigDecimal(4));
-                accounts.add(account);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Account account = new Account();
+                    account.setAccountID(resultSet.getLong(1));
+                    account.setCustomerID(resultSet.getLong(2));
+                    account.setAccountType(resultSet.getString(3));
+                    account.setBalance(resultSet.getBigDecimal(4));
+                    accounts.add(account);
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find account.", e);
         } finally {
@@ -88,16 +88,16 @@ public class AccountDaoImpl implements AccountDao {
         final String query = "SELECT account_id, customer_id, account_type, balance FROM Accounts WHERE customer_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Account account = new Account();
-                account.setAccountID(resultSet.getLong(1));
-                account.setCustomerID(resultSet.getLong(2));
-                account.setAccountType(resultSet.getString(3));
-                account.setBalance(resultSet.getBigDecimal(4));
-                accounts.add(account);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Account account = new Account();
+                    account.setAccountID(resultSet.getLong(1));
+                    account.setCustomerID(resultSet.getLong(2));
+                    account.setAccountType(resultSet.getString(3));
+                    account.setBalance(resultSet.getBigDecimal(4));
+                    accounts.add(account);
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find account.", e);
         } finally {

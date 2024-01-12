@@ -4,6 +4,7 @@ import com.solvd.bankapplication.domain.Transfer;
 import com.solvd.bankapplication.menu.Menu;
 import com.solvd.bankapplication.persistence.TransferDao;
 import com.solvd.bankapplication.service.TransferService;
+import com.solvd.bankapplication.utils.JdbcClassGenerator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
@@ -15,28 +16,10 @@ import java.util.Properties;
 
 public class TransferServiceImpl implements TransferService {
     private final Logger logger = (Logger) LogManager.getLogger("Output");
-    private final String configFile = "config.properties";
     private TransferDao transferDao;
 
     public TransferServiceImpl() {
-        try (InputStream inputStream = Menu.class.getClassLoader().getResourceAsStream(configFile)) {
-            Properties properties = new Properties();
-            properties.load(inputStream);
-            final String classPath = properties.getProperty("implementation-path");
-            transferDao = (TransferDao) Class.forName(classPath + "TransferDaoImpl").getConstructor().newInstance();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        transferDao = JdbcClassGenerator.generateClassInstance("TransferDaoImpl");
     }
 
     @Override

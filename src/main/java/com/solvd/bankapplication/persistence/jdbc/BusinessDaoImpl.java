@@ -37,13 +37,13 @@ public class BusinessDaoImpl implements BusinessDao {
         final String query = "SELECT customer_id, business_name FROM Businesses WHERE customer_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                business = new Business();
-                business.setCustomerID(resultSet.getLong(1));
-                business.setBusinessName(resultSet.getString(2));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    business = new Business();
+                    business.setCustomerID(resultSet.getLong(1));
+                    business.setBusinessName(resultSet.getString(2));
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find business.", e);
         } finally {
@@ -58,14 +58,14 @@ public class BusinessDaoImpl implements BusinessDao {
         List<Business> businesses = new ArrayList<>();
         final String query = "SELECT customer_id, business_name FROM Businesses";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Business business = new Business();
-                business.setCustomerID(resultSet.getLong(1));
-                business.setBusinessName(resultSet.getString(2));
-                businesses.add(business);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Business business = new Business();
+                    business.setCustomerID(resultSet.getLong(1));
+                    business.setBusinessName(resultSet.getString(2));
+                    businesses.add(business);
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find business.", e);
         } finally {

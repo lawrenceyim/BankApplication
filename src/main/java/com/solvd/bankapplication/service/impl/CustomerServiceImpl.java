@@ -4,6 +4,7 @@ import com.solvd.bankapplication.domain.Customer;
 import com.solvd.bankapplication.menu.Menu;
 import com.solvd.bankapplication.persistence.CustomerDao;
 import com.solvd.bankapplication.service.CustomerService;
+import com.solvd.bankapplication.utils.JdbcClassGenerator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
@@ -15,29 +16,10 @@ import java.util.Properties;
 
 public class CustomerServiceImpl implements CustomerService {
     private final Logger logger = (Logger) LogManager.getLogger("Output");
-    private final String configFile = "config.properties";
-
     private CustomerDao customerDao;
 
     public CustomerServiceImpl() {
-        try (InputStream inputStream = Menu.class.getClassLoader().getResourceAsStream(configFile)) {
-            Properties properties = new Properties();
-            properties.load(inputStream);
-            final String classPath = properties.getProperty("implementation-path");
-            customerDao = (CustomerDao) Class.forName(classPath + "CustomerDaoImpl").getConstructor().newInstance();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        customerDao = JdbcClassGenerator.generateClassInstance("CustomerDaoImpl");
     }
 
     @Override

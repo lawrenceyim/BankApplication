@@ -2,7 +2,7 @@ package com.solvd.bankapplication.persistence.mybatis;
 
 import com.solvd.bankapplication.domain.Payment;
 import com.solvd.bankapplication.persistence.PaymentDao;
-import com.solvd.bankapplication.utils.PersistenceConfig;
+import com.solvd.bankapplication.utils.MyBatisSessionFactory;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
@@ -12,7 +12,7 @@ public class PaymentDaoImpl implements PaymentDao {
 
     @Override
     public void create(Payment payment) {
-        try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
             PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
             paymentDao.create(payment);
         } catch (Exception e) {
@@ -22,7 +22,7 @@ public class PaymentDaoImpl implements PaymentDao {
 
     @Override
     public Optional<Payment> findById(long id) {
-        try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
             PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
             return paymentDao.findById(id);
         } catch (Exception e) {
@@ -32,7 +32,7 @@ public class PaymentDaoImpl implements PaymentDao {
 
     @Override
     public List<Payment> findAll() {
-        try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
             PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
             return paymentDao.findAll();
         } catch (Exception e) {
@@ -42,7 +42,7 @@ public class PaymentDaoImpl implements PaymentDao {
 
     @Override
     public List<Payment> findAllByCard(long id) {
-        try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
             PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
             return paymentDao.findAllByCard(id);
         } catch (Exception e) {
@@ -52,7 +52,7 @@ public class PaymentDaoImpl implements PaymentDao {
 
     @Override
     public void update(Payment payment) {
-        try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
             PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
             paymentDao.update(payment);
         } catch (Exception e) {
@@ -62,7 +62,7 @@ public class PaymentDaoImpl implements PaymentDao {
 
     @Override
     public void deleteById(long id) {
-        try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
             PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
             paymentDao.deleteById(id);
         } catch (Exception e) {

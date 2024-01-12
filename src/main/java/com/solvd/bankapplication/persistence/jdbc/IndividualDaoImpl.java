@@ -39,15 +39,15 @@ public class IndividualDaoImpl implements IndividualDao {
         final String query = "SELECT customer_id, first_name, middle_name, last_name FROM Individuals WHERE customer_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                individual = new Individual();
-                individual.setCustomerID(resultSet.getLong(1));
-                individual.setFirstName(resultSet.getString(2));
-                individual.setMiddleName(resultSet.getString(3));
-                individual.setLastName(resultSet.getString(4));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    individual = new Individual();
+                    individual.setCustomerID(resultSet.getLong(1));
+                    individual.setFirstName(resultSet.getString(2));
+                    individual.setMiddleName(resultSet.getString(3));
+                    individual.setLastName(resultSet.getString(4));
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find individual.", e);
         } finally {
@@ -62,16 +62,16 @@ public class IndividualDaoImpl implements IndividualDao {
         List<Individual> individuals = new ArrayList<>();
         final String query = "SELECT customer_id, first_name, middle_name, last_name FROM Individuals";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Individual individual = new Individual();
-                individual.setCustomerID(resultSet.getLong(1));
-                individual.setFirstName(resultSet.getString(2));
-                individual.setMiddleName(resultSet.getString(3));
-                individual.setLastName(resultSet.getString(4));
-                individuals.add(individual);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Individual individual = new Individual();
+                    individual.setCustomerID(resultSet.getLong(1));
+                    individual.setFirstName(resultSet.getString(2));
+                    individual.setMiddleName(resultSet.getString(3));
+                    individual.setLastName(resultSet.getString(4));
+                    individuals.add(individual);
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find individual.", e);
         } finally {

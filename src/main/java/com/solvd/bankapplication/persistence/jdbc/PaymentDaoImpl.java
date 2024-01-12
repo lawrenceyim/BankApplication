@@ -22,9 +22,10 @@ public class PaymentDaoImpl implements PaymentDao {
             preparedStatement.setBigDecimal(3, payment.getAmount());
             preparedStatement.setLong(4, payment.getCardID());
             preparedStatement.executeUpdate();
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) {
-                payment.setPaymentID(resultSet.getLong(1));
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    payment.setPaymentID(resultSet.getLong(1));
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException("Unable to create payment.", e);
@@ -40,14 +41,15 @@ public class PaymentDaoImpl implements PaymentDao {
         final String query = "SELECT payment_id, company, date, amount, card_id FROM Payments WHERE payment_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                payment = new Payment();
-                payment.setPaymentID(resultSet.getLong(1));
-                payment.setCompanyName(resultSet.getString(2));
-                payment.setDate(resultSet.getTimestamp(3));
-                payment.setAmount(resultSet.getBigDecimal(4));
-                payment.setCardID(resultSet.getLong(5));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    payment = new Payment();
+                    payment.setPaymentID(resultSet.getLong(1));
+                    payment.setCompanyName(resultSet.getString(2));
+                    payment.setDate(resultSet.getTimestamp(3));
+                    payment.setAmount(resultSet.getBigDecimal(4));
+                    payment.setCardID(resultSet.getLong(5));
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find payment.", e);
@@ -63,17 +65,17 @@ public class PaymentDaoImpl implements PaymentDao {
         List<Payment> payments = new ArrayList<>();
         final String query = "SELECT payment_id, company, date, amount, card_id FROM Payments";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Payment payment = new Payment();
-                payment.setPaymentID(resultSet.getLong(1));
-                payment.setCompanyName(resultSet.getString(2));
-                payment.setDate(resultSet.getTimestamp(3));
-                payment.setAmount(resultSet.getBigDecimal(4));
-                payment.setCardID(resultSet.getLong(5));
-                payments.add(payment);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Payment payment = new Payment();
+                    payment.setPaymentID(resultSet.getLong(1));
+                    payment.setCompanyName(resultSet.getString(2));
+                    payment.setDate(resultSet.getTimestamp(3));
+                    payment.setAmount(resultSet.getBigDecimal(4));
+                    payment.setCardID(resultSet.getLong(5));
+                    payments.add(payment);
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find payment.", e);
         } finally {
@@ -89,17 +91,17 @@ public class PaymentDaoImpl implements PaymentDao {
         final String query = "SELECT payment_id, company, date, amount, card_id FROM Payments WHERE card_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Payment payment = new Payment();
-                payment.setPaymentID(resultSet.getLong(1));
-                payment.setCompanyName(resultSet.getString(2));
-                payment.setDate(resultSet.getTimestamp(3));
-                payment.setAmount(resultSet.getBigDecimal(4));
-                payment.setCardID(resultSet.getLong(5));
-                payments.add(payment);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Payment payment = new Payment();
+                    payment.setPaymentID(resultSet.getLong(1));
+                    payment.setCompanyName(resultSet.getString(2));
+                    payment.setDate(resultSet.getTimestamp(3));
+                    payment.setAmount(resultSet.getBigDecimal(4));
+                    payment.setCardID(resultSet.getLong(5));
+                    payments.add(payment);
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find payment.", e);
         } finally {

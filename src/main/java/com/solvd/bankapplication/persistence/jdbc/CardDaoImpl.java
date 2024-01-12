@@ -20,11 +20,11 @@ public class CardDaoImpl implements CardDao {
             preparedStatement.setString(1, card.getCardType());
             preparedStatement.setLong(2, card.getAccountID());
             preparedStatement.executeUpdate();
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) {
-                card.setCardID(resultSet.getLong(1));
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    card.setCardID(resultSet.getLong(1));
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to create card.", e);
         } finally {
@@ -39,14 +39,14 @@ public class CardDaoImpl implements CardDao {
         final String query = "SELECT card_id, card_type, account_id FROM FROM Cards WHERE card_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                card = new Card();
-                card.setCardID((resultSet.getLong(1)));
-                card.setCardType(resultSet.getString(2));
-                card.setAccountID(resultSet.getLong(3));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    card = new Card();
+                    card.setCardID((resultSet.getLong(1)));
+                    card.setCardType(resultSet.getString(2));
+                    card.setAccountID(resultSet.getLong(3));
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find card.", e);
         } finally {
@@ -61,15 +61,15 @@ public class CardDaoImpl implements CardDao {
         List<Card> cards = new ArrayList<>();
         final String query = "SELECT card_id, card_type, account_id FROM Cards";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Card card = new Card();
-                card.setCardID(resultSet.getLong(1));
-                card.setCardType(resultSet.getString(2));
-                card.setAccountID(resultSet.getLong(3));
-                cards.add(card);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Card card = new Card();
+                    card.setCardID(resultSet.getLong(1));
+                    card.setCardType(resultSet.getString(2));
+                    card.setAccountID(resultSet.getLong(3));
+                    cards.add(card);
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find card.", e);
         } finally {
@@ -85,13 +85,14 @@ public class CardDaoImpl implements CardDao {
         final String query = "SELECT card_id, card_type, account_id FROM Cards WHERE card_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Card card = new Card();
-                card.setCardID(resultSet.getLong(1));
-                card.setCardType(resultSet.getString(2));
-                card.setAccountID(resultSet.getLong(3));
-                cards.add(card);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Card card = new Card();
+                    card.setCardID(resultSet.getLong(1));
+                    card.setCardType(resultSet.getString(2));
+                    card.setAccountID(resultSet.getLong(3));
+                    cards.add(card);
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException("Unable to find payment.", e);

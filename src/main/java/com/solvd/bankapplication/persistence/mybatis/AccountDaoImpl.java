@@ -2,7 +2,7 @@ package com.solvd.bankapplication.persistence.mybatis;
 
 import com.solvd.bankapplication.domain.Account;
 import com.solvd.bankapplication.persistence.AccountDao;
-import com.solvd.bankapplication.utils.PersistenceConfig;
+import com.solvd.bankapplication.utils.MyBatisSessionFactory;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.Optional;
 public class AccountDaoImpl implements AccountDao {
     @Override
     public void create(Account account) {
-        try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
             AccountDao accountDao = sqlSession.getMapper(AccountDao.class);
             accountDao.create(account);
         } catch (Exception e) {
@@ -21,7 +21,7 @@ public class AccountDaoImpl implements AccountDao {
 
     @Override
     public Optional<Account> findById(long id) {
-        try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
             AccountDao accountDao = sqlSession.getMapper(AccountDao.class);
             return accountDao.findById(id);
         } catch (Exception e) {
@@ -31,7 +31,7 @@ public class AccountDaoImpl implements AccountDao {
 
     @Override
     public List<Account> findAll() {
-        try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
             AccountDao accountDao = sqlSession.getMapper(AccountDao.class);
             return accountDao.findAll();
         } catch (Exception e) {
@@ -41,7 +41,7 @@ public class AccountDaoImpl implements AccountDao {
 
     @Override
     public List<Account> findByCustomer(long id) {
-        try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
             AccountDao accountDao = sqlSession.getMapper(AccountDao.class);
             return accountDao.findByCustomer(id);
         } catch (Exception e) {
@@ -51,7 +51,7 @@ public class AccountDaoImpl implements AccountDao {
 
     @Override
     public void update(Account account) {
-        try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
             AccountDao accountDao = sqlSession.getMapper(AccountDao.class);
             accountDao.update(account);
         } catch (Exception e) {
@@ -61,7 +61,7 @@ public class AccountDaoImpl implements AccountDao {
 
     @Override
     public void deleteById(long id) {
-        try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)) {
+        try (SqlSession sqlSession = MyBatisSessionFactory.getSessionFactory().openSession(true)) {
             AccountDao accountDao = sqlSession.getMapper(AccountDao.class);
             accountDao.deleteById(id);
         } catch (Exception e) {
