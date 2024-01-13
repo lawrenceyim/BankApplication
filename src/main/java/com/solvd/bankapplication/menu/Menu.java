@@ -2,11 +2,13 @@ package com.solvd.bankapplication.menu;
 
 import com.solvd.bankapplication.service.AccountService;
 import com.solvd.bankapplication.service.CardService;
+import com.solvd.bankapplication.service.CustomerPaymentsService;
 import com.solvd.bankapplication.service.CustomerService;
 import com.solvd.bankapplication.service.PaymentService;
 import com.solvd.bankapplication.service.TransferService;
 import com.solvd.bankapplication.service.impl.AccountServiceImpl;
 import com.solvd.bankapplication.service.impl.CardServiceImpl;
+import com.solvd.bankapplication.service.impl.CustomerPaymentsServiceImpl;
 import com.solvd.bankapplication.service.impl.CustomerServiceImpl;
 import com.solvd.bankapplication.service.impl.PaymentServiceImpl;
 import com.solvd.bankapplication.service.impl.TransferServiceImpl;
@@ -22,6 +24,7 @@ import java.util.Scanner;
 public class Menu implements IMenu {
     AccountService accountService;
     CardService cardService;
+    CustomerPaymentsService customerPaymentsService;
     CustomerService customerService;
     PaymentService paymentService;
     TransferService transferService;
@@ -31,6 +34,7 @@ public class Menu implements IMenu {
     public Menu() {
         accountService = new AccountServiceImpl();
         cardService = new CardServiceImpl();
+        customerPaymentsService = new CustomerPaymentsServiceImpl();
         customerService = new CustomerServiceImpl();
         paymentService = new PaymentServiceImpl();
         transferService = new TransferServiceImpl();
@@ -47,14 +51,15 @@ public class Menu implements IMenu {
         OUTPUT_LOGGER.info("6. View Locations");
         OUTPUT_LOGGER.info("7. View Employees");
         OUTPUT_LOGGER.info("8. View Employee Login Details");
-        OUTPUT_LOGGER.info("9. Exit");
+        OUTPUT_LOGGER.info("9. View Customer Payments");
+        OUTPUT_LOGGER.info("10. Exit");
     }
 
     @Override
     public int getUserChoice() {
         try {
             int choice = scanner.nextInt();
-            if (choice >= 1 && choice <= 9) {
+            if (choice >= 1 && choice <= 10) {
                 return choice;
             }
         } catch (InputMismatchException e) {
@@ -91,6 +96,9 @@ public class Menu implements IMenu {
                 JaxbParser.parseEmployeeLoginDetail();
                 return;
             case 9:
+                customerPaymentsService.findAllCustomerCardPayments();
+                return;
+            case 10:
                 System.exit(0);
             default:
                 OUTPUT_LOGGER.info("Invalid choice");

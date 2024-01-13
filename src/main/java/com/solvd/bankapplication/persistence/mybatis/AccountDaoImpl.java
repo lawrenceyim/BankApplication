@@ -6,7 +6,6 @@ import com.solvd.bankapplication.utils.MyBatisSessionFactory;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 

@@ -3,7 +3,7 @@ package com.solvd.bankapplication.service.impl;
 import com.solvd.bankapplication.domain.Account;
 import com.solvd.bankapplication.persistence.AccountDao;
 import com.solvd.bankapplication.service.AccountService;
-import com.solvd.bankapplication.utils.JdbcClassGenerator;
+import com.solvd.bankapplication.utils.ClassInstantiation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
@@ -14,7 +14,7 @@ public class AccountServiceImpl implements AccountService {
     private AccountDao accountDao;
 
     public AccountServiceImpl() {
-        accountDao = JdbcClassGenerator.generateClassInstance("AccountDaoImpl");
+        accountDao = ClassInstantiation.generateClassInstance("AccountDaoImpl");
     }
 
     @Override

@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
-public class JdbcClassGenerator<T> {
+public class ClassInstantiation<T> {
     private static final String configFile = "config.properties";
 
     public static <T> T generateClassInstance(String name) {

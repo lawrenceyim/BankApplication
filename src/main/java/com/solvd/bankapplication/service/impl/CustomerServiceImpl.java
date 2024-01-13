@@ -3,7 +3,7 @@ package com.solvd.bankapplication.service.impl;
 import com.solvd.bankapplication.domain.Customer;
 import com.solvd.bankapplication.persistence.CustomerDao;
 import com.solvd.bankapplication.service.CustomerService;
-import com.solvd.bankapplication.utils.JdbcClassGenerator;
+import com.solvd.bankapplication.utils.ClassInstantiation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
@@ -14,7 +14,7 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerDao customerDao;
 
     public CustomerServiceImpl() {
-        customerDao = JdbcClassGenerator.generateClassInstance("CustomerDaoImpl");
+        customerDao = ClassInstantiation.generateClassInstance("CustomerDaoImpl");
     }
 
     @Override

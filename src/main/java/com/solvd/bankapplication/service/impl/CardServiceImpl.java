@@ -3,7 +3,7 @@ package com.solvd.bankapplication.service.impl;
 import com.solvd.bankapplication.domain.Card;
 import com.solvd.bankapplication.persistence.CardDao;
 import com.solvd.bankapplication.service.CardService;
-import com.solvd.bankapplication.utils.JdbcClassGenerator;
+import com.solvd.bankapplication.utils.ClassInstantiation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
@@ -14,7 +14,7 @@ public class CardServiceImpl implements CardService {
     private CardDao cardDao;
 
     public CardServiceImpl() {
-        cardDao = JdbcClassGenerator.generateClassInstance("CardDaoImpl");
+        cardDao = ClassInstantiation.generateClassInstance("CardDaoImpl");
     }
 
     @Override
