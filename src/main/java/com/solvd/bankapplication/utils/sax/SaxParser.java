@@ -14,13 +14,13 @@ import java.util.List;
 
 public class SaxParser {
     private static final Logger OUTPUT_LOGGER = (Logger) LogManager.getLogger("Output");
+    private static final String employeesXml = "src/main/resources/sax/EmployeesExample.xml";
 
-    public static void main(String[] args) {
-        final String xmlFileName = "src/main/resources/sax/EmployeesExample.xml";
+    public static void parseEmployees() {
         final SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
         final SaxHandler saxHandler = new SaxHandler();
         try {
-            File file = new File(xmlFileName);
+            File file = new File(employeesXml);
             SAXParser parser = saxParserFactory.newSAXParser();
             parser.parse(file, saxHandler);
         } catch (ParserConfigurationException | SAXException | IOException e) {

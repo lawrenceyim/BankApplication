@@ -10,6 +10,9 @@ import com.solvd.bankapplication.service.impl.CardServiceImpl;
 import com.solvd.bankapplication.service.impl.CustomerServiceImpl;
 import com.solvd.bankapplication.service.impl.PaymentServiceImpl;
 import com.solvd.bankapplication.service.impl.TransferServiceImpl;
+import com.solvd.bankapplication.utils.jaxb.JaxbParser;
+import com.solvd.bankapplication.utils.json.JsonParser;
+import com.solvd.bankapplication.utils.sax.SaxParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
@@ -22,7 +25,7 @@ public class Menu implements IMenu {
     CustomerService customerService;
     PaymentService paymentService;
     TransferService transferService;
-    private final Logger logger = (Logger) LogManager.getLogger("Output");
+    private final Logger OUTPUT_LOGGER = (Logger) LogManager.getLogger("Output");
     private final Scanner scanner = new Scanner(System.in);
 
     public Menu() {
@@ -35,24 +38,27 @@ public class Menu implements IMenu {
 
     @Override
     public void displayMenu() {
-        logger.info("Bank Application");
-        logger.info("1. View Customers");
-        logger.info("2. View Accounts");
-        logger.info("3. View Cards");
-        logger.info("4. View Payments");
-        logger.info("5. View Transfers");
-        logger.info("6. Exit");
+        OUTPUT_LOGGER.info("Bank Application");
+        OUTPUT_LOGGER.info("1. View Customers");
+        OUTPUT_LOGGER.info("2. View Accounts");
+        OUTPUT_LOGGER.info("3. View Cards");
+        OUTPUT_LOGGER.info("4. View Payments");
+        OUTPUT_LOGGER.info("5. View Transfers");
+        OUTPUT_LOGGER.info("6. View Locations");
+        OUTPUT_LOGGER.info("7. View Employees");
+        OUTPUT_LOGGER.info("8. View Employee Login Details");
+        OUTPUT_LOGGER.info("9. Exit");
     }
 
     @Override
     public int getUserChoice() {
         try {
             int choice = scanner.nextInt();
-            if (choice >= 1 && choice <= 6) {
+            if (choice >= 1 && choice <= 9) {
                 return choice;
             }
         } catch (InputMismatchException e) {
-            logger.info("Invalid input. Returning to menu");
+            OUTPUT_LOGGER.info("Invalid input. Returning to menu");
         }
         return 0;
     }
@@ -76,7 +82,18 @@ public class Menu implements IMenu {
                 transferService.findAll();
                 return;
             case 6:
+                JsonParser.parseLocations();
+                return;
+            case 7:
+                SaxParser.parseEmployees();
+                return;
+            case 8:
+                JaxbParser.parseEmployeeLoginDetail();
+                return;
+            case 9:
                 System.exit(0);
+            default:
+                OUTPUT_LOGGER.info("Invalid choice");
         }
     }
 }

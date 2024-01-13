@@ -11,10 +11,10 @@ import java.io.IOException;
 
 public class JsonParser {
     private static final Logger OUTPUT_LOGGER = (Logger) LogManager.getLogger("Output");
+    private static final String locationsJson = "src/main/resources/json/Locations.json";
 
-    public static void main(String[] args) {
-        final String fileName = "src/main/resources/json/Locations.json";
-        File file = new File(fileName);
+    public static void parseLocations() {
+        File file = new File(locationsJson);
         final ObjectMapper objectMapper = new ObjectMapper();
         try {
             Locations locations = objectMapper.readValue(file, Locations.class);

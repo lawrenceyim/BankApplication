@@ -10,10 +10,10 @@ import java.io.File;
 
 public class JaxbParser {
     private static final Logger OUTPUT_LOGGER = (Logger) LogManager.getLogger("Output");
+    private static final String employeeLoginDetailXml = "src/main/resources/jaxb/EmployeeLoginDetailExample.xml";
 
-    public static void main(String[] args) {
-        final String xmlFileName = "src/main/resources/jaxb/EmployeeLoginDetailExample.xml";
-        final File file = new File(xmlFileName);
+    public static void parseEmployeeLoginDetail() {
+        final File file = new File(employeeLoginDetailXml);
         try {
             JAXBContext context = JAXBContext.newInstance(EmployeeLoginDetails.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
