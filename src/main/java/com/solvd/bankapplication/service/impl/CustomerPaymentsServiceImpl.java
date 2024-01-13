@@ -55,6 +55,11 @@ public class CustomerPaymentsServiceImpl implements CustomerPaymentsService {
                 .filter(card -> !paymentDao.findAllByCard(card.getCardID()).isEmpty())
                 .collect(Collectors.toList());
 
+        if (cardList.isEmpty()) {
+            OUTPUT_LOGGER.info("Customer has no card payments.");
+            return;
+        }
+
         StringBuilder sb = new StringBuilder();
         sb.append("Customer ID: ").append(customer.get().getCustomerID()).append(System.lineSeparator());
         cardList.stream().forEach(card -> {
