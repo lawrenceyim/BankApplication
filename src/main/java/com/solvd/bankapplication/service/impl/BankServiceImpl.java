@@ -13,12 +13,7 @@ import java.util.Scanner;
 public class BankServiceImpl implements BankService {
     private final Logger OUTPUT_LOGGER = (Logger) LogManager.getLogger("Output");
     private final Scanner scanner = new Scanner(System.in);
-
-    private BankDao bankDao;
-
-    public BankServiceImpl() {
-        bankDao = ClassInstantiation.generateClassInstance("BankDaoImpl");
-    }
+    private BankDao bankDao = ClassInstantiation.generateClassInstance("BankDaoImpl");
 
     @Override
     public void createBank() {

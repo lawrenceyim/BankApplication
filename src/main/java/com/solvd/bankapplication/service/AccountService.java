@@ -1,5 +1,5 @@
 package com.solvd.bankapplication.service;
 
 public interface AccountService {
-    void findAll();
+    void findAllAccounts();
 }

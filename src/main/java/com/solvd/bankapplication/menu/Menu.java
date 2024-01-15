@@ -38,7 +38,7 @@ public class Menu implements IMenu {
         OUTPUT_LOGGER.info("Bank Application");
         OUTPUT_LOGGER.info("1. View Customers");
         OUTPUT_LOGGER.info("2. View Accounts");
-        OUTPUT_LOGGER.info("3. View Cards");
+        OUTPUT_LOGGER.info("3. View Cards and Payments");
         OUTPUT_LOGGER.info("4. View Customer Payments");
         OUTPUT_LOGGER.info("5. View Locations");
         OUTPUT_LOGGER.info("6. View Employees");
@@ -66,10 +66,10 @@ public class Menu implements IMenu {
                 customerService.findAll();
                 return;
             case 2:
-                accountService.findAll();
+                accountService.findAllAccounts();
                 return;
             case 3:
-                cardService.findAll();
+                cardService.findAllCardsAndPayments();
                 return;
             case 4:
                 customerPaymentsService.findAllCustomerCardPayments();

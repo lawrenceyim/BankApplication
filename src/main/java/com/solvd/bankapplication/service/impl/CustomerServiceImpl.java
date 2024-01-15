@@ -10,18 +10,14 @@ import org.apache.logging.log4j.core.Logger;
 import java.util.List;
 
 public class CustomerServiceImpl implements CustomerService {
-    private final Logger logger = (Logger) LogManager.getLogger("Output");
-    private CustomerDao customerDao;
-
-    public CustomerServiceImpl() {
-        customerDao = ClassInstantiation.generateClassInstance("CustomerDaoImpl");
-    }
+    private final Logger OUTPUT_LOGGER = (Logger) LogManager.getLogger("Output");
+    private CustomerDao customerDao = ClassInstantiation.generateClassInstance("CustomerDaoImpl");
 
     @Override
     public void findAll() {
         List<Customer> customers = customerDao.findAll();
         if (customers.isEmpty()) {
-            logger.info("No customers found");
+            OUTPUT_LOGGER.info("No customers found");
             return;
         }
         StringBuilder sb = new StringBuilder();
@@ -29,6 +25,6 @@ public class CustomerServiceImpl implements CustomerService {
         customers.stream().forEach(customer -> {
             sb.append(String.format("%-30s%-30s%-30s" + System.lineSeparator(), customer.getCustomerID(), customer.getEmail(), customer.getPhoneNumber()));
         });
-        logger.info(sb.toString());
+        OUTPUT_LOGGER.info(sb.toString());
     }
 }

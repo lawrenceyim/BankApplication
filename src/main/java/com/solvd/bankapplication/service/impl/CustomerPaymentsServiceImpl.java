@@ -25,7 +25,6 @@ public class CustomerPaymentsServiceImpl implements CustomerPaymentsService {
     private final AccountDao accountDao = ClassInstantiation.generateClassInstance("AccountDaoImpl");
     private final CardDao cardDao = ClassInstantiation.generateClassInstance("CardDaoImpl");
     private final PaymentDao paymentDao = ClassInstantiation.generateClassInstance("PaymentDaoImpl");
-    private List<Account> accountList;
     private long customerId;
 
     @Override
@@ -42,7 +41,7 @@ public class CustomerPaymentsServiceImpl implements CustomerPaymentsService {
             OUTPUT_LOGGER.info("Customer with id not found.");
             return;
         }
-        accountList = accountDao.findByCustomer(customerId);
+        List<Account> accountList = accountDao.findByCustomer(customerId);
         if (accountList.isEmpty()) {
             OUTPUT_LOGGER.info("The customer does not have any accounts.");
             return;
