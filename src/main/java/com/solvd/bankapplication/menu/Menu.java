@@ -1,10 +1,12 @@
 package com.solvd.bankapplication.menu;
 
 import com.solvd.bankapplication.service.AccountService;
+import com.solvd.bankapplication.service.BankService;
 import com.solvd.bankapplication.service.CardService;
 import com.solvd.bankapplication.service.CustomerPaymentsService;
 import com.solvd.bankapplication.service.CustomerService;
 import com.solvd.bankapplication.service.impl.AccountServiceImpl;
+import com.solvd.bankapplication.service.impl.BankServiceImpl;
 import com.solvd.bankapplication.service.impl.CardServiceImpl;
 import com.solvd.bankapplication.service.impl.CustomerPaymentsServiceImpl;
 import com.solvd.bankapplication.service.impl.CustomerServiceImpl;
@@ -22,12 +24,14 @@ public class Menu implements IMenu {
     CardService cardService;
     CustomerPaymentsService customerPaymentsService;
     CustomerService customerService;
+    BankService bankService;
 
     private final Logger OUTPUT_LOGGER = (Logger) LogManager.getLogger("Output");
     private final Scanner scanner = new Scanner(System.in);
 
     public Menu() {
         accountService = new AccountServiceImpl();
+        bankService = new BankServiceImpl();
         cardService = new CardServiceImpl();
         customerPaymentsService = new CustomerPaymentsServiceImpl();
         customerService = new CustomerServiceImpl();
@@ -43,14 +47,15 @@ public class Menu implements IMenu {
         OUTPUT_LOGGER.info("5. View Locations");
         OUTPUT_LOGGER.info("6. View Employees");
         OUTPUT_LOGGER.info("7. View Employee Login Details");
-        OUTPUT_LOGGER.info("8. Exit");
+        OUTPUT_LOGGER.info("8. View Customers by Bank");
+        OUTPUT_LOGGER.info("9. Exit");
     }
 
     @Override
     public int getUserChoice() {
         try {
             int choice = scanner.nextInt();
-            if (choice >= 1 && choice <= 8) {
+            if (choice >= 1 && choice <= 9) {
                 return choice;
             }
         } catch (InputMismatchException e) {
@@ -84,6 +89,9 @@ public class Menu implements IMenu {
                 JaxbParser.parseEmployeeLoginDetail();
                 return;
             case 8:
+                bankService.findBankCustomerDetails();
+                return;
+            case 9:
                 System.exit(0);
             default:
                 OUTPUT_LOGGER.info("Invalid choice");
