@@ -23,6 +23,7 @@
         <log4j-core>2.21.1</log4j-core>
         <mybatis-version>3.5.15</mybatis-version>
         <mysql-connector-j>8.2.0</mysql-connector-j>
+        <testng>7.9.0</testng>
     </properties>
 
     <dependencies>
@@ -75,6 +76,12 @@
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
             <version>${mybatis-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
