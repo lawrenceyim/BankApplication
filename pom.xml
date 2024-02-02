@@ -23,6 +23,7 @@
         <log4j-core>2.21.1</log4j-core>
         <mybatis-version>3.5.15</mybatis-version>
         <mysql-connector-j>8.2.0</mysql-connector-j>
+        <surefire-plugin>3.2.5</surefire-plugin>
         <testng>7.9.0</testng>
     </properties>
 
@@ -78,6 +79,11 @@
             <version>${mybatis-version}</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>${surefire-plugin}</version>
+        </dependency>
+        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>${testng}</version>
@@ -97,5 +103,18 @@
                 </configuration>
             </plugin>
         </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.surefire</groupId>
+                    <artifactId>maven-surefire-common</artifactId>
+                    <version>${surefire-plugin}</version>
+                    <configuration>
+                        <suiteXmlFiles>${project.build.directory}</suiteXmlFiles>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>

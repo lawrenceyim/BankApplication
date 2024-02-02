@@ -1,0 +1,29 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Service Suite" verbose="1" parallel="tests" thread-count="3">
+    <test name="Account tests">
+        <classes>
+            <class name="com.solvd.bankapplication.AccountTest"/>
+        </classes>
+    </test>
+<!--    <test name="Bank tests">-->
+<!--        <classes>-->
+<!--            <class name="com.solvd.bankapplication.BankTests"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+    <test name="Card Test">
+        <classes>
+            <class name="com.solvd.bankapplication.CardTest"/>
+        </classes>
+    </test>
+    <test name="Customer payment tests">
+        <classes>
+            <class name="com.solvd.bankapplication.CustomerPaymentTest"></class>
+        </classes>
+    </test>
+    <test name="Customer test">
+        <classes>
+            <class name="com.solvd.bankapplication.CustomerTest"></class>
+        </classes>
+    </test>
+</suite>
